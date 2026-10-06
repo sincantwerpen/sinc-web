@@ -1,0 +1,120 @@
+"use client";
+
+import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { about } from "@/content/site";
+import { Button, Eyebrow, Reveal, RevealText } from "./ui";
+
+const themes = [
+  { card: "bg-blue text-white", num: "text-white/25", body: "text-white/85", tag: "bg-white/15 text-white" },
+  { card: "bg-cream text-ink", num: "text-ink/12", body: "text-ink/70", tag: "bg-ink/8 text-ink" },
+  { card: "bg-ink-2 text-cream ring-1 ring-white/10", num: "text-blue/40", body: "text-cream/70", tag: "bg-blue/15 text-blue" },
+  { card: "bg-yellow text-ink", num: "text-ink/15", body: "text-ink/75", tag: "bg-ink/10 text-ink" },
+];
+
+type Pillar = {
+  n: string;
+  title: string;
+  text: string;
+  image: string;
+  cta?: { label: string; href: string };
+};
+
+function PillarCard({
+  p,
+  i,
+  total,
+  progress,
+}: {
+  p: Pillar;
+  i: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const t = themes[i];
+  // Each card shrinks a little as the next one slides over it.
+  const scale = useTransform(progress, [i / total, 1], [1, 1 - (total - 1 - i) * 0.045]);
+  const imgScale = useTransform(progress, [i / total, (i + 1) / total], [1.15, 1]);
+
+  return (
+    <div className="sticky h-[78svh] min-h-[520px]" style={{ top: `calc(96px + ${i * 26}px)` }}>
+      <motion.article
+        style={{ scale, transformOrigin: "top center" }}
+        className={`grid h-[min(66svh,600px)] min-h-[480px] grid-rows-[1fr_auto] overflow-hidden rounded-[32px] md:grid-cols-[1.1fr_1fr] md:grid-rows-1 ${t.card}`}
+      >
+        <div className="relative flex flex-col justify-between gap-6 p-7 sm:p-10 lg:p-14">
+          <div className="relative flex flex-col gap-4">
+            <h3 className="text-display text-[clamp(44px,6vw,88px)]">{p.title}</h3>
+            <p className={`max-w-[440px] text-[17px] leading-[1.6] sm:text-lg ${t.body}`}>{p.text}</p>
+            {p.cta && (
+              <a
+                href={p.cta.href}
+                target={p.cta.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+                className="group mt-2 inline-flex w-fit items-center gap-2 font-bold underline decoration-2 underline-offset-[6px] transition-[text-underline-offset] hover:underline-offset-[9px]"
+              >
+                {p.cta.label}
+                <span className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
+              </a>
+            )}
+          </div>
+          <span
+            aria-hidden
+            className={`text-display pointer-events-none absolute -bottom-6 right-4 text-[clamp(140px,22vw,300px)] ${t.num}`}
+          >
+            {p.n}
+          </span>
+          <span className={`relative w-fit rounded-full px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-[0.16em] ${t.tag}`}>
+            Pijler {p.n}
+          </span>
+        </div>
+        <div className="relative min-h-[200px] overflow-hidden md:m-3 md:rounded-[24px]">
+          <motion.div style={{ scale: imgScale }} className="absolute inset-0">
+            <Image src={p.image} alt={p.title} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
+          </motion.div>
+        </div>
+      </motion.article>
+    </div>
+  );
+}
+
+/** The four pillar cards that stack on top of each other while you scroll. */
+export function PillarStack({ pillars }: { pillars: Pillar[] }) {
+  const stack = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: stack, offset: ["start start", "end end"] });
+  return (
+    <div ref={stack} className="relative">
+      {pillars.map((p, i) => (
+        <PillarCard key={p.n} p={p} i={i} total={pillars.length} progress={scrollYProgress} />
+      ))}
+    </div>
+  );
+}
+
+export function Pillars() {
+  return (
+    <section className="relative py-28 sm:py-40" aria-labelledby="about-title">
+      <div className="container-x">
+        <div className="mb-16 grid gap-10 sm:mb-24 lg:grid-cols-[1.7fr_1fr] lg:items-end">
+          <div className="flex flex-col gap-6">
+            <Eyebrow>{about.eyebrow}</Eyebrow>
+            <RevealText
+              id="about-title"
+              text={about.title}
+              className="text-display max-w-[900px] text-[clamp(40px,5.8vw,88px)]"
+            />
+          </div>
+          <Reveal className="flex flex-col items-start gap-7" delay={0.15}>
+            <p className="text-lg leading-[1.6] text-cream/70">{about.lead}</p>
+            <Button href={about.cta.href} variant="light">
+              {about.cta.label}
+            </Button>
+          </Reveal>
+        </div>
+
+        <PillarStack pillars={about.pillars} />
+      </div>
+    </section>
+  );
+}

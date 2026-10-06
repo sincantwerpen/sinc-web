@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SINC Antwerpen website
 
-## Getting Started
+The new sincantwerpen.be, built with Next.js 16 (App Router), React 19, Tailwind CSS 4, Motion and Lenis.
 
-First, run the development server:
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| What | Where |
+|---|---|
+| All text, links and images on the homepage | `src/content/site.ts` |
+| Brand colours, font (Helvetica) and shared styles | `src/app/globals.css` |
+| Page sections (hero, pillars, events, community, footer…) | `src/components/` |
+| Homepage layout | `src/app/page.tsx` |
+| Images (logos, team, partners) | `public/images/` |
+| Newsletter sign-up endpoint | `src/app/api/newsletter/route.ts` |
 
-## Learn More
+To change text, edit `src/content/site.ts`; you don't need to touch the components.
 
-To learn more about Next.js, take a look at the following resources:
+## Events
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Every event (title, poster, date, location, price, ticket link and the full "Over dit event" text) lives in
+`src/content/events.ts`, newest first. Each event automatically gets its own page at `/events/<slug>`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **New event:** copy an existing entry to the top of the list, change the fields, put the poster in
+  `public/images/events/past/` and set `upcoming: true`. It then appears under "Aankomende events" with a
+  "Claim je ticket" button.
+- **Event is over:** remove `upcoming: true`. It moves to "Afgelopen events" and the ticket button disappears.
+- In the description, a paragraph starting with `## ` becomes a subheading, lines starting with `- ` become
+  a list, and lines starting with a time (`18:30 | Welcome`) get a blue timestamp.
 
-## Deploy on Vercel
+## Other pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Text for Over SINC, Community, Ecosysteem, Partners, Contact and Privacy lives in `src/content/pages.ts`.
+The pages themselves are in `src/app/<page>/page.tsx`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contact form
+
+The form posts to `/api/contact`. Set `CONTACT_WEBHOOK_URL` (for example a Zapier/Make webhook that
+emails info@sincantwerpen.be, or a Formspree endpoint) to deliver messages. Until then the form tells
+visitors to mail info@sincantwerpen.be directly.
+
+## Newsletter
+
+The sign-up form posts to `/api/newsletter`. Set the environment variable `NEWSLETTER_WEBHOOK_URL`
+to forward sign-ups to the mailing tool (Mailchimp, Brevo, Flexmail, or a Zapier/Make webhook).
+Until it is set, the form shows the error message instead of pretending the sign-up worked.
