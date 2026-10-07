@@ -47,8 +47,18 @@ The form posts to `/api/contact`. Set `CONTACT_WEBHOOK_URL` (for example a Zapie
 emails info@sincantwerpen.be, or a Formspree endpoint) to deliver messages. Until then the form tells
 visitors to mail info@sincantwerpen.be directly.
 
-## Newsletter
+## Newsletter (Flexmail)
 
-The sign-up form posts to `/api/newsletter`. Set the environment variable `NEWSLETTER_WEBHOOK_URL`
-to forward sign-ups to the mailing tool (Mailchimp, Brevo, Flexmail, or a Zapier/Make webhook).
-Until it is set, the form shows the error message instead of pretending the sign-up worked.
+The sign-up form posts to `/api/newsletter`, which sends the sign-up to Flexmail. Set these
+environment variables in Vercel (Settings → Environment Variables):
+
+| Variable | Where to find it |
+|---|---|
+| `FLEXMAIL_ACCOUNT_ID` | Flexmail → Settings → API |
+| `FLEXMAIL_TOKEN` | Flexmail → Settings → API → Personal access tokens |
+| `FLEXMAIL_OPT_IN_FORM_ID` | id of an active opt-in form (Flexmail → opt-in forms) |
+
+With an opt-in form, Flexmail emails a confirmation link and only adds the person after they click it
+(double opt-in, recommended for GDPR). Alternatively set `FLEXMAIL_SOURCE_ID` instead of the opt-in form
+to add people straight away. `NEWSLETTER_WEBHOOK_URL` still works as a fallback for other tools.
+Until one of these is set, the form shows the error message instead of pretending the sign-up worked.

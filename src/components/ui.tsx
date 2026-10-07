@@ -104,7 +104,7 @@ type ButtonVariant = "primary" | "ghost" | "dark" | "light";
 const variantClass: Record<ButtonVariant, string> = {
   primary:
     "bg-blue text-white shadow-[0_10px_40px_-10px_rgba(0,150,255,0.8)] hover:shadow-[0_16px_50px_-8px_rgba(0,150,255,0.95)]",
-  ghost: "border border-white/20 text-cream backdrop-blur-md hover:border-white/50 hover:bg-white/5",
+  ghost: "border border-white/20 bg-ink/40 text-cream hover:border-white/50 hover:bg-white/5",
   dark: "bg-ink text-cream hover:bg-ink-2",
   light: "bg-cream text-ink hover:bg-white",
 };

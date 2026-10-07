@@ -4,6 +4,7 @@ import { useRef } from "react";
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -38,9 +39,11 @@ export function VelocityMarquee({
   const factor = useTransform(smooth, [-1000, 0, 1000], [-4, 0, 4], { clamp: false });
   const x = useTransform(base, (v) => `${wrap(-25, 0, v)}%`);
   const dir = useRef(1);
+  const box = useRef<HTMLDivElement>(null);
+  const visible = useInView(box);
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || !visible) return;
     let move = dir.current * baseVelocity * (delta / 1000);
     const f = factor.get();
     if (f < 0) dir.current = -1;
@@ -63,7 +66,7 @@ export function VelocityMarquee({
   );
 
   return (
-    <div className={`overflow-hidden ${className}`} aria-label={words.join(", ")}>
+    <div ref={box} className={`overflow-hidden ${className}`} aria-label={words.join(", ")}>
       <motion.div className="flex w-max whitespace-nowrap" style={{ x }} aria-hidden>
         {row}
         {row}

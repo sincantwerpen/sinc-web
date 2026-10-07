@@ -21,8 +21,8 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden pb-16 pt-36 sm:pb-24 sm:pt-44">
       <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute -right-[10%] -top-[20%] size-[60vw] max-w-[900px] rounded-full bg-blue/25 blur-[150px]" />
-        <div className="absolute -left-[10%] top-[50%] size-[35vw] rounded-full bg-blue-deep/20 blur-[140px]" />
+        <div className="absolute -right-[10%] -top-[20%] size-[60vw] max-w-[900px] glow text-blue/25" />
+        <div className="absolute -left-[10%] top-[50%] size-[35vw] glow text-blue-deep/20" />
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_70%_60%_at_30%_30%,black,transparent)]" />
       </div>
 

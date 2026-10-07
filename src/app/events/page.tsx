@@ -17,7 +17,7 @@ export default function EventsPage() {
     <main>
       <section className="relative isolate overflow-hidden pt-36 sm:pt-44">
         <div aria-hidden className="absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-[30%] size-[80vw] max-w-[1200px] -translate-x-1/2 rounded-full bg-blue/20 blur-[160px]" />
+          <div className="absolute left-1/2 top-[30%] size-[80vw] max-w-[1200px] -translate-x-1/2 glow text-blue/20" />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,black,transparent)]" />
         </div>
 

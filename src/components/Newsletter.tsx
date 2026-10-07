@@ -32,8 +32,8 @@ export function Newsletter() {
 
   return (
     <div className="relative overflow-hidden rounded-[32px] bg-blue p-8 text-white sm:p-12 lg:p-16">
-      <div aria-hidden className="absolute -right-24 -top-24 size-[420px] rounded-full bg-white/15 blur-[80px]" />
-      <div aria-hidden className="absolute -bottom-32 left-1/3 size-[360px] rounded-full bg-blue-deep blur-[90px]" />
+      <div aria-hidden className="absolute -right-24 -top-24 size-[420px] glow text-white/15" />
+      <div aria-hidden className="absolute -bottom-32 left-1/3 size-[360px] glow text-blue-deep" />
       <div className="relative grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
         <div className="flex flex-col gap-4">
           <h2 className="text-display text-[clamp(40px,5.4vw,80px)]">{newsletter.title}</h2>
@@ -49,6 +49,8 @@ export function Newsletter() {
             <label className="sr-only" htmlFor="nl-last">{newsletter.fields.lastName}</label>
             <input id="nl-last" name="lastName" required autoComplete="family-name" placeholder={newsletter.fields.lastName} className={`${field} border-white/30 bg-white/10 placeholder:text-white/70`} />
           </div>
+          {/* honeypot against spam bots */}
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
           <button
             type="submit"
             disabled={status === "loading"}

@@ -18,7 +18,7 @@ function ComingSoon({ title, text, soon, big = false }: { title: string; text?: 
           big ? "bg-gradient-to-br from-ink-2 to-[#0d1a2e] ring-1 ring-white/10" : "bg-yellow text-ink"
         }`}
       >
-        {big && <div aria-hidden className="absolute -right-24 -top-24 size-[400px] rounded-full bg-blue/25 blur-[110px]" />}
+        {big && <div aria-hidden className="absolute -right-24 -top-24 size-[400px] glow text-blue/25" />}
         <div className="relative flex flex-col gap-4">
           <h2 className={`text-display ${big ? "text-[clamp(36px,4.6vw,68px)]" : "text-[clamp(28px,3vw,44px)]"}`}>{title}</h2>
           {text && <p className="max-w-[520px] text-lg leading-[1.6] text-cream/70">{text}</p>}

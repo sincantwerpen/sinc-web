@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -43,9 +44,11 @@ export function PhotoRing({ photos }: { photos: string[] }) {
 
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
+  const box = useRef<HTMLDivElement>(null);
+  const visible = useInView(box);
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || !visible) return;
     const dt = delta / 1000;
     if (!drag.current) {
       const fromScroll = Math.max(-60, Math.min(60, scrollVelocity.get() * 0.04));
@@ -75,7 +78,8 @@ export function PhotoRing({ photos }: { photos: string[] }) {
 
   return (
     <motion.div
-      className="relative mx-auto flex w-full cursor-grab touch-pan-y select-none items-center justify-center overflow-hidden active:cursor-grabbing [mask-image:linear-gradient(90deg,transparent,black_14%,black_86%,transparent)]"
+      ref={box}
+      className="relative mx-auto flex w-full cursor-grab touch-pan-y select-none items-center justify-center overflow-hidden active:cursor-grabbing"
       style={{ height: size.h + 120, perspective: 1500 }}
       onPointerDown={onDown}
       onPointerMove={onMove}
@@ -86,6 +90,8 @@ export function PhotoRing({ photos }: { photos: string[] }) {
       transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
       aria-hidden
     >
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[16%] bg-gradient-to-r from-ink to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[16%] bg-gradient-to-l from-ink to-transparent" />
       <div
         className="relative"
         style={{ width: size.w, height: size.h, transformStyle: "preserve-3d", transform: `translateZ(${-size.r}px)` }}
@@ -97,7 +103,7 @@ export function PhotoRing({ photos }: { photos: string[] }) {
             className="absolute inset-0 overflow-hidden rounded-[26px] bg-ink-2 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] ring-1 ring-white/10 [backface-visibility:hidden]"
             style={{ transform: `rotateY(${i * step}deg) translateZ(${size.r}px)` }}
           >
-            <Image src={src} alt="" fill sizes="240px" className="pointer-events-none object-cover" draggable={false} />
+            <Image src={src} alt="" fill sizes="240px" loading="eager" className="pointer-events-none object-cover" draggable={false} />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
           </div>
         ))}

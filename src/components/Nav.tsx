@@ -107,7 +107,7 @@ export function Nav() {
             exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
             transition={{ duration: 0.8, ease: EASE }}
           >
-            <div aria-hidden className="absolute -right-32 -top-32 size-[420px] rounded-full bg-blue/40 blur-[110px]" />
+            <div aria-hidden className="absolute -right-32 -top-32 size-[420px] glow text-blue/40" />
             <ul className="relative flex flex-col gap-1">
               {[...nav.links, nav.cta].map((l, i) => (
                 <li key={l.href} className="overflow-hidden">

@@ -9,8 +9,10 @@ export function PhotoColumns({ photos }: { photos: string[] }) {
   return (
     <div
       aria-hidden
-      className="group relative grid h-[460px] grid-cols-3 gap-3 overflow-hidden [mask-image:linear-gradient(transparent,black_14%,black_86%,transparent)] sm:h-[620px] sm:gap-4"
+      className="group relative grid h-[460px] grid-cols-3 gap-3 overflow-hidden sm:h-[620px] sm:gap-4"
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[14%] bg-gradient-to-b from-ink to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[14%] bg-gradient-to-t from-ink to-transparent" />
       {cols.map((col, c) => {
         const items = [...col, ...col, ...col, ...col];
         return (
@@ -22,7 +24,7 @@ export function PhotoColumns({ photos }: { photos: string[] }) {
             >
               {items.map((src, i) => (
                 <div key={i} className="relative aspect-[9/16] overflow-hidden rounded-[20px] bg-ink-2 ring-1 ring-white/10">
-                  <Image src={src} alt="" fill sizes="200px" className="object-cover" />
+                  <Image src={src} alt="" fill sizes="200px" loading="eager" className="object-cover" />
                 </div>
               ))}
             </div>
@@ -37,7 +39,9 @@ export function PhotoColumns({ photos }: { photos: string[] }) {
 export function PhotoStrip({ photos }: { photos: string[] }) {
   const items = [...photos, ...photos];
   return (
-    <div aria-hidden className="group flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
+    <div aria-hidden className="group relative flex overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[12%] bg-gradient-to-r from-ink to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[12%] bg-gradient-to-l from-ink to-transparent" />
       {[0, 1].map((copy) => (
         <div key={copy} className="flex shrink-0 animate-marquee gap-4 pr-4 [--marquee-duration:50s] group-hover:[animation-play-state:paused]">
           {items.map((src, i) => (
@@ -45,7 +49,7 @@ export function PhotoStrip({ photos }: { photos: string[] }) {
               key={i}
               className={`relative aspect-[9/14] w-44 overflow-hidden rounded-[22px] bg-ink-2 ring-1 ring-white/10 sm:w-56 ${i % 2 ? "mt-10" : ""}`}
             >
-              <Image src={src} alt="" fill sizes="224px" className="object-cover" />
+              <Image src={src} alt="" fill sizes="224px" loading="eager" className="object-cover" />
             </div>
           ))}
         </div>

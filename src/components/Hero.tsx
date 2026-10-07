@@ -20,47 +20,55 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 
 /**
- * "Students for / Innovation & / Cooperation" — on scroll the blue S, I, N and C glide
- * together into SINC on the third line and stop dead still. Positions are measured from the
- * rendered letters, so it lines up at every screen size and with any fallback font.
+ * "Students for / Innovation & / Cooperation" with S, I, & and C in blue. On scroll the "&" turns
+ * into an N, and S, I, N and C glide together into SINC on the third line, then stop dead still.
+ * Positions are measured from the rendered letters, so it lines up at every screen size and font.
  */
 function MorphTitle({ progress }: { progress: MotionValue<number> }) {
   const lines = useRef<(HTMLSpanElement | null)[]>([]);
   const sRef = useRef<HTMLSpanElement>(null);
-  const capRef = useRef<HTMLSpanElement>(null);
-  const yS = useMotionValue(0);
-  const yIn = useMotionValue(0);
-  const xIn = useMotionValue(0);
-  const xC = useMotionValue(0);
+  const iRef = useRef<HTMLSpanElement>(null);
+  const ampRef = useRef<HTMLSpanElement>(null);
+  const nRef = useRef<HTMLSpanElement>(null);
+  const yS = useMotionValue(0); // S: down two lines
+  const yRow2 = useMotionValue(0); // I and &: down one line
+  const xI = useMotionValue(0); // I: right after S
+  const xAmp = useMotionValue(0); // & → N: from its own spot to right after "SI"
+  const xC = useMotionValue(0); // C: right after "SIN"
 
   useLayoutEffect(() => {
     const measure = () => {
       const [l1, l2, l3] = lines.current;
-      if (!l1 || !l2 || !l3 || !sRef.current || !capRef.current) return;
-      const wS = sRef.current.getBoundingClientRect().width;
-      const wIN = capRef.current.getBoundingClientRect().width;
+      if (!l1 || !l2 || !l3 || !sRef.current || !iRef.current || !ampRef.current || !nRef.current) return;
+      // offsetWidth ignores transforms (the N starts rotated), so these are the real letter widths.
+      const wS = sRef.current.offsetWidth;
+      const wI = iRef.current.offsetWidth;
+      const wN = nRef.current.offsetWidth;
       yS.set(l3.offsetTop - l1.offsetTop);
-      yIn.set(l3.offsetTop - l2.offsetTop);
-      xIn.set(wS);
-      xC.set(wS + wIN);
+      yRow2.set(l3.offsetTop - l2.offsetTop);
+      xI.set(wS);
+      xAmp.set(wS + wI - ampRef.current.offsetLeft);
+      xC.set(wS + wI + wN);
     };
     measure();
     document.fonts?.ready.then(measure);
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [yS, yIn, xIn, xC]);
+  }, [yS, yRow2, xI, xAmp, xC]);
 
   const t = useTransform(progress, (v) => easeOutCubic(clamp01(v)));
   const times = ([v, d]: number[]) => v * d;
   const sY = useTransform([t, yS], times);
-  const inX = useTransform([t, xIn], times);
-  const inY = useTransform([t, yIn], times);
+  const iX = useTransform([t, xI], times);
+  const rowY = useTransform([t, yRow2], times);
+  const ampX = useTransform([t, xAmp], times);
   const cX = useTransform([t, xC], times);
-  const lowerOpacity = useTransform(t, [0, 0.35], [1, 0]);
-  const upperOpacity = useTransform(t, [0.05, 0.4], [0, 1]);
+  const ampOpacity = useTransform(t, [0.1, 0.45], [1, 0]);
+  const nOpacity = useTransform(t, [0.15, 0.5], [0, 1]);
+  const ampRotate = useTransform(t, [0.1, 0.5], [0, -90]);
+  const nRotate = useTransform(t, [0.15, 0.5], [90, 0]);
   const restOpacity = useTransform(t, [0, 0.4], [1, 0]);
   const restX = useTransform(t, [0, 1], [0, 40]);
-  const restBlur = useTransform(t, [0, 0.4], ["blur(0px)", "blur(8px)"]);
 
   const rest = "inline-block whitespace-pre text-cream";
   const keeper = "inline-block text-blue will-change-transform";
@@ -78,18 +86,21 @@ function MorphTitle({ progress }: { progress: MotionValue<number> }) {
     >
       <motion.span ref={(el) => { lines.current[0] = el; }} className="flex" aria-hidden {...lineIn(0)}>
         <motion.span ref={sRef} className={keeper} style={{ y: sY }}>S</motion.span>
-        <motion.span className={rest} style={{ opacity: restOpacity, x: restX, filter: restBlur }}>tudents for</motion.span>
+        <motion.span className={rest} style={{ opacity: restOpacity, x: restX }}>tudents for</motion.span>
       </motion.span>
-      <motion.span ref={(el) => { lines.current[1] = el; }} className="flex" aria-hidden {...lineIn(1)}>
-        <motion.span className={`${keeper} relative`} style={{ x: inX, y: inY }}>
-          <motion.span className="inline-block" style={{ opacity: lowerOpacity }}>In</motion.span>
-          <motion.span ref={capRef} className="absolute left-0 top-0" style={{ opacity: upperOpacity }}>IN</motion.span>
+      <motion.span ref={(el) => { lines.current[1] = el; }} className="relative flex" aria-hidden {...lineIn(1)}>
+        <motion.span ref={iRef} className={keeper} style={{ x: iX, y: rowY }}>I</motion.span>
+        <motion.span className={rest} style={{ opacity: restOpacity, x: restX }}>nnovation </motion.span>
+        <motion.span ref={ampRef} className={`${keeper} relative`} style={{ x: ampX, y: rowY }}>
+          <motion.span className="inline-block" style={{ opacity: ampOpacity, rotate: ampRotate }}>&amp;</motion.span>
+          <motion.span ref={nRef} className="absolute left-0 top-0 inline-block" style={{ opacity: nOpacity, rotate: nRotate }}>
+            N
+          </motion.span>
         </motion.span>
-        <motion.span className={rest} style={{ opacity: restOpacity, x: restX, filter: restBlur }}>novation &amp;</motion.span>
       </motion.span>
       <motion.span ref={(el) => { lines.current[2] = el; }} className="flex" aria-hidden {...lineIn(2)}>
         <motion.span className={keeper} style={{ x: cX }}>C</motion.span>
-        <motion.span className={rest} style={{ opacity: restOpacity, x: restX, filter: restBlur }}>ooperation</motion.span>
+        <motion.span className={rest} style={{ opacity: restOpacity, x: restX }}>ooperation</motion.span>
       </motion.span>
     </h1>
   );
@@ -134,10 +145,8 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
   ];
 
   return (
-    <motion.div
-      className="relative grid grid-cols-3 gap-3 [perspective:1400px] sm:gap-4"
-      style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }}
-    >
+    <div className="[perspective:1400px]">
+    <motion.div className="relative grid grid-cols-3 gap-3 sm:gap-4" style={{ rotateX: srx, rotateY: sry }}>
       {hero.photos.map((p, i) => (
         <motion.div key={p.src} style={{ y: reduce || !wide ? 0 : ys[i] }} className={offsets[i]}>
           <motion.div
@@ -152,7 +161,7 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
               alt={p.alt}
               fill
               sizes="(min-width: 1024px) 14vw, 30vw"
-              priority={i < 3}
+              priority
               className="object-cover object-[50%_30%] transition-transform duration-700 ease-out-expo group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-blue/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -166,7 +175,6 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
         initial={{ scale: 0, rotate: -90 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ duration: 1.1, ease: EASE, delay: 1.1 }}
-        style={{ z: 60 }}
       >
         <svg viewBox="0 0 100 100" className="absolute inset-0 size-full animate-spin-slow" aria-hidden>
           <defs>
@@ -181,27 +189,32 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
         <span className="text-3xl" aria-hidden>🚀</span>
       </motion.div>
     </motion.div>
+    </div>
   );
 }
 
-/** Soft blue light that trails the cursor across the hero. */
-function Spotlight() {
+/** Soft blue light that trails the cursor, only inside the hero. */
+function Spotlight({ area }: { area: React.RefObject<HTMLElement | null> }) {
   const x = useMotionValue(-1000);
   const y = useMotionValue(-1000);
   const sx = useSpring(x, { stiffness: 60, damping: 20 });
   const sy = useSpring(y, { stiffness: 60, damping: 20 });
   useEffect(() => {
+    const el = area.current;
+    if (!el) return;
     const onMove = (e: PointerEvent) => {
-      x.set(e.clientX - 300);
-      y.set(e.clientY - 300);
+      if (e.pointerType !== "mouse") return;
+      const r = el.getBoundingClientRect();
+      x.set(e.clientX - r.left - 300);
+      y.set(e.clientY - r.top - 300);
     };
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [x, y]);
+    el.addEventListener("pointermove", onMove);
+    return () => el.removeEventListener("pointermove", onMove);
+  }, [area, x, y]);
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 size-[600px] rounded-full bg-[radial-gradient(circle,rgba(0,150,255,0.18),transparent_65%)]"
+      className="pointer-events-none absolute left-0 top-0 -z-10 size-[600px] glow text-blue/20"
       style={{ x: sx, y: sy }}
     />
   );
@@ -212,30 +225,54 @@ export function Hero() {
   const { scrollY } = useScroll();
   const morph = useMotionValue(0);
 
+  // The first stretch of scrolling is "fake": the hero stays pinned while only the letters move.
+  // The pin lasts for the whole morph plus a short hold, so SINC stays in view before the page moves on.
+  const pinDistance = useMotionValue(0);
+  const [spacer, setSpacer] = useState(0);
   useEffect(() => {
-    if (reduce) return;
-    return scrollY.on("change", (v) => morph.set(v / Math.max(260, window.innerHeight * 0.5)));
-  }, [scrollY, morph, reduce]);
-
-  const glowY = useTransform(scrollY, [0, 800], [0, 200]);
+    const update = () => {
+      const morphRange = Math.max(260, window.innerHeight * 0.5);
+      const pin = reduce ? 0 : Math.round(morphRange * 1.35);
+      pinDistance.set(pin);
+      setSpacer(pin);
+      morph.set(reduce ? 0 : scrollY.get() / morphRange);
+    };
+    update();
+    window.addEventListener("resize", update);
+    const unsub = scrollY.on("change", (v) => {
+      if (!reduce) morph.set(v / Math.max(260, window.innerHeight * 0.5));
+    });
+    return () => {
+      window.removeEventListener("resize", update);
+      unsub();
+    };
+  }, [scrollY, morph, pinDistance, reduce]);
+  // Scroll distance after the pin is released: background and photos only drift from then on.
+  const afterPin = useTransform([scrollY, pinDistance], ([v, p]: number[]) => Math.max(0, v - p));
+  const glowY = useTransform(afterPin, [0, 800], [0, 200]);
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section className="relative isolate overflow-hidden pb-24 pt-36 sm:pt-44 lg:min-h-[100svh] lg:pb-32">
+    // overflow-clip (not hidden) so the sticky pin below keeps working; the browser itself holds the
+    // hero in place, so it never lags behind the scroll.
+    <section ref={sectionRef} className="relative isolate overflow-clip">
+    <div className="sticky top-0 pb-24 pt-36 sm:pt-44 lg:min-h-[100svh] lg:pb-32">
       {/* Background: drifting aurora, masked grid, cursor light */}
       <div aria-hidden className="absolute inset-0 -z-10">
         <motion.div style={{ y: glowY }} className="absolute inset-0">
-          <div className="absolute -right-[20%] -top-[30%] size-[70vw] max-w-[1100px] animate-[spin_40s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg,#0096ff,#0060d6,#0b0e14,#0096ff)] opacity-40 blur-[120px]" />
-          <div className="absolute -left-[15%] top-[40%] size-[45vw] rounded-full bg-blue/25 blur-[140px]" />
+          <div className="absolute -right-[25%] -top-[40%] size-[90vw] max-w-[1400px] glow text-blue/35" />
+          <div className="absolute -right-[5%] top-[5%] size-[50vw] max-w-[800px] glow text-blue-deep/40" />
+          <div className="absolute -left-[15%] top-[40%] size-[45vw] glow text-blue/25" />
         </motion.div>
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,black,transparent)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink" />
       </div>
-      {!reduce && <Spotlight />}
+      {!reduce && <Spotlight area={sectionRef} />}
 
       <div className="container-x grid items-start gap-16 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
         <div className="flex flex-col items-start gap-8">
           <motion.span
-            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[12px] font-bold text-cream/90 backdrop-blur-md sm:text-[13px]"
+            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-[12px] font-bold text-cream/90 sm:text-[13px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
@@ -268,9 +305,12 @@ export function Hero() {
         </div>
 
         <div className="lg:pt-6">
-          <PhotoStack scroll={scrollY} />
+          <PhotoStack scroll={afterPin} />
         </div>
       </div>
+    </div>
+    {/* how long the hero stays pinned */}
+    <div aria-hidden style={{ height: spacer }} />
     </section>
   );
 }

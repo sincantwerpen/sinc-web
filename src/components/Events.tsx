@@ -52,7 +52,7 @@ export function EmptyEventsCard({ showCta = true }: { showCta?: boolean }) {
   return (
     <Reveal>
       <div className="relative grid items-center gap-10 overflow-hidden rounded-[32px] bg-gradient-to-br from-ink-2 to-[#0d1a2e] p-8 ring-1 ring-white/10 sm:p-14 md:grid-cols-[1fr_auto]">
-        <div className="absolute -right-40 -top-40 size-[500px] rounded-full bg-blue/20 blur-[120px]" aria-hidden />
+        <div className="absolute -right-40 -top-40 size-[500px] glow text-blue/20" aria-hidden />
         <div className="relative flex max-w-[560px] flex-col gap-8">
           <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/8 px-4 py-2 text-[13px] font-bold text-cream/80">
             <span className="size-2 rounded-full bg-yellow" />

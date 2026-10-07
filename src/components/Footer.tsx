@@ -7,7 +7,9 @@ import { Button, Reveal } from "./ui";
 function PartnerRow({ reverse = false }: { reverse?: boolean }) {
   const logos = reverse ? [...partners.logos].reverse() : partners.logos;
   return (
-    <div className="group flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
+    <div className="group relative flex overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[12%] bg-gradient-to-r from-ink to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[12%] bg-gradient-to-l from-ink to-transparent" />
       {[0, 1].map((copy) => (
         <ul
           key={copy}
@@ -25,7 +27,7 @@ function PartnerRow({ reverse = false }: { reverse?: boolean }) {
                 tabIndex={copy === 1 ? -1 : undefined}
                 className="flex h-28 w-52 items-center justify-center rounded-3xl bg-white/[0.04] px-8 ring-1 ring-white/8 transition-all duration-300 hover:-translate-y-1 hover:bg-blue/15 hover:ring-blue sm:w-60"
               >
-                <Image src={l.src} alt={l.name} width={200} height={80} className="max-h-12 w-auto object-contain" />
+                <Image src={l.src} alt={l.name} width={200} height={80} loading="eager" className="max-h-12 w-auto object-contain" />
               </a>
             </li>
           ))}

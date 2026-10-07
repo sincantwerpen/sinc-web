@@ -56,7 +56,7 @@ export function NetworkCards() {
                   className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
-                <div className="absolute inset-0 bg-blue opacity-0 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-40" />
+                <div className="absolute inset-0 bg-blue/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="relative flex flex-col gap-3 p-7">
                   <h3 className="text-display text-[34px]">{c.title}</h3>
                   <p className="max-h-0 overflow-hidden leading-[1.55] text-cream/80 opacity-0 transition-all duration-700 ease-out-expo group-hover:max-h-40 group-hover:opacity-100 max-md:max-h-40 max-md:opacity-100">
@@ -126,7 +126,7 @@ export function CtaBand({ title, cta }: { title: string; cta: { label: string; h
       <div className="container-x">
         <Reveal>
           <div className="relative flex flex-col items-start justify-between gap-8 overflow-hidden rounded-[32px] bg-blue p-8 text-white sm:p-14 md:flex-row md:items-end">
-            <div aria-hidden className="absolute -right-20 -top-24 size-[380px] rounded-full bg-white/15 blur-[80px]" />
+            <div aria-hidden className="absolute -right-20 -top-24 size-[380px] glow text-white/15" />
             <h2 className="text-display relative max-w-[760px] text-[clamp(34px,4.6vw,68px)]">{title}</h2>
             <Button href={cta.href} variant="dark" className="relative shrink-0">
               {cta.label}
