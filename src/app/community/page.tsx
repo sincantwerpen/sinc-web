@@ -3,7 +3,7 @@ import { communityPage } from "@/content/pages";
 import { PageHero } from "@/components/page/PageHero";
 import { PhotoColumns } from "@/components/page/PhotoColumns";
 import { LinkedInBlock, NetworkCards } from "@/components/page/Sections";
-import { Reveal } from "@/components/ui";
+import { Reveal, RevealText } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Community | SINC Antwerpen",
@@ -39,6 +39,21 @@ function ComingSoon({ title, text, soon, big = false }: { title: string; text?: 
   );
 }
 
+/** Studying and starting a business in Antwerp (kept from the former Ecosysteem page). */
+function Antwerp() {
+  const { antwerp } = communityPage;
+  return (
+    <section className="py-24 sm:py-32" aria-labelledby="antwerp-title">
+      <div className="container-x grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
+        <RevealText id="antwerp-title" text={antwerp.title} className="text-display text-[clamp(36px,4.8vw,72px)]" />
+        <Reveal delay={0.1}>
+          <p className="text-lg leading-[1.7] text-cream/75">{antwerp.text}</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 export default function CommunityPage() {
   const { spotlight, featureMe } = communityPage;
   return (
@@ -51,6 +66,7 @@ export default function CommunityPage() {
         visual={<PhotoColumns photos={communityPage.heroPhotos} />}
       />
       <NetworkCards />
+      <Antwerp />
       <LinkedInBlock />
       <section className="py-24 sm:py-32">
         <div className="container-x grid gap-5 lg:grid-cols-[1.5fr_1fr]">

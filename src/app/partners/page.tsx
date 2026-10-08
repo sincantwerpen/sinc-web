@@ -63,7 +63,7 @@ export default function PartnersPage() {
               <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-14">
                 <div className="flex flex-col gap-6">
                   <Logo p={moore} tall />
-                  <h2 className="text-display text-[clamp(40px,5vw,72px)]">{moore.name}</h2>
+                  <h2 className="sr-only">{moore.name}</h2>
                   <PartnerLinks p={moore} />
                 </div>
                 <p className="text-[17px] leading-[1.75] text-cream/75">{moore.text}</p>
@@ -76,10 +76,8 @@ export default function PartnersPage() {
                 <SpotlightCard>
                   <div className="flex flex-col gap-6 p-7 sm:p-8">
                     <Logo p={p} tall />
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                      <h2 className="text-display text-[32px]">{p.name}</h2>
-                      <PartnerLinks p={p} />
-                    </div>
+                    <h2 className="sr-only">{p.name}</h2>
+                    <PartnerLinks p={p} />
                   </div>
                 </SpotlightCard>
               </Reveal>
@@ -95,7 +93,7 @@ export default function PartnersPage() {
               <SpotlightCard className="h-full">
                 <div className="flex h-full flex-col gap-6 p-7 sm:p-8">
                   <Logo p={p} />
-                  <h2 className="text-display text-[32px]">{p.name}</h2>
+                  <h2 className="sr-only">{p.name}</h2>
                   <p className="flex-1 leading-[1.7] text-cream/75">{p.text}</p>
                   <PartnerLinks p={p} />
                 </div>
@@ -115,13 +113,15 @@ export default function PartnersPage() {
                     href={p.links[0].href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex aspect-[4/3] flex-col items-center justify-center gap-4 rounded-[24px] bg-white/[0.04] p-6 ring-1 ring-white/8 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:bg-blue/15 hover:ring-blue"
+                    className="group flex aspect-[4/3] items-center justify-center rounded-[24px] bg-white/[0.04] p-6 ring-1 ring-white/8 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:bg-blue/15 hover:ring-blue"
                   >
-                    <Image src={p.logo} alt="" width={200} height={80} className="max-h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-110" />
-                    <span className="flex items-center gap-1.5 text-[14px] font-bold text-cream/60 transition-colors group-hover:text-white">
-                      {p.name}
-                      <span aria-hidden className="opacity-0 transition-opacity group-hover:opacity-100">↗</span>
-                    </span>
+                    <Image
+                      src={p.logo}
+                      alt={p.name}
+                      width={200}
+                      height={80}
+                      className="max-h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
+                    />
                   </a>
                 </Reveal>
               </li>

@@ -24,7 +24,14 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
  * into an N, and S, I, N and C glide together into SINC on the third line, then stop dead still.
  * Positions are measured from the rendered letters, so it lines up at every screen size and font.
  */
-function MorphTitle({ progress }: { progress: MotionValue<number> }) {
+function MorphTitle({
+  progress,
+  line3Top,
+}: {
+  progress: MotionValue<number>;
+  /** Receives the page position (px from the top of the document) of the third line, where SINC lands. */
+  line3Top: MotionValue<number>;
+}) {
   const lines = useRef<(HTMLSpanElement | null)[]>([]);
   const sRef = useRef<HTMLSpanElement>(null);
   const iRef = useRef<HTMLSpanElement>(null);
@@ -49,12 +56,15 @@ function MorphTitle({ progress }: { progress: MotionValue<number> }) {
       xI.set(wS);
       xAmp.set(wS + wI - ampRef.current.offsetLeft);
       xC.set(wS + wI + wN);
+      // The h1 itself is never transformed and is the lines' offsetParent, so this is exact.
+      const h1 = l3.offsetParent as HTMLElement | null;
+      if (h1) line3Top.set(h1.getBoundingClientRect().top + window.scrollY + l3.offsetTop);
     };
     measure();
     document.fonts?.ready.then(measure);
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [yS, yRow2, xI, xAmp, xC]);
+  }, [yS, yRow2, xI, xAmp, xC, line3Top]);
 
   const t = useTransform(progress, (v) => easeOutCubic(clamp01(v)));
   const times = ([v, d]: number[]) => v * d;
@@ -82,7 +92,7 @@ function MorphTitle({ progress }: { progress: MotionValue<number> }) {
   return (
     <h1
       aria-label={hero.title}
-      className="text-display relative flex flex-col text-[clamp(50px,8.2vw,124px)] leading-[0.92]"
+      className="text-display relative flex flex-col text-[clamp(44px,13.4vw,64px)] sm:text-[clamp(50px,8.2vw,124px)] leading-[0.92]"
     >
       <motion.span ref={(el) => { lines.current[0] = el; }} className="flex" aria-hidden {...lineIn(0)}>
         <motion.span ref={sRef} className={keeper} style={{ y: sY }}>S</motion.span>
@@ -176,7 +186,7 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
         animate={{ scale: 1, rotate: 0 }}
         transition={{ duration: 1.1, ease: EASE, delay: 1.1 }}
       >
-        <svg viewBox="0 0 100 100" className="absolute inset-0 size-full animate-spin-slow" aria-hidden>
+        <svg viewBox="0 0 100 100" className="absolute inset-0 size-full" aria-hidden>
           <defs>
             <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
           </defs>
@@ -224,39 +234,33 @@ export function Hero() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   const morph = useMotionValue(0);
+  const line3Top = useMotionValue(0);
 
-  // The first stretch of scrolling is "fake": the hero stays pinned while only the letters move.
-  // The pin lasts for the whole morph plus a short hold, so SINC stays in view before the page moves on.
-  const pinDistance = useMotionValue(0);
-  const [spacer, setSpacer] = useState(0);
+  // The letters move with the scroll and must be done while SINC is still clearly on screen:
+  // SINC lands on line 3, so the morph is complete by the time that line has risen to 30% of the
+  // viewport height (well below the top bar). Kept between 160px and 420px of scrolling.
   useEffect(() => {
-    const update = () => {
-      const morphRange = Math.max(260, window.innerHeight * 0.5);
-      const pin = reduce ? 0 : Math.round(morphRange * 1.35);
-      pinDistance.set(pin);
-      setSpacer(pin);
-      morph.set(reduce ? 0 : scrollY.get() / morphRange);
-    };
+    if (reduce) return;
+    const range = () =>
+      Math.min(420, Math.max(160, line3Top.get() - window.innerHeight * 0.3));
+    const update = () => morph.set(scrollY.get() / range());
     update();
+    const a = scrollY.on("change", update);
+    const b = line3Top.on("change", update);
     window.addEventListener("resize", update);
-    const unsub = scrollY.on("change", (v) => {
-      if (!reduce) morph.set(v / Math.max(260, window.innerHeight * 0.5));
-    });
     return () => {
+      a();
+      b();
       window.removeEventListener("resize", update);
-      unsub();
     };
-  }, [scrollY, morph, pinDistance, reduce]);
-  // Scroll distance after the pin is released: background and photos only drift from then on.
-  const afterPin = useTransform([scrollY, pinDistance], ([v, p]: number[]) => Math.max(0, v - p));
-  const glowY = useTransform(afterPin, [0, 800], [0, 200]);
+  }, [scrollY, morph, line3Top, reduce]);
+
+  const glowY = useTransform(scrollY, [0, 800], [0, 200]);
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    // overflow-clip (not hidden) so the sticky pin below keeps working; the browser itself holds the
-    // hero in place, so it never lags behind the scroll.
     <section ref={sectionRef} className="relative isolate overflow-clip">
-    <div className="sticky top-0 pb-24 pt-36 sm:pt-44 lg:min-h-[100svh] lg:pb-32">
+    <div className="pb-24 pt-36 sm:pt-44 lg:min-h-[100svh] lg:pb-32">
       {/* Background: drifting aurora, masked grid, cursor light */}
       <div aria-hidden className="absolute inset-0 -z-10">
         <motion.div style={{ y: glowY }} className="absolute inset-0">
@@ -280,7 +284,7 @@ export function Hero() {
             {hero.eyebrow}
           </motion.span>
 
-          <MorphTitle progress={morph} />
+          <MorphTitle progress={morph} line3Top={line3Top} />
 
           <motion.p
             className="max-w-[560px] text-[17px] leading-[1.6] text-cream/70 sm:text-lg"
@@ -305,12 +309,10 @@ export function Hero() {
         </div>
 
         <div className="lg:pt-6">
-          <PhotoStack scroll={afterPin} />
+          <PhotoStack scroll={scrollY} />
         </div>
       </div>
     </div>
-    {/* how long the hero stays pinned */}
-    <div aria-hidden style={{ height: spacer }} />
     </section>
   );
 }

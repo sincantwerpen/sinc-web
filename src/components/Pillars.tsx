@@ -38,21 +38,24 @@ function PillarCard({
   const imgScale = useTransform(progress, [i / total, (i + 1) / total], [1.15, 1]);
 
   return (
-    <div className="sticky h-[78svh] min-h-[520px]" style={{ top: `calc(96px + ${i * 26}px)` }}>
+    <div
+      className="sticky top-[calc(84px+var(--i)*14px)] h-[78svh] min-h-[520px] md:top-[calc(96px+var(--i)*26px)]"
+      style={{ "--i": i } as React.CSSProperties}
+    >
       <motion.article
         style={{ scale, transformOrigin: "top center" }}
-        className={`grid h-[min(66svh,600px)] min-h-[480px] grid-rows-[1fr_auto] overflow-hidden rounded-[32px] md:grid-cols-[1.1fr_1fr] md:grid-rows-1 ${t.card}`}
+        className={`grid grid-rows-[auto_auto] overflow-hidden rounded-[28px] sm:rounded-[32px] md:h-[min(66svh,600px)] md:min-h-[480px] md:grid-cols-[1.1fr_1fr] md:grid-rows-1 ${t.card}`}
       >
-        <div className="relative flex flex-col justify-between gap-6 p-7 sm:p-10 lg:p-14">
-          <div className="relative flex flex-col gap-4">
-            <h3 className="text-display text-[clamp(44px,6vw,88px)]">{p.title}</h3>
-            <p className={`max-w-[440px] text-[17px] leading-[1.6] sm:text-lg ${t.body}`}>{p.text}</p>
+        <div className="relative flex min-h-[300px] flex-col justify-between gap-5 p-6 sm:gap-6 sm:p-10 md:min-h-0 lg:p-14">
+          <div className="relative flex flex-col gap-3 sm:gap-4">
+            <h3 className="text-display text-[clamp(40px,6vw,88px)]">{p.title}</h3>
+            <p className={`max-w-[440px] text-[16px] leading-[1.55] sm:text-lg sm:leading-[1.6] ${t.body}`}>{p.text}</p>
             {p.cta && (
               <a
                 href={p.cta.href}
                 target={p.cta.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
-                className="group mt-2 inline-flex w-fit items-center gap-2 font-bold underline decoration-2 underline-offset-[6px] transition-[text-underline-offset] hover:underline-offset-[9px]"
+                className="group mt-1 inline-flex w-fit items-center gap-2 py-2 font-bold underline decoration-2 underline-offset-[6px] transition-[text-underline-offset] hover:underline-offset-[9px]"
               >
                 {p.cta.label}
                 <span className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
@@ -69,7 +72,7 @@ function PillarCard({
             Pijler {p.n}
           </span>
         </div>
-        <div className="relative min-h-[200px] overflow-hidden md:m-3 md:rounded-[24px]">
+        <div className="relative h-[clamp(170px,26svh,240px)] overflow-hidden md:m-3 md:h-auto md:rounded-[24px]">
           <motion.div style={{ scale: imgScale }} className="absolute inset-0">
             <Image src={p.image} alt={p.title} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
           </motion.div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { footer, partners } from "@/content/site";
 import { Newsletter } from "./Newsletter";
 import { Button, Reveal } from "./ui";
+import { HideOn } from "./HideOn";
 
 function PartnerRow({ reverse = false }: { reverse?: boolean }) {
   const logos = reverse ? [...partners.logos].reverse() : partners.logos;
@@ -46,6 +47,8 @@ export function Footer() {
           <Newsletter />
         </Reveal>
 
+        {/* the partners teaser is pointless on the partners page itself */}
+        <HideOn path="/partners">
         <section className="flex flex-col gap-12" aria-labelledby="partners-title">
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
             <div className="flex max-w-[620px] flex-col gap-4">
@@ -59,12 +62,15 @@ export function Footer() {
             </Button>
           </div>
         </section>
+        </HideOn>
       </div>
 
-      <div className="mt-12 flex flex-col gap-3">
-        <PartnerRow />
-        <PartnerRow reverse />
-      </div>
+      <HideOn path="/partners">
+        <div className="mt-12 flex flex-col gap-3">
+          <PartnerRow />
+          <PartnerRow reverse />
+        </div>
+      </HideOn>
 
       <div className="container-x mt-24 sm:mt-32">
         <div className="grid gap-12 border-t border-white/10 pt-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
@@ -75,23 +81,23 @@ export function Footer() {
             <p className="max-w-[320px] leading-[1.6] text-cream/60">{footer.about}</p>
           </div>
 
-          <nav aria-label="Footer menu" className="flex flex-col gap-3">
+          <nav aria-label="Footer menu" className="flex flex-col gap-1 lg:gap-3">
             <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.16em] text-blue">{footer.menuTitle}</p>
             {footer.menu.map((m) => (
-              <Link key={m.href} href={m.href} className="w-fit text-cream/80 transition-colors hover:text-blue">
+              <Link key={m.href} href={m.href} className="w-fit py-2 text-cream/80 transition-colors hover:text-blue lg:py-0">
                 {m.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex flex-col gap-3 text-cream/80">
+          <div className="flex flex-col gap-1 text-cream/80 lg:gap-3">
             <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.16em] text-blue">{footer.orgTitle}</p>
-            <Link href={footer.privacy.href} className="w-fit transition-colors hover:text-blue">
+            <Link href={footer.privacy.href} className="w-fit py-2 transition-colors hover:text-blue lg:py-0">
               {footer.privacy.label}
             </Link>
             <p>{footer.address}</p>
             <p>{footer.vat}</p>
-            <a href={`mailto:${footer.email}`} className="w-fit transition-colors hover:text-blue">
+            <a href={`mailto:${footer.email}`} className="w-fit py-2 transition-colors hover:text-blue lg:py-0">
               {footer.email}
             </a>
           </div>
@@ -105,7 +111,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-white/12 px-4 py-2 text-[14px] font-bold text-cream/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue hover:bg-blue hover:text-white"
+                  className="rounded-full border border-white/12 px-4 py-2.5 text-[14px] lg:py-2 font-bold text-cream/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue hover:bg-blue hover:text-white"
                 >
                   {s.label}
                 </a>

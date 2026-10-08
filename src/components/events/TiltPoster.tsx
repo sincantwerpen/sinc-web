@@ -22,7 +22,7 @@ export function TiltPoster({ src, alt }: { src: string; alt: string }) {
   );
 
   const onMove = (e: React.PointerEvent) => {
-    if (reduce || !ref.current) return;
+    if (reduce || e.pointerType !== "mouse" || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     px.set((e.clientX - r.left) / r.width);
     py.set((e.clientY - r.top) / r.height);

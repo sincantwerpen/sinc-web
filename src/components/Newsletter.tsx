@@ -7,7 +7,7 @@ import { newsletter } from "@/content/site";
 type Status = "idle" | "loading" | "ok" | "error";
 
 const field =
-  "h-14 w-full rounded-full border border-white/15 bg-white/[0.06] px-6 text-[15px] text-cream placeholder:text-cream/45 outline-none transition-colors focus:border-blue focus:bg-white/[0.09]";
+  "h-14 w-full rounded-full border border-white/15 bg-white/[0.06] px-6 text-[16px] text-cream placeholder:text-cream/45 outline-none transition-colors focus:border-blue focus:bg-white/[0.09]";
 
 export function Newsletter() {
   const [status, setStatus] = useState<Status>("idle");

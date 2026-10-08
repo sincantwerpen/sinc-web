@@ -4,6 +4,7 @@ import { Pillars } from "@/components/Pillars";
 import { Events } from "@/components/Events";
 import { Community } from "@/components/Community";
 import { about } from "@/content/site";
+import { NextEventBadge } from "@/components/NextEventBadge";
 
 export default function Home() {
   const pillarWords = about.pillars.map((p) => p.title);
@@ -16,6 +17,7 @@ export default function Home() {
         <Pillars />
         <Events />
         <Community />
+        <NextEventBadge />
     </main>
   );
 }

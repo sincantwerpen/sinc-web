@@ -7,7 +7,7 @@ const pillarImg = (n: string) => `/images/pillars/${n}.webp`;
 
 /** Shared blocks used on both "Over SINC" and "Community". */
 export const network = {
-  title: "Een hecht netwerk van ondernemingsgezinden",
+  title: "Een hecht netwerk van ondernemings\u00ADgezinden",
   lead: "Haal je kracht uit je netwerk!",
   cards: [
     {
@@ -15,12 +15,6 @@ export const network = {
       text: "Ben jij benieuwd wie jou voorging? Antwerpen bevat al meer dan 1.000 student-ondernemers die we hier in de kijker zetten.",
       image: "/images/community/student-ondernemers.webp",
       cta: { label: "Ontdek", href: "/student-ondernemers" },
-    },
-    {
-      title: "Het ecosysteem",
-      text: "Het ecosysteem bevat verschillende organisaties die zich inzetten rond ondernemerschap in Antwerpen. Leer ze hier kennen!",
-      image: "/images/community/eco-systeem.webp",
-      cta: { label: "Ontdek", href: "/ecosysteem" },
     },
     {
       title: "Onze partners",
@@ -41,14 +35,16 @@ export const linkedinCommunity = {
 export const overSinc = {
   eyebrow: "Over SINC",
   title: "De studenten-organisatie voor entrepreneurial minded studenten",
-  lead: "Ons team van 18 gemotiveerde studenten werken het hele jaar samen om jullie te inspireren, informeren, connecteren en activeren rond ondernemerschap.",
+  lead: "Ons team van 19 gemotiveerde studenten werken het hele jaar samen om jullie te inspireren, informeren, connecteren en activeren rond ondernemerschap.",
   cta: { label: "Word jij deel van ons team?", href: "/contact" },
-  heroPhotos: ["enis", "furkan", "luka", "luca", "ilian", "emma"].map((n) => `/images/over/${n}.jpg`),
+  heroPhotos: ["julie-vandenryt", "ilian-costa", "safia-el-mamoun", "babatunde-agunloye", "frie-vermeersch"].map(
+    (n) => `/images/team-2026/${n}.jpg`,
+  ),
   team: {
-    title: "18 studenten ondernemen, voor meer ondernemer-schap in Antwerpen.",
+    title: "19 studenten ondernemen, voor meer ondernemer-schap in Antwerpen.",
     text: "Ons team bestaat uit een diverse groep studenten die zich een jaar lang inzetten voor ondernemerschap in Antwerpen en daarbuiten.",
     cta: { label: "Ontmoet het team", href: "/het-team" },
-    image: "/images/over/groepsfoto.jpg",
+    image: "/images/team-2026/groepsfoto.jpg",
   },
   statsTitle: "SINC in cijfers",
   stats: [
@@ -99,78 +95,17 @@ export const communityPage = {
     text: "Antwerpen bevat al meer dan 1.000 student-ondernemers. Benieuwd wie jou voorging?",
     soon: "Coming soon...",
   },
+  // Kept from the former Ecosysteem page.
+  antwerp: {
+    title: "Studeren & ondernemen? In Antwerpen kan dat zeker en vast.",
+    text: "Antwerpen heeft heel wat te bieden aan ondernemende studenten. Als student kan je uiteraard bij je eigen onderwijsinstelling terecht. Maar ook de stad en alle relevante organisaties werken nauw samen om jou en je project te ondersteunen. Je kan ook officieel als student-zelfstandige aan de slag gaan. Op die manier krijg je meer ruimte om ondernemersactiviteiten uit te bouwen, maar kan je toch ten laste van je ouders blijven.",
+  },
   featureMe: {
     title: "Wil jij ook als student ondernemer vermeld worden op onze website?",
     soon: "Coming soon...",
   },
 };
 
-export const ecoPage = {
-  eyebrow: "Ecosysteem",
-  title: "Studeren & ondernemen? In Antwerpen kan dat zeker en vast.",
-  lead: "Antwerpen heeft enorm veel te bieden voor student-ondernemers. Je kan terecht bij je eigen onderwijsinstelling, maar ook andere organisaties staan hiervoor open.",
-  heroPhotos: [6, 3, 5, 4, 1, 2].map((n) => `/images/eco/hero-0${n}.webp`),
-  intro: {
-    title: "Het ecosysteem van ondernemend Antwerpen",
-    text: "Antwerpen heeft heel wat te bieden aan ondernemende studenten. Als student kan je uiteraard bij je eigen onderwijsinstelling terecht. Maar ook de stad en alle relevante organisaties werken nauw samen om jou en je project te ondersteunen. Je kan ook officieel als student-zelfstandige aan de slag gaan. Op die manier krijg je meer ruimte om ondernemersactiviteiten uit te bouwen, maar kan je toch ten laste van hun je ouders blijven. Informatie over dit statuut kan je terugvinden in deze handige",
-    link: {
-      label: "startersgids",
-      href: "https://4fddd117-05f9-4ba3-9dad-3b2c5fb75f7c.filesusr.com/ugd/fd0759_e09bc1fdea8649a2bb47aea1d146e33d.pdf",
-    },
-  },
-  websiteLabel: "Website",
-  contactLabel: "Contact",
-  orgs: [
-    {
-      name: "TAKEOFFANTWERP_",
-      person: "Matthias Mallentjer",
-      text: "TAKEOFFANTWERP is sinds 2014 een werking waar studenten hun ondernemingsvaardigheden kunnen ontwikkelen.",
-      image: "/images/eco/takeoff.webp",
-      website: "https://www.takeoffantwerp.be/",
-      email: "info@takeoffantwerp.be",
-    },
-    {
-      name: "BRYO",
-      person: "Margo Mathys",
-      text: "Bryo is een project van Voka dat focust op jong en ambitieus ondernemerstalent.",
-      image: "/images/eco/bryo.webp",
-      website: "https://www.voka.be/bryo",
-      email: "starten.aw@voka.be",
-    },
-    {
-      name: "Stad Antwerpen",
-      person: "Sofie Pauwels",
-      text: "Onder het motto ‘Open voor Business’ kiest stad Antwerpen er voluit voor om een ondernemersvriendelijke stad te zijn.",
-      image: "/images/eco/stad-a.webp",
-      website: "https://www.ondernemeninantwerpen.be/",
-      email: "businesseninnovatie@antwerpen.be",
-    },
-    {
-      name: "UAntwerpen",
-      person: "Isabelle Yaramis",
-      text: "UAntwerpen stimuleert ondernemingszin en ondernemerschap voor studenten, docenten en onderzoekers.",
-      image: "/images/eco/ua.webp",
-      website: "https://www.uantwerpen.be/nl/studeren/flexibel-studeren/studeren-en-ondernemen/",
-      email: "isabelle.yaramis@uantwerpen.be",
-    },
-    {
-      name: "KdG Hogeschool",
-      person: "Annemie Soetewey",
-      text: "KdG beschikt over het KdG ondernemerscentrum voor studenten en staff die hun ondernemingszin willen aanscherpen.",
-      image: "/images/eco/kdg.webp",
-      website: "https://www.kdg.be/ondernemerscentrum",
-      email: "ondernemerscentrum@kdg.be",
-    },
-    {
-      name: "AP Hogeschool",
-      person: "Inge Verhaegen",
-      text: "Ondernemende studenten zijn welkom in het Ondernemersl-AP voor informatie, begeleiding en connectie met andere studenten.",
-      image: "/images/eco/ap.webp",
-      website: "https://www.ap.be/student-ondernemer",
-      email: "ondernemen@ap.be",
-    },
-  ],
-};
 
 const MOORE =
   "Bij Moore zijn we er voor ondernemers. Voor elke kmo, voor elk familiebedrijf, groot of klein, en voor de ambitieuze managementteams met een passie voor ondernemerschap. Zij hebben een onstopbare drive om te groeien. En daar houden wij van. Want ondernemers zijn de motor van onze economie. Ondernemerschap zit in ons DNA. We weten hoe ondernemers denken en handelen omdat we zelf ondernemers zijn. We hebben onmisbare expertise opgebouwd, en die willen we delen. We helpen ondernemers in hun dagelijkse bedrijfsvoering. We adviseren en begeleiden hen op sleutelmomenten. Proactief en op maat. Van fiscaal en juridisch advies tot corporate finance, business consulting, innovatie en digitale transformatie. Meedenken, meewerken en meegroeien. Wij zijn ondernemers, net als u.";
@@ -256,7 +191,15 @@ export const contactPage = {
   eyebrow: "Contact",
   titleLines: ["Heb je vragen?", "Nood aan advies?", "Get in touch!"],
   lead: "Heb jij vragen rond ondernemerschap? Wil je graag zelf deel uitmaken van SINC? Aarzel niet en neem contact op! We beantwoorden zo snel mogelijk al jouw vragen.",
-  heroPhotos: ["julie", "gilles", "sander", "niels", "elsa", "yiwin"].map((n) => `/images/contact/${n}.webp`),
+  heroPhotos: [
+    "arbina-recica",
+    "thibeau-smets",
+    "helena-herrera-freire",
+    "can-demet",
+    "julie-geeraerts",
+    "sander-roedig",
+    "ben-alp-celik",
+  ].map((n) => `/images/team-2026/${n}.jpg`),
   form: {
     name: "Naam",
     email: "Email",
@@ -268,11 +211,6 @@ export const contactPage = {
   email: "info@sincantwerpen.be",
   questionsTitle: "Heb je een specifieke vraag?",
   questions: [
-    {
-      title: "Word jij deel van het volgende SINC-team?",
-      image: "/images/contact/team-23-24.webp",
-      cta: { label: "Vul de form in", href: "https://forms.monday.com/forms/7fccd6cc5cb7a27d9007e188160564e6?r=use1" },
-    },
     {
       title: "Interesse om SINC Partner te worden?",
       image: "/images/community/partners.webp",

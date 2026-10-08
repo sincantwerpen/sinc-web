@@ -49,7 +49,7 @@ export function PhotoStrip({ photos }: { photos: string[] }) {
               key={i}
               className={`relative aspect-[9/14] w-44 overflow-hidden rounded-[22px] bg-ink-2 ring-1 ring-white/10 sm:w-56 ${i % 2 ? "mt-10" : ""}`}
             >
-              <Image src={src} alt="" fill sizes="224px" loading="eager" className="object-cover" />
+              <Image src={src} alt="" fill sizes="224px" loading="eager" className="object-cover object-[50%_25%]" />
             </div>
           ))}
         </div>

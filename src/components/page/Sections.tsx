@@ -31,7 +31,7 @@ export function SectionHead({
   );
 }
 
-/** Three image cards: student-ondernemers, ecosysteem, partners. */
+/** Image cards: student-ondernemers and partners. */
 export function NetworkCards() {
   return (
     <section className="py-24 sm:py-32" aria-labelledby="network-title">
@@ -41,7 +41,7 @@ export function NetworkCards() {
           title={network.title}
           aside={<p className="text-display text-[clamp(24px,2.4vw,34px)] text-blue">{network.lead}</p>}
         />
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2">
           {network.cards.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.08}>
               <Link
@@ -52,7 +52,7 @@ export function NetworkCards() {
                   src={c.image}
                   alt={c.title}
                   fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-transparent transition-opacity duration-500 group-hover:opacity-90" />

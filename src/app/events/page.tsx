@@ -23,7 +23,7 @@ export default function EventsPage() {
 
         <div className="container-x flex flex-col items-center gap-7 text-center">
           <Eyebrow>{eventsPage.eyebrow}</Eyebrow>
-          <RevealText as="h1" text={eventsPage.title} className="text-display text-[clamp(56px,11vw,180px)]" />
+          <RevealText as="h1" text={eventsPage.title} className="text-display text-[clamp(48px,14.5vw,64px)] sm:text-[clamp(56px,11vw,180px)]" />
           <Reveal delay={0.2}>
             <p className="mx-auto max-w-[640px] text-lg leading-[1.6] text-cream/70">{eventsPage.lead}</p>
           </Reveal>

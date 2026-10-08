@@ -101,14 +101,14 @@ export function Nav() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col justify-end overflow-hidden bg-ink px-6 pb-10 pt-32 lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-ink px-6 pb-10 pt-32 lg:hidden"
             initial={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
             animate={{ clipPath: "circle(150% at calc(100% - 44px) 44px)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
             transition={{ duration: 0.8, ease: EASE }}
           >
             <div aria-hidden className="absolute -right-32 -top-32 size-[420px] glow text-blue/40" />
-            <ul className="relative flex flex-col gap-1">
+            <ul className="relative mt-auto flex flex-col gap-1">
               {[...nav.links, nav.cta].map((l, i) => (
                 <li key={l.href} className="overflow-hidden">
                   <motion.div

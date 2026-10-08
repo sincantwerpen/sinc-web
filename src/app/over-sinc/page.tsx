@@ -26,16 +26,16 @@ export default function OverSincPage() {
       />
 
       <section className="py-24 sm:py-32">
-        <div className="container-x grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="container-x grid items-center gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
           <Reveal className="relative">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[32px] ring-1 ring-white/10">
-              <Image src={team.image} alt="Het SINC team" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[32px] ring-1 ring-white/10">
+              <Image src={team.image} alt="Het SINC team 2026–2027" fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
             </div>
             <div
               aria-hidden
               className="text-display absolute -bottom-8 -right-4 flex size-36 items-center justify-center rounded-full bg-blue text-[64px] text-white shadow-[0_20px_60px_-10px_rgba(0,150,255,0.8)] sm:-right-8 sm:size-44 sm:text-[80px]"
             >
-              18
+              19
             </div>
           </Reveal>
           <div className="flex flex-col items-start gap-7">

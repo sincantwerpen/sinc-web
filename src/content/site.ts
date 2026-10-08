@@ -3,19 +3,18 @@
 export const nav = {
   links: [
     { label: "Events", href: "/events" },
-    { label: "Community", href: "/community" },
-    { label: "Ecosysteem", href: "/ecosysteem" },
     { label: "Partners", href: "/partners" },
+    { label: "Community", href: "/community" },
     { label: "Over SINC", href: "/over-sinc" },
-    { label: "Het team", href: "/het-team" },
+    { label: "Het Team", href: "/het-team" },
   ],
   cta: { label: "Contact", href: "/contact" },
 };
 
 export const hero = {
-  eyebrow: "Voor en door studenten met ondernemingszin 🚀",
+  eyebrow: "Voor en door studenten met ondernemingszin",
   title: "Students for Innovation & Cooperation",
-  lead: "SINC wil studenten laten zien dat ondernemen geen ver-van-mijn-bedshow hoeft te zijn. We geven studenten de nodige dosis inspiratie, de juiste tools om van start te gaan, en het nodige netwerk om hen daarbij te helpen.",
+  lead: "SINC is ontstaan in 2014 om studenten ondernemender door het leven te gaan. We geven studenten de nodige dosis inspiratie, de juiste tools om van start te gaan, en het nodige netwerk om hen daarbij te helpen.",
   primary: { label: "Aankomende events", href: "/events" },
   secondary: { label: "Join onze community", href: "/community" },
   photos: [
@@ -71,7 +70,7 @@ export const events = {
 
 export const community = {
   eyebrow: "Community",
-  title: "De community voor ondernemingsgezinden",
+  title: "De community voor ondernemings\u00ADgezinden",
   lead: "Een netwerk is één van de belangrijkste krachten van een ondernemer. Daarom bouwen wij aan een community van studenten met ondernemingszin.",
   cta: { label: "Join onze community", href: "/community" },
   image: "/images/community.jpg",
@@ -110,8 +109,10 @@ export const footer = {
   menu: [
     { label: "Home", href: "/" },
     { label: "Events", href: "/events" },
+    { label: "Partners", href: "/partners" },
     { label: "Community", href: "/community" },
     { label: "Over SINC", href: "/over-sinc" },
+    { label: "Het Team", href: "/het-team" },
     { label: "Contact", href: "/contact" },
   ],
   orgTitle: "SINC VZW",
@@ -149,4 +150,19 @@ export const eventsPage = {
     relatedTitle: "Deze events vind je misschien ook interessant",
     relatedEmpty: "We hebben momenteel geen andere events gepland. Kom zeker later terug!",
   },
+};
+
+/** Round "next event" button in the bottom-right corner of the homepage. */
+export const nextEventBadge = {
+  ring: "Volgend event • Schrijf je in • ",
+  open: "Toon het volgende event",
+  close: "Sluiten",
+  eyebrow: "Binnenkort bij SINC",
+  title: "Het volgende event",
+  subtitle: "kom je ook?",
+  moreInfo: "Meer info",
+  allEvents: "Alle events",
+  today: "vandaag",
+  tomorrow: "morgen",
+  inDays: (n: number) => `over ${n} dagen`,
 };

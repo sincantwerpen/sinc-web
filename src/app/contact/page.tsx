@@ -37,16 +37,16 @@ export default function ContactPage() {
       <section className="py-24 sm:py-32" aria-labelledby="questions-title">
         <div className="container-x flex flex-col gap-12">
           <RevealText id="questions-title" text={contactPage.questionsTitle} className="text-display text-[clamp(38px,5.4vw,84px)]" />
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2">
             {contactPage.questions.map((q, i) => (
               <Reveal key={q.title} delay={i * 0.08} className="h-full">
                 <article className="group flex h-full flex-col overflow-hidden rounded-[28px] bg-ink-2 ring-1 ring-white/10 transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:ring-blue">
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden md:aspect-[16/9]">
                     <Image
                       src={q.image}
                       alt=""
                       fill
-                      sizes="(min-width: 768px) 33vw, 100vw"
+                      sizes="(min-width: 768px) 50vw, 100vw"
                       className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-110"
                     />
                   </div>
