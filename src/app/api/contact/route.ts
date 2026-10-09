@@ -28,8 +28,8 @@ export async function POST(request: Request) {
 
   const res = await fetch(webhook, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, message, source: "sincantwerpen.be/contact" }),
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ name, email, message, _subject: `Contactformulier: ${name}`, source: "sincantwerpen.be/contact" }),
   });
   if (!res.ok) return Response.json({ error: "upstream_failed" }, { status: 502 });
 

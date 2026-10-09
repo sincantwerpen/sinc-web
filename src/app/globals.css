@@ -46,6 +46,11 @@
     text-rendering: optimizeLegibility;
   }
 
+  button:not(:disabled),
+  [role="button"] {
+    cursor: pointer;
+  }
+
   body {
     font-family: var(--font-sans);
     overflow-x: clip;
@@ -76,8 +81,7 @@ html.lenis body {
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.92;
-  overflow-wrap: break-word;
-  hyphens: auto;
+  hyphens: none;
 }
 
 @utility container-x {

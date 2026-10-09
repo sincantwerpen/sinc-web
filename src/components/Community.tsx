@@ -21,7 +21,7 @@ export function Community() {
         <div className="grid gap-10 lg:grid-cols-[1.7fr_1fr] lg:items-end">
           <div className="flex flex-col gap-6">
             <Eyebrow>{community.eyebrow}</Eyebrow>
-            <RevealText id="community-title" text={community.title} className="text-display text-[clamp(40px,5.8vw,88px)]" />
+            <RevealText id="community-title" text={community.title} className="text-display text-[min(clamp(40px,5.8vw,88px),8.4vw)]" />
           </div>
           <Reveal className="flex flex-col items-start gap-7" delay={0.15}>
             <p className="text-lg leading-[1.6] text-cream/70">{community.lead}</p>

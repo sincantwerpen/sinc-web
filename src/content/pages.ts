@@ -7,7 +7,7 @@ const pillarImg = (n: string) => `/images/pillars/${n}.webp`;
 
 /** Shared blocks used on both "Over SINC" and "Community". */
 export const network = {
-  title: "Een hecht netwerk van ondernemings\u00ADgezinden",
+  title: "Een hecht netwerk van ondernemingsgezinden",
   lead: "Haal je kracht uit je netwerk!",
   cards: [
     {

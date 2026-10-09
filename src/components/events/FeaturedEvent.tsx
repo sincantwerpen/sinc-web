@@ -32,9 +32,9 @@ function Countdown({ iso }: { iso?: string }) {
     { v: s % 60, l: eventsPage.countdown.seconds },
   ];
   return (
-    <div className="flex gap-2" aria-hidden>
+    <div className="flex gap-1.5 sm:gap-2" aria-hidden>
       {parts.map((p) => (
-        <div key={p.l} className="flex min-w-[64px] flex-col items-center rounded-2xl bg-white/[0.06] px-3 py-2.5 ring-1 ring-white/10">
+        <div key={p.l} className="flex min-w-0 flex-1 flex-col items-center rounded-2xl bg-white/[0.06] px-1 py-2.5 ring-1 ring-white/10 sm:min-w-[64px] sm:flex-none sm:px-3">
           <span className="relative h-8 overflow-hidden text-display text-[30px] tabular-nums leading-8">
             <motion.span
               key={p.v}
@@ -46,7 +46,7 @@ function Countdown({ iso }: { iso?: string }) {
               {String(p.v).padStart(2, "0")}
             </motion.span>
           </span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-cream/50">{p.l}</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-cream/50 sm:text-[11px] sm:tracking-[0.14em]">{p.l}</span>
         </div>
       ))}
     </div>

@@ -21,7 +21,7 @@ function JoinTile({ span }: { span: number }) {
     <Reveal className={`col-span-2 ${span === 3 ? "lg:col-span-3" : span === 1 ? "lg:col-span-1" : "lg:col-span-2"}`}>
       <div className="relative flex h-full min-h-[280px] flex-col justify-between gap-8 overflow-hidden rounded-[28px] bg-blue p-7 text-white sm:p-9">
         <div aria-hidden className="absolute -right-16 -top-20 size-[340px] glow text-white/20" />
-        <h3 className="text-display relative text-[clamp(28px,2.8vw,44px)] leading-[1]" style={{ hyphens: "manual" }}>{band.title}</h3>
+        <h3 className="text-display relative text-[clamp(28px,2.8vw,44px)] leading-[1]">{band.title}</h3>
         <Button href={band.cta.href} variant="dark" className="relative w-fit">
           {band.cta.label}
         </Button>

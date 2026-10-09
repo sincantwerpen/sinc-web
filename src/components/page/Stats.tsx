@@ -38,14 +38,14 @@ export function Stats({ title, stats }: { title: string; stats: Stat[] }) {
           {stats.map((s, i) => (
             <div
               key={s.label}
-              className={`flex aspect-square flex-col justify-between rounded-[28px] p-6 sm:p-8 ${
+              className={`flex aspect-square flex-col justify-between rounded-[24px] p-4 sm:rounded-[28px] sm:p-8 ${
                 ["bg-blue text-white", "bg-cream text-ink", "bg-ink-2 text-cream ring-1 ring-white/10", "bg-yellow text-ink"][i % 4]
               }`}
             >
-              <span className="text-display text-[clamp(44px,5.4vw,88px)]">
+              <span className="text-display text-[min(clamp(44px,5.4vw,88px),11vw)]">
                 <Counter value={s.value} suffix={s.suffix} />
               </span>
-              <span className="text-[15px] font-bold sm:text-lg">{s.label}</span>
+              <span className="text-[14px] font-bold leading-tight sm:text-lg">{s.label}</span>
             </div>
           ))}
         </div>

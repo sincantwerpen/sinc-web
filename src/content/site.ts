@@ -2,6 +2,7 @@
 
 export const nav = {
   links: [
+    { label: "Home", href: "/" },
     { label: "Events", href: "/events" },
     { label: "Partners", href: "/partners" },
     { label: "Community", href: "/community" },
@@ -70,7 +71,7 @@ export const events = {
 
 export const community = {
   eyebrow: "Community",
-  title: "De community voor ondernemings\u00ADgezinden",
+  title: "De community voor ondernemingsgezinden",
   lead: "Een netwerk is één van de belangrijkste krachten van een ondernemer. Daarom bouwen wij aan een community van studenten met ondernemingszin.",
   cta: { label: "Join onze community", href: "/community" },
   image: "/images/community.jpg",

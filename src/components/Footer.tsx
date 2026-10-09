@@ -8,7 +8,7 @@ import { HideOn } from "./HideOn";
 function PartnerRow({ reverse = false }: { reverse?: boolean }) {
   const logos = reverse ? [...partners.logos].reverse() : partners.logos;
   return (
-    <div className="group relative flex overflow-hidden">
+    <div className="group relative flex overflow-hidden py-2">
       <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[12%] bg-gradient-to-r from-ink to-transparent" />
       <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[12%] bg-gradient-to-l from-ink to-transparent" />
       {[0, 1].map((copy) => (
@@ -66,25 +66,25 @@ export function Footer() {
       </div>
 
       <HideOn path="/partners">
-        <div className="mt-12 flex flex-col gap-3">
+        <div className="mt-10 flex flex-col gap-1">
           <PartnerRow />
           <PartnerRow reverse />
         </div>
       </HideOn>
 
-      <div className="container-x mt-24 sm:mt-32">
-        <div className="grid gap-12 border-t border-white/10 pt-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div className="flex flex-col gap-5">
-            <Link href="/" aria-label="SINC home">
+      <div className="container-x mt-16 sm:mt-32">
+        <div className="grid gap-9 border-t border-white/10 pt-10 sm:grid-cols-2 sm:gap-12 sm:pt-14 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div className="flex flex-col gap-4 sm:gap-5">
+            <Link href="/" aria-label="SINC home" className="w-fit">
               <Image src="/images/brand/sinc-logo-header.webp" alt="SINC Logo" width={556} height={237} className="h-12 w-auto" />
             </Link>
-            <p className="max-w-[320px] leading-[1.6] text-cream/60">{footer.about}</p>
+            <p className="max-w-[320px] text-[15px] leading-[1.6] text-cream/60 sm:text-base">{footer.about}</p>
           </div>
 
-          <nav aria-label="Footer menu" className="flex flex-col gap-1 lg:gap-3">
+          <nav aria-label="Footer menu" className="hidden flex-col gap-3 lg:flex">
             <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.16em] text-blue">{footer.menuTitle}</p>
             {footer.menu.map((m) => (
-              <Link key={m.href} href={m.href} className="w-fit py-2 text-cream/80 transition-colors hover:text-blue lg:py-0">
+              <Link key={m.href} href={m.href} className="w-fit text-cream/80 transition-colors hover:text-blue">
                 {m.label}
               </Link>
             ))}
@@ -95,8 +95,11 @@ export function Footer() {
             <Link href={footer.privacy.href} className="w-fit py-2 transition-colors hover:text-blue lg:py-0">
               {footer.privacy.label}
             </Link>
-            <p>{footer.address}</p>
-            <p>{footer.vat}</p>
+            <p className="text-[15px] text-cream/60 sm:text-base sm:text-cream/80">
+              {footer.address}
+              <br />
+              {footer.vat}
+            </p>
             <a href={`mailto:${footer.email}`} className="w-fit py-2 transition-colors hover:text-blue lg:py-0">
               {footer.email}
             </a>
@@ -120,7 +123,7 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="mt-14 text-[13px] text-cream/40">
+        <p className="mt-10 text-[13px] text-cream/40 sm:mt-14">
           Copyright © {year} {footer.copyright}
         </p>
       </div>

@@ -125,10 +125,10 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-blue/45 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <motion.div aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: glare }} />
 
-        <div className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 ${big ? "p-7 sm:p-9" : "p-4 sm:p-5"}`}>
-          <div className={`flex min-w-0 flex-col items-start gap-2.5 ${big ? "pr-28" : ""}`}>
+        <div className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 ${big ? "p-6 sm:p-9" : "p-4 sm:p-5"}`}>
+          <div className={`flex min-w-0 flex-col items-start gap-2.5 ${big ? "sm:pr-28" : ""}`}>
             <span
-              className={`whitespace-nowrap rounded-full px-3 py-1 font-bold uppercase ${
+              className={`whitespace-nowrap rounded-full px-3 py-1 font-bold uppercase max-[374px]:whitespace-normal max-[374px]:rounded-[10px] max-[374px]:leading-tight ${
                 big ? "text-[11px] tracking-[0.14em]" : "text-[9.5px] tracking-[0.08em] sm:text-[11px] sm:tracking-[0.12em]"
               } ${
                 m.lead ? "bg-yellow text-ink" : "bg-white/15 text-white"
@@ -137,18 +137,19 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
               {m.role}
             </span>
             <h3
-              style={{ hyphens: "manual" }}
-              className={`text-display text-white ${big ? "text-[clamp(36px,4.6vw,72px)]" : "text-[clamp(19px,2vw,28px)] leading-[1]"}`}
+              className={`text-display text-white ${
+                big ? "text-[clamp(36px,4.6vw,72px)]" : "text-[17px] leading-[1] min-[360px]:text-[19px] sm:text-[clamp(19px,2vw,28px)]"
+              }`}
             >
               {m.name}
             </h3>
           </div>
         </div>
 
-        {/* LinkedIn + email: bottom-right on big cards, top-right on small ones; on desktop they appear on hover */}
+        {/* LinkedIn + email: top-right on phones and small cards, bottom-right on big cards from tablet up; on desktop they appear on hover */}
         <div
           className={`absolute flex gap-2 transition-all duration-500 ease-out-expo lg:opacity-0 lg:group-hover:opacity-100 ${
-            big ? "bottom-7 right-7 sm:bottom-9 sm:right-9 lg:translate-y-3 lg:group-hover:translate-y-0" : "right-4 top-4 lg:-translate-y-2 lg:group-hover:translate-y-0"
+            big ? "right-5 top-5 sm:bottom-9 sm:right-9 sm:top-auto lg:translate-y-3 lg:group-hover:translate-y-0" : "right-4 top-4 lg:-translate-y-2 lg:group-hover:translate-y-0"
           }`}
         >
           <IconLink href={m.linkedin} label={`${teamPage.linkedinLabel}: ${m.name}`}>

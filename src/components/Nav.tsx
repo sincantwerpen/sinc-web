@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { nav } from "@/content/site";
@@ -9,11 +10,15 @@ import { Button } from "./ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+/** Current page check; event detail pages count as "Events". */
+const isActive = (path: string, href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`));
+
 export function Nav() {
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const path = usePathname();
 
   // Shrink once you leave the top; slide away while scrolling down, come back when scrolling up.
   useMotionValueEvent(scrollY, "change", (y) => {
@@ -43,8 +48,14 @@ export function Nav() {
               : "h-20 border-transparent bg-transparent"
           }`}
         >
-          <Link href="/" aria-label="SINC home" className="shrink-0">
+          <Link
+            href="/"
+            aria-label="SINC home"
+            draggable={false}
+            className="shrink-0 cursor-pointer select-none transition-transform duration-300 ease-out-expo hover:scale-105 active:scale-95"
+          >
             <Image
+              draggable={false}
               src="/images/brand/sinc-logo-blue.webp"
               alt="SINC"
               width={466}
@@ -55,17 +66,29 @@ export function Nav() {
           </Link>
 
           <ul className="hidden items-center gap-1 lg:flex">
-            {nav.links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="group relative block rounded-full px-4 py-2 text-[15px] font-bold text-cream/80 transition-colors hover:text-white"
-                >
-                  <span className="absolute inset-0 scale-75 rounded-full bg-white/8 opacity-0 transition-all duration-300 ease-out-expo group-hover:scale-100 group-hover:opacity-100" />
-                  <span className="relative">{l.label}</span>
-                </Link>
-              </li>
-            ))}
+            {nav.links.map((l) => {
+              const active = isActive(path, l.href);
+              return (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`group relative block rounded-full px-4 py-2 text-[15px] font-bold transition-colors hover:text-white ${
+                      active ? "text-white" : "text-cream/80"
+                    }`}
+                  >
+                    <span
+                      className={`absolute inset-0 rounded-full transition-all duration-300 ease-out-expo ${
+                        active
+                          ? "scale-100 bg-blue/20 opacity-100 ring-1 ring-blue/60"
+                          : "scale-75 bg-white/8 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                      }`}
+                    />
+                    <span className="relative">{l.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="flex items-center gap-2">
@@ -101,7 +124,7 @@ export function Nav() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-ink px-6 pb-10 pt-32 lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y bg-ink px-6 pb-10 pt-32 lg:hidden"
             initial={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
             animate={{ clipPath: "circle(150% at calc(100% - 44px) 44px)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
@@ -119,9 +142,13 @@ export function Nav() {
                     <Link
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="text-display block py-1 text-[clamp(40px,11vw,72px)] text-cream transition-colors active:text-blue"
+                      aria-current={isActive(path, l.href) ? "page" : undefined}
+                      className={`text-display flex items-center gap-4 py-1 text-[clamp(40px,11vw,72px)] transition-colors active:text-blue ${
+                        isActive(path, l.href) ? "text-blue" : "text-cream"
+                      }`}
                     >
                       {l.label}
+                      {isActive(path, l.href) && <span aria-hidden className="size-3 rounded-full bg-blue" />}
                     </Link>
                   </motion.div>
                 </li>

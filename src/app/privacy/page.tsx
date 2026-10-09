@@ -52,7 +52,7 @@ export default function PrivacyPage() {
       <div className="container-x">
         <div className="mx-auto flex max-w-[820px] flex-col gap-8">
           <Eyebrow>SINC VZW</Eyebrow>
-          <h1 className="text-display text-[clamp(38px,7vw,104px)]">{privacyPage.title}</h1>
+          <h1 className="text-display text-[min(clamp(38px,7vw,104px),10.6vw)]">{privacyPage.title}</h1>
           <Reveal>
             <div className="flex flex-col gap-5 text-[17px] leading-[1.75] text-cream/75">
               {blocks.map((b, i) => {

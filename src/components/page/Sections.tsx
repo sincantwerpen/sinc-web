@@ -20,7 +20,7 @@ export function SectionHead({
     <div className="grid gap-8 lg:grid-cols-[1.7fr_1fr] lg:items-end">
       <div className="flex flex-col gap-6">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <RevealText id={id} text={title} className="text-display max-w-[980px] text-[clamp(32px,5.4vw,84px)]" />
+        <RevealText id={id} text={title} className="text-display max-w-[980px] text-[min(clamp(32px,5.4vw,84px),8.4vw)]" />
       </div>
       {aside && (
         <Reveal className="flex flex-col items-start gap-7" delay={0.15}>
@@ -127,7 +127,7 @@ export function CtaBand({ title, cta }: { title: string; cta: { label: string; h
         <Reveal>
           <div className="relative flex flex-col items-start justify-between gap-8 overflow-hidden rounded-[32px] bg-blue p-8 text-white sm:p-14 md:flex-row md:items-end">
             <div aria-hidden className="absolute -right-20 -top-24 size-[380px] glow text-white/15" />
-            <h2 className="text-display relative max-w-[760px] text-[clamp(34px,4.6vw,68px)]">{title}</h2>
+            <h2 className="text-display relative max-w-[760px] text-[min(clamp(34px,4.6vw,68px),9.4vw)]">{title}</h2>
             <Button href={cta.href} variant="dark" className="relative shrink-0">
               {cta.label}
             </Button>

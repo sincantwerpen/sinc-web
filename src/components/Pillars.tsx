@@ -13,6 +13,14 @@ const themes = [
   { card: "bg-yellow text-ink", num: "text-ink/15", body: "text-ink/75", tag: "bg-ink/10 text-ink" },
 ];
 
+// Where the faces are in each photo, so the wide crop on phones doesn't cut off heads.
+const focus: Record<string, string> = {
+  "/images/pillars/inspireren.webp": "45% 22%",
+  "/images/pillars/informeren.webp": "50% 18%",
+  "/images/pillars/connecteren.webp": "55% 15%",
+  "/images/pillars/activeren.webp": "50% 40%",
+};
+
 type Pillar = {
   n: string;
   title: string;
@@ -73,8 +81,15 @@ function PillarCard({
           </span>
         </div>
         <div className="relative h-[clamp(170px,26svh,240px)] overflow-hidden md:m-3 md:h-auto md:rounded-[24px]">
-          <motion.div style={{ scale: imgScale }} className="absolute inset-0">
-            <Image src={p.image} alt={p.title} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover" />
+          <motion.div style={{ scale: imgScale, transformOrigin: "50% 20%" }} className="absolute inset-0">
+            <Image
+              src={p.image}
+              alt={p.title}
+              fill
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: focus[p.image] ?? "50% 30%" }}
+            />
           </motion.div>
         </div>
       </motion.article>
