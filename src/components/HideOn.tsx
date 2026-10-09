@@ -1,9 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { switchLang } from "@/i18n";
 
-/** Renders its children on every page except the given path. */
-export function HideOn({ path, children }: { path: string; children: ReactNode }) {
-  return usePathname() === path ? null : <>{children}</>;
+/** Hides its children on one page (given as the Dutch address, e.g. "/partners"), in every language. */
+export function HideOn({ path, children }: { path: string; children: React.ReactNode }) {
+  return switchLang(usePathname(), "nl") === path ? null : <>{children}</>;
 }

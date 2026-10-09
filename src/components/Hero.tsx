@@ -11,8 +11,8 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import { hero } from "@/content/site";
 import { Button } from "./ui";
+import { useT } from "./LangProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -32,6 +32,7 @@ function MorphTitle({
   /** Receives the page position (px from the top of the document) of the third line, where SINC lands. */
   line3Top: MotionValue<number>;
 }) {
+  const { hero } = useT();
   const lines = useRef<(HTMLSpanElement | null)[]>([]);
   const sRef = useRef<HTMLSpanElement>(null);
   const iRef = useRef<HTMLSpanElement>(null);
@@ -118,6 +119,7 @@ function MorphTitle({
 
 /** Six team portraits that float at different scroll speeds and tilt towards the cursor. */
 function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
+  const { hero } = useT();
   const reduce = useReducedMotion();
   const [wide, setWide] = useState(false);
   useEffect(() => {
@@ -231,6 +233,7 @@ function Spotlight({ area }: { area: React.RefObject<HTMLElement | null> }) {
 }
 
 export function Hero() {
+  const { hero } = useT();
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   const morph = useMotionValue(0);

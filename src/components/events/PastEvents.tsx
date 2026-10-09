@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "../Link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import { pastEvents, pillars, type Pillar } from "@/content/events";
-import { eventsPage } from "@/content/site";
-import { Eyebrow, RevealText } from "../ui";
+import type { Pillar } from "@/content";
+import { useT } from "../LangProvider";
+import { Eyebrow, RevealText, ArrowIcon } from "../ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -18,9 +18,10 @@ const pillarColor: Record<Pillar, string> = {
 };
 
 export function PillarTag({ pillar, className = "" }: { pillar: Pillar; className?: string }) {
+  const { eventsPage } = useT();
   return (
     <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ${pillarColor[pillar]} ${className}`}>
-      {pillar}
+      {eventsPage.pillarLabels[pillar]}
     </span>
   );
 }
@@ -72,6 +73,7 @@ function CursorPreview({ image, visible }: { image: string | null; visible: bool
 }
 
 export function PastEvents() {
+  const { pastEvents, pillars, eventsPage } = useT();
   const reduce = useReducedMotion();
   const [filter, setFilter] = useState<Pillar | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -109,7 +111,7 @@ export function PastEvents() {
                       />
                     )}
                     {!active && <span className="absolute inset-0 rounded-full ring-1 ring-white/12" />}
-                    <span className="relative">{p ?? eventsPage.allLabel}</span>
+                    <span className="relative">{p ? eventsPage.pillarLabels[p] : eventsPage.allLabel}</span>
                   </button>
                 );
               })}
@@ -178,7 +180,7 @@ export function PastEvents() {
                   <span className="relative hidden items-center gap-3 pr-4 text-[15px] font-bold lg:flex">
                     <span className="opacity-0 transition-opacity duration-300 group-hover:opacity-100">{eventsPage.moreInfo}</span>
                     <span className="flex size-12 items-center justify-center rounded-full border border-white/20 transition-all duration-500 ease-out-expo group-hover:-rotate-45 group-hover:border-white group-hover:bg-white group-hover:text-blue">
-                      →
+                      <ArrowIcon className="size-5" />
                     </span>
                   </span>
                 </Link>

@@ -16,7 +16,12 @@ export function SmoothScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return () => window.removeEventListener("popstate", onPop);
     }
-    const l = new Lenis({ duration: 1.15, smoothWheel: true });
+    const l = new Lenis({
+      duration: 1.15,
+      smoothWheel: true,
+      // Scrolling inside the open phone menu must not move the (locked) page behind it.
+      prevent: (node) => !!node.closest("#mobile-menu"),
+    });
     lenis.current = l;
     let frame = requestAnimationFrame(function raf(time) {
       l.raf(time);

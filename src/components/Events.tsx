@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "motion/react";
-import { events } from "@/content/site";
-import { upcomingEvents } from "@/content/events";
 import { FeaturedEvent } from "./events/FeaturedEvent";
 import { Button, Eyebrow, Reveal, RevealText } from "./ui";
+import { useT } from "./LangProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -49,6 +48,7 @@ export function Radar() {
 
 /** "No events planned" card with the radar. Shared by the homepage and the events page. */
 export function EmptyEventsCard({ showCta = true }: { showCta?: boolean }) {
+  const { events } = useT();
   return (
     <Reveal>
       <div className="relative grid items-center gap-10 overflow-hidden rounded-[32px] bg-gradient-to-br from-ink-2 to-[#0d1a2e] p-8 ring-1 ring-white/10 sm:p-14 md:grid-cols-[1fr_auto]">
@@ -70,6 +70,7 @@ export function EmptyEventsCard({ showCta = true }: { showCta?: boolean }) {
 }
 
 export function Events() {
+  const { events, upcomingEvents } = useT();
   return (
     <section className="relative py-28 sm:py-40" aria-labelledby="events-title">
       <div className="container-x flex flex-col gap-14 sm:gap-20">

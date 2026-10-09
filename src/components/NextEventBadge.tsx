@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Link } from "./Link";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   AnimatePresence,
   motion,
@@ -9,16 +9,18 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
-import { upcomingEvents } from "@/content/events";
-import { nextEventBadge as copy } from "@/content/site";
+import { getContent, type Content } from "@/content";
+import { intlLocale, type Lang } from "@/i18n";
+import { ArrowIcon } from "@/components/ui";
+import { useLang, useT } from "./LangProvider";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const TZ = "Europe/Brussels";
 
-function dateParts(iso: string) {
+function dateParts(iso: string, lang: Lang) {
   const d = new Date(iso);
-  const day = new Intl.DateTimeFormat("nl-BE", { day: "numeric", timeZone: TZ }).format(d);
-  const month = new Intl.DateTimeFormat("nl-BE", { month: "short", timeZone: TZ })
+  const day = new Intl.DateTimeFormat(intlLocale[lang], { day: "numeric", timeZone: TZ }).format(d);
+  const month = new Intl.DateTimeFormat(intlLocale[lang], { month: "short", timeZone: TZ })
     .format(d)
     .replace(".", "")
     .toUpperCase();
@@ -27,7 +29,7 @@ function dateParts(iso: string) {
 
 /** "vandaag", "morgen", "over 5 dagen" (calendar days in Brussels time). Only used inside the card,
  *  which exists only after a click, so it's always computed in the browser with the real date. */
-function relativeDay(iso: string) {
+function relativeDay(iso: string, copy: Content["nextEventBadge"]) {
   const ymd = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(d);
   const days = Math.round((Date.parse(ymd(new Date(iso))) - Date.parse(ymd(new Date()))) / 86400000);
   return days <= 0 ? copy.today : days === 1 ? copy.tomorrow : copy.inDays(days);
@@ -37,8 +39,18 @@ function relativeDay(iso: string) {
  * Round button in the bottom-right corner with the date of the next event. The text ring turns
  * slowly and speeds up on hover; clicking opens a small card that links to the event page.
  */
+// Which event is next only depends on the dates, which are the same in every language.
+const dated = getContent("nl").upcomingEvents.filter((e) => e.startsAt);
+const noSubscribe = () => () => {};
+/** First event that hasn't ended yet (counted as over 4 hours after the start). */
+const nextSlug = () => dated.find((e) => Date.parse(e.startsAt!) + 4 * 3600_000 > Date.now())?.slug ?? null;
+
 export function NextEventBadge() {
-  const event = upcomingEvents.find((e) => e.startsAt);
+  // The page is built ahead of time, so the browser re-checks which event is next.
+  const slug = useSyncExternalStore(noSubscribe, nextSlug, () => dated[0]?.slug ?? null);
+  const lang = useLang();
+  const { upcomingEvents, nextEventBadge: copy } = useT();
+  const event = upcomingEvents.find((e) => e.slug === slug);
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -94,7 +106,7 @@ export function NextEventBadge() {
   }, [open]);
 
   if (!event?.startsAt) return null;
-  const { day, month } = dateParts(event.startsAt);
+  const { day, month } = dateParts(event.startsAt, lang);
   const time = event.time?.split(/\s*[–-]\s*/)[0];
   const ringChars = [...copy.ring];
 
@@ -141,18 +153,18 @@ export function NextEventBadge() {
                   {event.title}: {event.subtitle}
                 </span>
                 <span className="text-[14px] text-ink/60">
-                  {[time, relativeDay(event.startsAt)].filter(Boolean).join(" · ")}
+                  {[time, relativeDay(event.startsAt, copy)].filter(Boolean).join(" · ")}
                 </span>
                 <span className="mt-1 flex items-center gap-1.5 text-[14px] font-bold uppercase tracking-[0.08em] text-blue">
                   {copy.moreInfo}
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  <span className="flex transition-transform duration-300 group-hover:translate-x-1"><ArrowIcon className="size-4" /></span>
                 </span>
               </div>
             </Link>
 
             <Link href="/events" onClick={() => setOpen(false)} className="group mt-5 flex w-fit items-center gap-2 text-[17px] font-bold">
               {copy.allEvents}
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              <span className="flex transition-transform duration-300 group-hover:translate-x-1"><ArrowIcon /></span>
             </Link>
           </motion.div>
         )}
@@ -169,7 +181,7 @@ export function NextEventBadge() {
           onPointerEnter={(e) => e.pointerType === "mouse" && setHover(true)}
           onPointerLeave={() => setHover(false)}
           aria-expanded={open}
-          aria-controls="next-event-panel"
+          aria-controls={open ? "next-event-panel" : undefined}
           aria-label={open ? copy.close : `${copy.open}: ${event.title}, ${day} ${month}`}
           className="relative block size-[100px] rounded-full bg-blue text-white shadow-[0_18px_50px_-8px_rgba(0,150,255,0.85),inset_0_0_0_1px_rgba(255,255,255,0.25)] [--r:40px] sm:size-[120px] sm:[--r:49px]"
           initial={{ scale: 0, rotate: -120 }}

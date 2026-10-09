@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { contactPage } from "@/content/pages";
+import { useLang, useT } from "../LangProvider";
+import { ArrowIcon } from "@/components/ui";
 
 type Status = "idle" | "loading" | "ok" | "error";
 
@@ -10,7 +11,8 @@ const field =
   "w-full rounded-[22px] border border-white/12 bg-white/[0.04] px-6 text-[16px] text-cream placeholder:text-cream/40 outline-none transition-colors focus:border-blue focus:bg-white/[0.07]";
 
 export function ContactForm() {
-  const { form, email } = contactPage;
+  const { form, email } = useT().contactPage;
+  const lang = useLang();
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,7 +23,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(el))),
+        body: JSON.stringify({ ...Object.fromEntries(new FormData(el)), language: lang }),
       });
       setStatus(res.ok ? "ok" : "error");
       if (res.ok) el.reset();
@@ -46,7 +48,7 @@ export function ContactForm() {
         className="group mt-1 flex h-15 items-center justify-center gap-3 rounded-full bg-blue text-[16px] font-bold text-white shadow-[0_10px_40px_-10px_rgba(0,150,255,0.8)] transition-all hover:shadow-[0_16px_50px_-8px_rgba(0,150,255,0.95)] disabled:opacity-60"
       >
         {status === "loading" ? "…" : form.submit}
-        <span aria-hidden className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
+        <span className="flex transition-transform duration-500 ease-out-expo group-hover:translate-x-1"><ArrowIcon /></span>
       </button>
       <div aria-live="polite" className="min-h-6">
         <AnimatePresence mode="wait">

@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { about } from "@/content/site";
-import { Button, Eyebrow, Reveal, RevealText } from "./ui";
+import { Button, Eyebrow, Reveal, RevealText, ArrowIcon } from "./ui";
+import { useLang, useT } from "./LangProvider";
+import { localize } from "@/i18n";
 
 const themes = [
   { card: "bg-blue text-white", num: "text-white/25", body: "text-white/85", tag: "bg-white/15 text-white" },
@@ -40,6 +41,8 @@ function PillarCard({
   total: number;
   progress: MotionValue<number>;
 }) {
+  const { about } = useT();
+  const lang = useLang();
   const t = themes[i];
   // Each card shrinks a little as the next one slides over it.
   const scale = useTransform(progress, [i / total, 1], [1, 1 - (total - 1 - i) * 0.045]);
@@ -60,13 +63,13 @@ function PillarCard({
             <p className={`max-w-[440px] text-[16px] leading-[1.55] sm:text-lg sm:leading-[1.6] ${t.body}`}>{p.text}</p>
             {p.cta && (
               <a
-                href={p.cta.href}
+                href={localize(p.cta.href, lang)}
                 target={p.cta.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
                 className="group mt-1 inline-flex w-fit items-center gap-2 py-2 font-bold underline decoration-2 underline-offset-[6px] transition-[text-underline-offset] hover:underline-offset-[9px]"
               >
                 {p.cta.label}
-                <span className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
+                <span className="flex transition-transform duration-500 ease-out-expo group-hover:translate-x-1"><ArrowIcon /></span>
               </a>
             )}
           </div>
@@ -77,7 +80,7 @@ function PillarCard({
             {p.n}
           </span>
           <span className={`relative w-fit rounded-full px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-[0.16em] ${t.tag}`}>
-            Pijler {p.n}
+            {about.pillarLabel} {p.n}
           </span>
         </div>
         <div className="relative h-[clamp(170px,26svh,240px)] overflow-hidden md:m-3 md:h-auto md:rounded-[24px]">
@@ -111,6 +114,7 @@ export function PillarStack({ pillars }: { pillars: Pillar[] }) {
 }
 
 export function Pillars() {
+  const { about } = useT();
   return (
     <section className="relative py-28 sm:py-40" aria-labelledby="about-title">
       <div className="container-x">

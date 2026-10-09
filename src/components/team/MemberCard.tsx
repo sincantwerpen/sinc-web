@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
-import type { Member } from "@/content/team";
-import { teamPage } from "@/content/team";
+import type { Member } from "@/content";
+import { useT } from "../LangProvider";
 
 function LinkedInIcon() {
   return (
@@ -59,6 +59,7 @@ function initials(name: string) {
  * then tilts towards the cursor with a soft light reflection.
  */
 export function MemberCard({ m, from, big = false }: { m: Member; from: "left" | "right"; big?: boolean }) {
+  const { teamPage } = useT();
   const reduce = useReducedMotion();
   const wrap = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLDivElement>(null);

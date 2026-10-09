@@ -1,11 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
-import { footer, partners } from "@/content/site";
+import { Link } from "./Link";
+import { getT } from "@/content/server";
+import type { Content } from "@/content";
 import { Newsletter } from "./Newsletter";
 import { Button, Reveal } from "./ui";
 import { HideOn } from "./HideOn";
 
-function PartnerRow({ reverse = false }: { reverse?: boolean }) {
+function PartnerRow({ partners, reverse = false }: { partners: Content["partners"]; reverse?: boolean }) {
   const logos = reverse ? [...partners.logos].reverse() : partners.logos;
   return (
     <div className="group relative flex overflow-hidden py-2">
@@ -38,7 +39,8 @@ function PartnerRow({ reverse = false }: { reverse?: boolean }) {
   );
 }
 
-export function Footer() {
+export async function Footer() {
+  const { footer, partners } = await getT();
   const year = new Date().getFullYear();
   return (
     <footer className="relative pb-10 pt-10">
@@ -67,8 +69,8 @@ export function Footer() {
 
       <HideOn path="/partners">
         <div className="mt-10 flex flex-col gap-1">
-          <PartnerRow />
-          <PartnerRow reverse />
+          <PartnerRow partners={partners} />
+          <PartnerRow partners={partners} reverse />
         </div>
       </HideOn>
 

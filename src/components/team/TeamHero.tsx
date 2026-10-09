@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { allMembers, departments, teamPage } from "@/content/team";
+import { useT } from "../LangProvider";
 import { Eyebrow } from "../ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /** One tilted row of faces sliding endlessly (pure CSS). */
 function FaceRow({ reverse = false, offset = 0 }: { reverse?: boolean; offset?: number }) {
+  const { allMembers } = useT();
   const people = allMembers.filter((m) => m.photo);
   const row = [...people.slice(offset), ...people.slice(0, offset)];
   return (
@@ -30,6 +31,7 @@ function FaceRow({ reverse = false, offset = 0 }: { reverse?: boolean; offset?: 
 }
 
 export function TeamHero() {
+  const { allMembers, departments, teamPage } = useT();
   const { scrollY } = useScroll();
   const wallY = useTransform(scrollY, [0, 700], [0, 160]);
   const titleScale = useTransform(scrollY, [0, 600], [1, 0.9]);
@@ -72,7 +74,7 @@ export function TeamHero() {
         </motion.p>
 
         <motion.nav
-          aria-label="Afdelingen"
+          aria-label={teamPage.departmentsLabel}
           className="mt-2 flex flex-wrap justify-center gap-2"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -91,7 +93,7 @@ export function TeamHero() {
             </a>
           ))}
           <span className="inline-flex items-center rounded-full bg-yellow px-5 py-2 text-[15px] font-bold text-ink">
-            {total} studenten
+            {total} {teamPage.students}
           </span>
         </motion.nav>
       </div>

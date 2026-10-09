@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import type { SincEvent } from "@/content/events";
-import { eventsPage } from "@/content/site";
+import type { SincEvent } from "@/content";
+import { useT } from "../LangProvider";
 import { Button, Reveal } from "../ui";
 import { PillarTag } from "./PastEvents";
 
@@ -22,6 +22,7 @@ function useCountdown(iso?: string) {
 }
 
 function Countdown({ iso }: { iso?: string }) {
+  const { eventsPage } = useT();
   const left = useCountdown(iso);
   if (left === null || left === 0) return null;
   const s = Math.floor(left / 1000);
@@ -54,7 +55,10 @@ function Countdown({ iso }: { iso?: string }) {
 }
 
 /** Big card for an upcoming event: poster, key info, countdown, "Registreer" + "Meer info". */
-export function FeaturedEvent({ event: e }: { event: SincEvent }) {
+/** `level`: heading level of the event title (2 when it sits right under the page title). */
+export function FeaturedEvent({ event: e, level = 3 }: { event: SincEvent; level?: 2 | 3 }) {
+  const Title = level === 2 ? "h2" : "h3";
+  const { eventsPage } = useT();
   const { labels } = eventsPage.detail;
   const info = [
     { label: labels.date, value: e.date },
@@ -93,7 +97,7 @@ export function FeaturedEvent({ event: e }: { event: SincEvent }) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h3 className="text-display text-[clamp(44px,6vw,88px)]">{e.title}</h3>
+              <Title className="text-display text-[clamp(44px,6vw,88px)]">{e.title}</Title>
               <p className="text-display text-[clamp(24px,2.8vw,40px)] leading-[1.05] text-blue">{e.subtitle}</p>
             </div>
 

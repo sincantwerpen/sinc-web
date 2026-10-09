@@ -1,12 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
-import type { SincEvent } from "@/content/events";
-import { eventsPage } from "@/content/site";
-import { Reveal } from "../ui";
+import { Link } from "../Link";
+import type { SincEvent } from "@/content";
+import { getT } from "@/content/server";
+import { Reveal, ArrowIcon } from "../ui";
 import { PillarTag } from "./PastEvents";
 
 /** Poster card for an event: used for upcoming events and "misschien ook interessant". */
-export function EventCard({ event: e, delay = 0 }: { event: SincEvent; delay?: number }) {
+export async function EventCard({ event: e, delay = 0 }: { event: SincEvent; delay?: number }) {
+  const { eventsPage } = await getT();
   return (
     <Reveal delay={delay}>
       <Link
@@ -31,7 +32,7 @@ export function EventCard({ event: e, delay = 0 }: { event: SincEvent; delay?: n
           </p>
           <span className="flex items-center gap-2 text-[15px] font-bold text-blue">
             {eventsPage.moreInfo}
-            <span className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
+            <span className="flex transition-transform duration-500 ease-out-expo group-hover:translate-x-1"><ArrowIcon /></span>
           </span>
         </div>
       </Link>

@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
-import { community } from "@/content/site";
 import { Button, Eyebrow, Reveal, RevealText } from "./ui";
+import { useT } from "./LangProvider";
 
 export function Community() {
+  const { community } = useT();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   // The photo opens up from a small window to full width as it scrolls into view.
@@ -35,7 +36,7 @@ export function Community() {
           <motion.div style={{ y: imgY }} className="absolute -inset-y-[10%] inset-x-0">
             <Image
               src={community.image}
-              alt="De SINC community op een groepsfoto"
+              alt={community.imageAlt}
               fill
               sizes="(min-width: 1320px) 1320px, 100vw"
               className="object-cover object-[50%_25%]"

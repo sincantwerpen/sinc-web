@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "./Link";
 import { useRef, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion, type Variants } from "motion/react";
 
@@ -90,11 +90,35 @@ export function Reveal({
   );
 }
 
+/** Bold arrow icon used on every button and link. `dir` turns it: left (back) or up-right (external). */
+export function ArrowIcon({ className = "size-[18px]", dir = "right" }: { className?: string; dir?: "right" | "left" | "up-right" }) {
+  const rotate = dir === "left" ? "rotate-180" : dir === "up-right" ? "-rotate-45" : "";
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={`shrink-0 ${rotate} ${className}`}
+    >
+      <path d="M4 12h15M13 5.5 19.5 12 13 18.5" />
+    </svg>
+  );
+}
+
+/** Button arrow: slides out to the right on hover while a second one slides in. */
 function Arrow() {
   return (
-    <span className="relative inline-flex size-4 overflow-hidden" aria-hidden>
-      <span className="absolute inset-0 transition-transform duration-500 ease-out-expo group-hover:translate-x-full">→</span>
-      <span className="absolute inset-0 -translate-x-full transition-transform duration-500 ease-out-expo group-hover:translate-x-0">→</span>
+    <span className="relative inline-flex size-[18px] shrink-0 overflow-hidden" aria-hidden>
+      <span className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out-expo group-hover:translate-x-full">
+        <ArrowIcon />
+      </span>
+      <span className="absolute inset-0 flex -translate-x-full items-center justify-center transition-transform duration-500 ease-out-expo group-hover:translate-x-0">
+        <ArrowIcon />
+      </span>
     </span>
   );
 }

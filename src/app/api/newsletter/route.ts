@@ -14,7 +14,7 @@
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FLEXMAIL = process.env.FLEXMAIL_API_URL ?? "https://api.flexmail.eu";
 
-type Signup = { email: string; firstName: string; lastName: string };
+type Signup = { email: string; firstName: string; lastName: string; language: "nl" | "en" };
 
 async function toFlexmail(s: Signup): Promise<Response | null> {
   const account = process.env.FLEXMAIL_ACCOUNT_ID;
@@ -28,7 +28,7 @@ async function toFlexmail(s: Signup): Promise<Response | null> {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
-  const contact = { email: s.email, first_name: s.firstName, name: s.lastName, language: "nl" };
+  const contact = { email: s.email, first_name: s.firstName, name: s.lastName, language: s.language };
 
   const res = optInForm
     ? await fetch(`${FLEXMAIL}/opt-ins`, {
@@ -71,6 +71,8 @@ export async function POST(request: Request) {
     email: String(body.email ?? "").trim().toLowerCase(),
     firstName: String(body.firstName ?? "").trim(),
     lastName: String(body.lastName ?? "").trim(),
+    // Language of the page the visitor signed up on (Flexmail uses it for the confirmation mail).
+    language: body.language === "en" ? "en" : "nl",
   };
   // Honeypot: real visitors never fill in the hidden "website" field.
   if (String(body.website ?? "")) return Response.json({ ok: true });

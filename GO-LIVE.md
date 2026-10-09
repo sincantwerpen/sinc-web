@@ -12,12 +12,12 @@ de hosting/cPanel en Flexmail).
 
 ### Stap 1: laatste code-aanpassingen en pushen (Can + Claude)
 - [ ] Alle lokale wijzigingen committen en pushen naar `sincantwerpen/sinc-web` (main).
-- [ ] Favicon / app-icoon met het SINC-logo (nu staat er nog het Next.js-icoon).
-- [ ] `sitemap.xml` en `robots.txt` toevoegen (voor Google).
-- [ ] Doorverwijzingen van oude WordPress-adressen: `/sinc-hub` (+ alles eronder), `/student-ondernemers`,
+- [x] Favicon / app-icoon met het SINC-logo.
+- [x] `sitemap.xml` en `robots.txt` toevoegen (voor Google).
+- [x] Doorverwijzingen van oude WordPress-adressen: `/sinc-hub` (+ alles eronder), `/student-ondernemers`,
       `/eco-systeem` → juiste nieuwe pagina. (`/ecosysteem` is al gedaan. Event-, team-, partner-, contact-,
       community-, over-sinc- en privacy-adressen blijven hetzelfde.)
-- [ ] Links naar "Student-ondernemers" weghalen of laten doorverwijzen (die pagina bestaat niet).
+- [x] Links naar "Student-ondernemers" verwijzen nu naar het blok op de Community-pagina.
 
 ### Stap 2: project in Vercel (SINC-beheer)
 1. Log in op **vercel.com** met het SINC-account.

@@ -26,12 +26,22 @@ export async function POST(request: Request) {
     return Response.json({ error: "contact_not_configured" }, { status: 503 });
   }
 
-  const res = await fetch(webhook, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ name, email, message, _subject: `Contactformulier: ${name}`, source: "sincantwerpen.be/contact" }),
-  });
-  if (!res.ok) return Response.json({ error: "upstream_failed" }, { status: 502 });
+  // So SINC knows in which language to answer.
+  const language = body.language === "en" ? "English" : "Nederlands";
+  try {
+    const res = await fetch(webhook, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ name, email, message, language, _subject: `Contactformulier: ${name}`, source: "sincantwerpen.be/contact" }),
+    });
+    if (!res.ok) {
+      console.error("Contact form delivery failed", res.status, await res.text().catch(() => ""));
+      return Response.json({ error: "upstream_failed" }, { status: 502 });
+    }
+  } catch (err) {
+    console.error("Contact form delivery error", err);
+    return Response.json({ error: "upstream_failed" }, { status: 502 });
+  }
 
   return Response.json({ ok: true });
 }

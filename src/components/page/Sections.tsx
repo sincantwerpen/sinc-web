@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "../Link";
 import type { ReactNode } from "react";
-import { linkedinCommunity, network } from "@/content/pages";
-import { Button, Eyebrow, Reveal, RevealText } from "../ui";
+import { getT } from "@/content/server";
+import { Button, Eyebrow, Reveal, RevealText, ArrowIcon } from "../ui";
 
 /** Section title row: eyebrow + big title on the left, optional text/button on the right. */
 export function SectionHead({
@@ -32,7 +32,8 @@ export function SectionHead({
 }
 
 /** Image cards: student-ondernemers and partners. */
-export function NetworkCards() {
+export async function NetworkCards() {
+  const { network } = await getT();
   return (
     <section className="py-24 sm:py-32" aria-labelledby="network-title">
       <div className="container-x flex flex-col gap-12 sm:gap-16">
@@ -64,7 +65,7 @@ export function NetworkCards() {
                   </p>
                   <span className="mt-1 flex items-center gap-3 font-bold">
                     <span className="flex size-11 items-center justify-center rounded-full bg-white text-ink transition-all duration-500 ease-out-expo group-hover:-rotate-45 group-hover:bg-blue group-hover:text-white">
-                      →
+                      <ArrowIcon className="size-5" />
                     </span>
                     {c.cta.label}
                   </span>
@@ -79,7 +80,8 @@ export function NetworkCards() {
 }
 
 /** LinkedIn community call-out with a bento of community photos. */
-export function LinkedInBlock() {
+export async function LinkedInBlock() {
+  const { linkedinCommunity } = await getT();
   const g = linkedinCommunity.gallery;
   return (
     <section className="py-24 sm:py-32">

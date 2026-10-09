@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { newsletter } from "@/content/site";
+import { ArrowIcon } from "@/components/ui";
+import { useLang, useT } from "./LangProvider";
 
 type Status = "idle" | "loading" | "ok" | "error";
 
@@ -10,13 +11,15 @@ const field =
   "h-14 w-full rounded-full border border-white/15 bg-white/[0.06] px-6 text-[16px] text-cream placeholder:text-cream/45 outline-none transition-colors focus:border-blue focus:bg-white/[0.09]";
 
 export function Newsletter() {
+  const { newsletter } = useT();
+  const lang = useLang();
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     setStatus("loading");
-    const data = Object.fromEntries(new FormData(form));
+    const data = { ...Object.fromEntries(new FormData(form)), language: lang };
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
@@ -57,7 +60,7 @@ export function Newsletter() {
             className="group mt-1 flex h-14 items-center justify-center gap-3 rounded-full bg-ink text-[15px] font-bold text-white transition-colors hover:bg-yellow hover:text-ink disabled:opacity-60"
           >
             {status === "loading" ? "…" : newsletter.submit}
-            <span aria-hidden className="transition-transform duration-500 ease-out-expo group-hover:translate-x-1">→</span>
+            <span className="flex transition-transform duration-500 ease-out-expo group-hover:translate-x-1"><ArrowIcon /></span>
           </button>
           <div aria-live="polite" className="min-h-6">
             <AnimatePresence mode="wait">
