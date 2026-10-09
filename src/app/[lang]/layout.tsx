@@ -6,6 +6,7 @@ import { LangProvider } from "@/components/LangProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 // Only /… (Dutch) and /en/… (English) exist; any other first segment is a 404.
 export const dynamicParams = false;
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           <Footer />
         </LangProvider>
         <div aria-hidden className="grain" />
+        <Analytics />
       </body>
     </html>
   );
