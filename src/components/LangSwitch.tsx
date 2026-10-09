@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { motion } from "motion/react";
 import { locales, switchLang, type Lang } from "@/i18n";
 import { useLang, useT } from "./LangProvider";
 
 /**
  * NL | EN pill. The blue knob slides to the chosen language first, then the same page opens in that
  * language (a different language is a different root layout, so the page itself reloads).
+ * The knob only moves sideways inside the pill (a plain CSS transform), so it stays put when the navbar
+ * itself moves or changes height, e.g. after clicking a link.
  */
 export function LangSwitch({ className = "" }: { className?: string }) {
   const lang = useLang();
@@ -27,6 +28,11 @@ export function LangSwitch({ className = "" }: { className?: string }) {
 
   return (
     <nav aria-label={siteMeta.switchLabel} className={`relative flex h-12 items-center rounded-full bg-white/8 p-1 ring-1 ring-white/10 ${className}`}>
+      <span
+        aria-hidden
+        className="absolute left-1 top-1 h-10 w-11 rounded-full bg-blue shadow-[0_6px_20px_-6px_rgba(0,150,255,0.9)] transition-transform duration-300 ease-out-expo"
+        style={{ transform: `translateX(${locales.indexOf(active) * 100}%)` }}
+      />
       {locales.map((l) => (
         <a
           key={l}
@@ -39,13 +45,6 @@ export function LangSwitch({ className = "" }: { className?: string }) {
             l === active ? "text-white" : "text-cream/60 hover:text-white"
           }`}
         >
-          {l === active && (
-            <motion.span
-              layoutId="lang-knob"
-              className="absolute inset-0 rounded-full bg-blue shadow-[0_6px_20px_-6px_rgba(0,150,255,0.9)]"
-              transition={{ type: "spring", stiffness: 420, damping: 32 }}
-            />
-          )}
           <span className="relative">{l.toUpperCase()}</span>
         </a>
       ))}
