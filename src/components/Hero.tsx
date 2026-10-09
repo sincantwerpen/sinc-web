@@ -81,7 +81,7 @@ function MorphTitle({
   const restOpacity = useTransform(t, [0, 0.4], [1, 0]);
   const restX = useTransform(t, [0, 1], [0, 40]);
 
-  const rest = "inline-block whitespace-pre text-cream";
+  const rest = "inline-block whitespace-pre text-cream will-change-[transform,opacity]";
   const keeper = "inline-block text-blue will-change-transform";
 
   const lineIn = (i: number) => ({
@@ -103,8 +103,8 @@ function MorphTitle({
         <motion.span ref={iRef} className={keeper} style={{ x: iX, y: rowY }}>I</motion.span>
         <motion.span className={rest} style={{ opacity: restOpacity, x: restX }}>nnovation </motion.span>
         <motion.span ref={ampRef} className={`${keeper} relative`} style={{ x: ampX, y: rowY }}>
-          <motion.span className="inline-block" style={{ opacity: ampOpacity, rotate: ampRotate }}>&amp;</motion.span>
-          <motion.span ref={nRef} className="absolute left-0 top-0 inline-block" style={{ opacity: nOpacity, rotate: nRotate }}>
+          <motion.span className="inline-block will-change-[transform,opacity]" style={{ opacity: ampOpacity, rotate: ampRotate }}>&amp;</motion.span>
+          <motion.span ref={nRef} className="absolute left-0 top-0 inline-block will-change-[transform,opacity]" style={{ opacity: nOpacity, rotate: nRotate }}>
             N
           </motion.span>
         </motion.span>

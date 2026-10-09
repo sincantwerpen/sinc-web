@@ -70,8 +70,10 @@ export function FeaturedEvent({ event: e, level = 3 }: { event: SincEvent; level
   return (
     <Reveal>
       <article className="relative isolate overflow-hidden rounded-[32px] bg-ink-2 p-5 ring-1 ring-white/10 sm:p-8 lg:p-10">
-        <div aria-hidden className="absolute inset-0 -z-10">
-          <Image src={e.image} alt="" fill sizes="100vw" className="scale-150 object-cover opacity-30 blur-[80px] saturate-150" />
+        {/* Blurred poster as background: a tiny version is enough once blurred, and its own layer
+            (transform-gpu) keeps the ticking countdown from redrawing the blur every second. */}
+        <div aria-hidden className="absolute inset-0 -z-10 transform-gpu">
+          <Image src={e.image} alt="" fill sizes="96px" className="scale-150 object-cover opacity-30 blur-[80px] saturate-150" />
           <div className="absolute inset-0 bg-gradient-to-br from-ink/40 to-ink/90" />
         </div>
 

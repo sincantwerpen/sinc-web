@@ -56,32 +56,38 @@ export function NextEventBadge() {
   const [hover, setHover] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // Ring rotation with a smooth change of speed on hover.
+  // Phones: keep the hero buttons and the newsletter form in the footer free, so the badge only shows
+  // between the hero and the footer. No scroll listener: the browser itself reports (IntersectionObserver)
+  // when the top of the page or the footer is on screen; reading positions while scrolling makes phones stutter.
+  const [away, setAway] = useState<boolean | null>(null); // null = not checked yet: hidden on phones only
+  const heroMarker = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 639px)");
+    const footer = document.querySelector("footer");
+    const seen = new Map<Element, boolean>();
+    const update = () => setAway(phone.matches && [...seen.values()].some(Boolean));
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) seen.set(e.target, e.isIntersecting);
+      update();
+    });
+    if (heroMarker.current) io.observe(heroMarker.current);
+    if (footer) io.observe(footer);
+    phone.addEventListener("change", update);
+    return () => {
+      io.disconnect();
+      phone.removeEventListener("change", update);
+    };
+  }, []);
+  // Ring rotation with a smooth change of speed on hover (paused while the badge is hidden).
   const angle = useMotionValue(0);
   const speed = useRef(18);
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
+    if (reduce || (away && !open)) return;
     const target = hover || open ? 110 : 18; // degrees per second
     speed.current += (target - speed.current) * Math.min(1, delta / 250);
     angle.set((angle.get() + (speed.current * delta) / 1000) % 360);
   });
 
-  // Phones: keep the hero buttons and the newsletter form in the footer free, so the badge only
-  // shows between the hero and the footer.
-  const [away, setAway] = useState<boolean | null>(null); // null = not scrolled yet: hidden on phones only
-  useEffect(() => {
-    const onScroll = () => {
-      if (window.innerWidth >= 640) return setAway(false);
-      const footer = document.querySelector("footer")?.getBoundingClientRect().top ?? Infinity;
-      setAway(window.scrollY < window.innerHeight * 0.6 || footer < window.innerHeight);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
   const visibility = open
     ? ""
     : away === null
@@ -111,6 +117,9 @@ export function NextEventBadge() {
   const ringChars = [...copy.ring];
 
   return (
+    <>
+    {/* Covers the first 60% of the screen at the top of the page: while it's visible, the hero is. */}
+    <div ref={heroMarker} aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[60svh]" />
     <div
       ref={rootRef}
       className={`fixed bottom-4 right-4 z-30 flex flex-col items-end gap-4 transition-[opacity,translate] duration-500 ease-out-expo sm:bottom-8 sm:right-8 ${
@@ -190,7 +199,7 @@ export function NextEventBadge() {
           whileTap={{ scale: 0.85 }}
         >
           {/* rotating ring of letters: plain HTML so it renders the same in every browser */}
-          <motion.span aria-hidden className="absolute inset-0" style={{ rotate: angle }}>
+          <motion.span aria-hidden className="absolute inset-0 will-change-transform" style={{ rotate: angle }}>
             {ringChars.map((ch, i) => (
               <span
                 key={i}
@@ -241,5 +250,6 @@ export function NextEventBadge() {
         </motion.button>
       </div>
     </div>
+    </>
   );
 }

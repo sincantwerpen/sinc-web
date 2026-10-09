@@ -106,8 +106,8 @@ export default async function EventPage({ params }: PageProps<"/[lang]/events/[s
 
   return (
     <main className="relative isolate">
-      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[900px] overflow-hidden">
-        <Image src={e.image} alt="" fill sizes="100vw" className="scale-125 object-cover opacity-25 blur-[90px] saturate-150" />
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[900px] transform-gpu overflow-hidden">
+        <Image src={e.image} alt="" fill sizes="96px" className="scale-125 object-cover opacity-25 blur-[90px] saturate-150" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/70 to-ink" />
       </div>
 
@@ -153,7 +153,7 @@ export default async function EventPage({ params }: PageProps<"/[lang]/events/[s
 
         <aside className="lg:sticky lg:top-28 lg:self-start">
           <Reveal delay={0.1}>
-            <div className="flex flex-col gap-6 rounded-[28px] bg-white/[0.04] p-7 ring-1 ring-white/10 backdrop-blur-xl sm:p-8">
+            <div className="flex flex-col gap-6 rounded-[28px] bg-white/[0.04] p-7 ring-1 ring-white/10 sm:p-8 lg:backdrop-blur-xl">
               <p className="text-display text-[28px]">{e.title}</p>
               <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
                 {info.map((r) => (

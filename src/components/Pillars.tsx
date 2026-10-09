@@ -55,7 +55,7 @@ function PillarCard({
     >
       <motion.article
         style={{ scale, transformOrigin: "top center" }}
-        className={`grid grid-rows-[auto_auto] overflow-hidden rounded-[28px] sm:rounded-[32px] md:h-[min(66svh,600px)] md:min-h-[480px] md:grid-cols-[1.1fr_1fr] md:grid-rows-1 ${t.card}`}
+        className={`grid will-change-transform grid-rows-[auto_auto] overflow-hidden rounded-[28px] sm:rounded-[32px] md:h-[min(66svh,600px)] md:min-h-[480px] md:grid-cols-[1.1fr_1fr] md:grid-rows-1 ${t.card}`}
       >
         <div className="relative flex min-h-[300px] flex-col justify-between gap-5 p-6 sm:gap-6 sm:p-10 md:min-h-0 lg:p-14">
           <div className="relative flex flex-col gap-3 sm:gap-4">
@@ -84,7 +84,7 @@ function PillarCard({
           </span>
         </div>
         <div className="relative h-[clamp(170px,26svh,240px)] overflow-hidden md:m-3 md:h-auto md:rounded-[24px]">
-          <motion.div style={{ scale: imgScale, transformOrigin: "50% 20%" }} className="absolute inset-0">
+          <motion.div style={{ scale: imgScale, transformOrigin: "50% 20%" }} className="absolute inset-0 will-change-transform">
             <Image
               src={p.image}
               alt={p.title}

@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           {children}
           <Footer />
         </LangProvider>
-        <div aria-hidden className="grain" />
+        <div aria-hidden className="grain max-lg:hidden" />
       </body>
     </html>
   );

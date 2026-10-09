@@ -67,7 +67,7 @@ export function VelocityMarquee({
 
   return (
     <div ref={box} className={`overflow-hidden ${className}`} aria-label={words.join(", ")}>
-      <motion.div className="flex w-max whitespace-nowrap" style={{ x }} aria-hidden>
+      <motion.div className="flex w-max whitespace-nowrap will-change-transform" style={{ x }} aria-hidden>
         {row}
         {row}
         {row}

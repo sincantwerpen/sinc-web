@@ -73,6 +73,8 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 - [x] Mobile pass in the browser at 320 / 360 / 375 / 390 / 430 / 768 px: no sideways scrolling, no words too wide
       for the screen, tap targets ≥ 40px, 16px form inputs (no iOS zoom), menu scrolls on short screens,
       pillar cards fit on iPhone SE, event badge stays out of the hero and footer on phones
+- [x] Smoother animations on phones: measured on a simulated phone (4–6× slower CPU), the work per frame
+      while scrolling dropped 40–65% on every page (homepage 6.9 → 3.0 ms per frame)
 - [ ] Test on real phones via the Vercel URL: iPhone (Safari) and Android (Chrome), portrait and landscape.
       Check the SINC morph, 3D photo carousel on Events, stacking cards, team page fly-ins, menu, round event
       badge + popup, both forms

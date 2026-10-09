@@ -55,7 +55,7 @@ export function Nav() {
   return (
     <>
       <motion.header
-        className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-5 sm:pt-5"
+        className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 will-change-transform sm:px-5 sm:pt-5"
         initial={{ y: -120 }}
         animate={{ y: hidden ? -120 : 0 }}
         transition={{ duration: 0.7, ease: EASE }}
@@ -64,7 +64,7 @@ export function Nav() {
           aria-label={nav.menuLabel}
           className={`flex w-full max-w-[1320px] items-center justify-between gap-4 rounded-full border pl-5 pr-2 transition-all duration-500 ease-out-expo ${
             scrolled
-              ? "h-16 border-white/10 bg-ink/70 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+              ? "h-16 border-white/10 bg-ink/95 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] lg:bg-ink/70 lg:backdrop-blur-xl"
               : "h-20 border-transparent bg-transparent"
           }`}
         >
@@ -143,38 +143,48 @@ export function Nav() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col overflow-y-auto overflow-x-hidden overscroll-contain touch-pan-y bg-ink px-6 pb-10 pt-32 lg:hidden"
-            initial={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
-            animate={{ clipPath: "circle(150% at calc(100% - 44px) 44px)" }}
-            exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
-            transition={{ duration: 0.8, ease: EASE }}
-          >
-            <div aria-hidden className="absolute -right-32 -top-32 size-[420px] glow text-blue/40" />
-            <ul className="relative mt-auto flex flex-col gap-1">
-              {[...nav.links, nav.cta].map((l, i) => (
-                <li key={l.href} className="overflow-hidden">
-                  <motion.div
-                    initial={{ y: "100%" }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.7, ease: EASE, delay: 0.15 + i * 0.05 }}
-                  >
-                    <Link
-                      href={l.href}
-                      onClick={() => setOpen(false)}
-                      aria-current={here(l.href) ? "page" : undefined}
-                      className={`text-display flex items-center gap-4 py-1 text-[clamp(40px,11vw,72px)] transition-colors active:text-blue ${
-                        here(l.href) ? "text-blue" : "text-cream"
-                      }`}
+          <motion.div key="menu" className="fixed inset-0 z-40 lg:hidden" initial="closed" animate="open" exit="closed">
+            {/* The ink background grows as a circle from the menu button. A small circle that is scaled up
+                (a transform) instead of an animated clip-path, so phones can draw it on the graphics card. */}
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute -right-1.5 -top-1.5 size-[100px] rounded-full bg-ink will-change-transform"
+              variants={{
+                closed: { transform: "scale(0)" },
+                open: { transform: `scale(${Math.ceil((2 * Math.hypot(window.innerWidth, window.innerHeight)) / 100) + 1})` },
+              }}
+              transition={{ duration: 0.8, ease: EASE }}
+            />
+            <motion.div
+              id="mobile-menu"
+              className="absolute inset-0 flex flex-col overflow-y-auto overflow-x-hidden overscroll-contain px-6 pb-10 pt-32"
+              variants={{ open: { opacity: 1 }, closed: { opacity: 0, transition: { duration: 0.25 } } }}
+            >
+              <div aria-hidden className="absolute -right-32 -top-32 size-[420px] glow text-blue/40" />
+              <ul className="relative mt-auto flex flex-col gap-1">
+                {[...nav.links, nav.cta].map((l, i) => (
+                  <li key={l.href} className="overflow-hidden">
+                    <motion.div
+                      initial={{ transform: "translateY(100%)" }}
+                      animate={{ transform: "translateY(0%)" }}
+                      transition={{ duration: 0.7, ease: EASE, delay: 0.15 + i * 0.05 }}
                     >
-                      {l.label}
-                      {here(l.href) && <span aria-hidden className="size-3 rounded-full bg-blue" />}
-                    </Link>
-                  </motion.div>
-                </li>
-              ))}
-            </ul>
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        aria-current={here(l.href) ? "page" : undefined}
+                        className={`text-display flex items-center gap-4 py-1 text-[clamp(40px,11vw,72px)] transition-colors active:text-blue ${
+                          here(l.href) ? "text-blue" : "text-cream"
+                        }`}
+                      >
+                        {l.label}
+                        {here(l.href) && <span aria-hidden className="size-3 rounded-full bg-blue" />}
+                      </Link>
+                    </motion.div>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

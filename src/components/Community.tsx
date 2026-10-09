@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { Button, Eyebrow, Reveal, RevealText } from "./ui";
 import { useT } from "./LangProvider";
 
@@ -10,10 +10,11 @@ export function Community() {
   const { community } = useT();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  // The photo opens up from a small window to full width as it scrolls into view.
-  const inset = useTransform(scrollYProgress, [0, 0.45], [14, 0]);
-  const radius = useTransform(scrollYProgress, [0, 0.45], [48, 32]);
-  const clip = useMotionTemplate`inset(${inset}% ${inset}% ${inset}% ${inset}% round ${radius}px)`;
+  // The photo opens up from a small window to full width as it scrolls into view: the frame grows while
+  // the photo inside shrinks by the same factor, so it looks like a mask opening. Only transforms, so the
+  // graphics card does the work (an animated clip-path is redrawn on every frame, which stutters on phones).
+  const frame = useTransform(scrollYProgress, [0, 0.45], [0.72, 1]);
+  const counter = useTransform(frame, (s) => 1 / s);
   const imgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
@@ -32,8 +33,11 @@ export function Community() {
       </div>
 
       <div ref={ref} className="container-x mt-14 sm:mt-20">
-        <motion.div style={{ clipPath: clip }} className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9]">
-          <motion.div style={{ y: imgY }} className="absolute -inset-y-[10%] inset-x-0">
+        <motion.div
+          style={{ scale: frame }}
+          className="relative aspect-[4/3] w-full overflow-hidden rounded-[40px] will-change-transform sm:aspect-[16/9]"
+        >
+          <motion.div style={{ y: imgY, scale: counter }} className="absolute -inset-y-[10%] inset-x-0 will-change-transform">
             <Image
               src={community.image}
               alt={community.imageAlt}

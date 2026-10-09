@@ -21,7 +21,7 @@ export default async function ContactPage() {
         lead={contactPage.lead}
         visual={
           <Reveal delay={0.2}>
-            <div className="relative overflow-hidden rounded-[32px] bg-ink-2/80 p-6 ring-1 ring-white/10 backdrop-blur-xl sm:p-8">
+            <div className="relative overflow-hidden rounded-[32px] bg-ink-2/80 p-6 ring-1 ring-white/10 lg:backdrop-blur-xl sm:p-8">
               <div aria-hidden className="absolute -right-20 -top-20 size-[300px] glow text-blue/25" />
               <div className="relative">
                 <ContactForm />

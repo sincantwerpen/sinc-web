@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useT } from "../LangProvider";
+import { DESKTOP, useMedia } from "../useMedia";
 import { Eyebrow } from "../ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -35,6 +36,8 @@ export function TeamHero() {
   const { scrollY } = useScroll();
   const wallY = useTransform(scrollY, [0, 700], [0, 160]);
   const titleScale = useTransform(scrollY, [0, 600], [1, 0.9]);
+  // On phones the wall and title stay still: moving them with the scroll costs too much there.
+  const desktop = useMedia(DESKTOP);
   const total = allMembers.length;
 
   return (
@@ -42,12 +45,14 @@ export function TeamHero() {
       {/* wall of faces behind the title */}
       <motion.div
         aria-hidden
-        style={{ y: wallY }}
-        className="absolute inset-x-0 top-24 -z-20 flex -rotate-6 flex-col gap-4 opacity-45 sm:top-16"
+        style={desktop ? { y: wallY } : undefined}
+        className="absolute inset-x-0 top-24 -z-20 flex -rotate-6 flex-col gap-4 opacity-45 sm:top-16 lg:will-change-transform"
       >
         <FaceRow />
         <FaceRow reverse offset={7} />
-        <FaceRow offset={13} />
+        <div className="max-sm:hidden">
+          <FaceRow offset={13} />
+        </div>
       </motion.div>
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_55%_at_50%_45%,rgba(11,14,20,0.92),rgba(11,14,20,0.55)_60%,rgba(11,14,20,0.2))]" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-72 bg-gradient-to-b from-transparent via-ink/80 to-ink" />
@@ -56,7 +61,7 @@ export function TeamHero() {
       <div className="container-x flex flex-col items-center gap-8 text-center">
         <Eyebrow>{teamPage.eyebrow}</Eyebrow>
         <motion.h1
-          style={{ scale: titleScale }}
+          style={desktop ? { scale: titleScale } : undefined}
           className="text-display text-[clamp(84px,17vw,260px)] leading-[0.85]"
           initial={{ opacity: 0, y: 80 }}
           animate={{ opacity: 1, y: 0 }}

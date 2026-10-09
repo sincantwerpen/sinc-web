@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
-/** Buttery inertial scrolling. Skipped for people who prefer reduced motion. */
+/** Buttery inertial scrolling with a mouse or trackpad. Skipped on touch screens and for reduced motion. */
 export function SmoothScroll() {
   const lenis = useRef<Lenis | null>(null);
   const backForward = useRef(false);
@@ -13,7 +13,9 @@ export function SmoothScroll() {
   useEffect(() => {
     const onPop = () => (backForward.current = true);
     window.addEventListener("popstate", onPop);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Phones and tablets keep their own (native) scrolling, which is the smoothest there.
+    const touch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    if (touch || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return () => window.removeEventListener("popstate", onPop);
     }
     const l = new Lenis({

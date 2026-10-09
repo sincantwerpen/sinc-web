@@ -94,7 +94,7 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
   };
 
   return (
-    <motion.div ref={wrap} className="h-full [perspective:1200px]" style={reduce ? undefined : { x, y, rotate }}>
+    <motion.div ref={wrap} className="h-full will-change-transform [perspective:1200px]" style={reduce ? undefined : { x, y, rotate }}>
       <motion.article
         ref={card}
         onPointerMove={onMove}
