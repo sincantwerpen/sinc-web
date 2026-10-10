@@ -21,8 +21,10 @@ export function SmoothScroll() {
     const l = new Lenis({
       duration: 1.15,
       smoothWheel: true,
-      // Scrolling inside the open phone menu must not move the (locked) page behind it.
-      prevent: (node) => !!node.closest("#mobile-menu"),
+      // Lenis steps aside (normal browser scrolling) when:
+      // - the page is zoomed in (pinch/trackpad zoom), so you can also move left and right;
+      // - scrolling inside the open phone menu, which must not move the (locked) page behind it.
+      prevent: (node) => (window.visualViewport?.scale ?? 1) > 1.01 || !!node.closest("#mobile-menu"),
     });
     lenis.current = l;
     let frame = requestAnimationFrame(function raf(time) {
