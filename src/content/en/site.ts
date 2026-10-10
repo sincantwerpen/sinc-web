@@ -41,7 +41,7 @@ export const nav = {
 export const hero = {
   eyebrow: "By and for students with an entrepreneurial mindset",
   title: "Students for Innovation & Cooperation",
-  lead: "SINC was founded in 2014 to help students go through life more entrepreneurially. We give students the right dose of inspiration, the right tools to get started, and the network they need to help them along the way.",
+  lead: "At SINC, we want to help students go through life more entrepreneurially. We give students the right dose of inspiration, the right tools to get started, and the network they need to help them along the way.",
   primary: { label: "Upcoming events", href: "/events" },
   secondary: { label: "Join our community", href: "/community" },
   photos: [

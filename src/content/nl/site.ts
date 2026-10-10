@@ -40,7 +40,7 @@ export const nav = {
 export const hero = {
   eyebrow: "Voor en door studenten met ondernemingszin",
   title: "Students for Innovation & Cooperation",
-  lead: "SINC is ontstaan in 2014 om studenten ondernemender door het leven te gaan. We geven studenten de nodige dosis inspiratie, de juiste tools om van start te gaan, en het nodige netwerk om hen daarbij te helpen.",
+  lead: "Bij SINC willen we studenten ondernemender door het leven laten gaan. We geven studenten de nodige dosis inspiratie, de juiste tools om van start te gaan, en het nodige netwerk om hen daarbij te helpen.",
   primary: { label: "Aankomende events", href: "/events" },
   secondary: { label: "Join onze community", href: "/community" },
   photos: [
