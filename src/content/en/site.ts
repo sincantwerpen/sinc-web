@@ -207,3 +207,12 @@ export const notFound = {
   home: { label: "Go to the homepage", href: "/" },
   events: { label: "See our events", href: "/events" },
 };
+
+/** Page after confirming the newsletter sign-up (Flexmail redirects here). */
+export const newsletterConfirmed = {
+  eyebrow: "Newsletter",
+  title: "You're subscribed!",
+  text: "Thanks for confirming your subscription. From now on, you won't miss a single SINC event or piece of news about student entrepreneurship.",
+  events: { label: "See our events", href: "/events" },
+  socials: { label: "Follow our socials", href: "https://linktr.ee/sincantwerpen" },
+};

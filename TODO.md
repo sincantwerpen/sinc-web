@@ -16,6 +16,8 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
       which language to reply. Check it shows up in the Formspree mail
 
 ## Check by hand
+- [ ] Flexmail: set the opt-in form's page after confirmation to
+      `https://website26-27.vercel.app/nieuwsbrief/bevestigd` (after going live: `https://sincantwerpen.be/nieuwsbrief/bevestigd`)
 - [ ] Facebook link in the footer (facebook.com/sincantwerpen): Facebook blocks automatic checks, so open it
       once yourself to make sure the page still exists
 
@@ -34,9 +36,6 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
       TypeScript gives an error when the English version is missing something
 - [ ] New events: add the English text in `src/content/en/events.ts` (by slug). Until then the English
       site shows the Dutch text for that event
-- [ ] Het team: email + LinkedIn per person in `src/content/nl/team.ts` (`email`, `linkedin` fields, only needed there; the
-      buttons are already there, dimmed until filled in)
-- [ ] Het team: Tugce's photo (portrait, roughly 3:4, put it in `public/images/team-2026/`) and surname
 - [ ] Privacy statement (`privacyPage` in `src/content/nl/pages.ts`, and the English
       version in `src/content/en/pages.ts`):
       - one address (now both Van Schoonbekestraat 55 and Ijzerenpoortkaai 3; the footer uses Ijzerenpoortkaai)
@@ -73,6 +72,7 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 - [x] Mobile pass in the browser at 320 / 360 / 375 / 390 / 430 / 768 px: no sideways scrolling, no words too wide
       for the screen, tap targets ≥ 40px, 16px form inputs (no iOS zoom), menu scrolls on short screens,
       pillar cards fit on iPhone SE, event badge stays out of the hero and footer on phones
+- [x] Newsletter thank-you page: `/nieuwsbrief/bevestigd` (EN: `/en/nieuwsbrief/bevestigd`)
 - [x] Smoother animations on phones: measured on a simulated phone (4–6× slower CPU), the work per frame
       while scrolling dropped 40–65% on every page (homepage 6.9 → 3.0 ms per frame)
 - [ ] Test on real phones via the Vercel URL: iPhone (Safari) and Android (Chrome), portrait and landscape.
@@ -83,6 +83,7 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 - [x] Smoother animations, no stray boxes while scrolling
 - [x] Newsletter code connected to Flexmail (keys still needed, see Forms)
 - [x] Het team page with the 2026–2027 team, departments and roles
+- [x] Team: photo, email (checked against the SINC mailing list) and LinkedIn for all 19 members
 - [x] Ecosysteem page removed (useful text moved to Community; `/ecosysteem` redirects there)
 - [x] Partners page logo-only, partner footer hidden on /partners
 - [x] Over SINC: 19 students, new photos and group photo
