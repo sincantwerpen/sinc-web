@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { eventSlugs } from "@/content";
 import { localize } from "@/i18n";
 
-const SITE = "https://sincantwerpen.be";
+const SITE = "https://www.sincantwerpen.be";
 
 /** /sitemap.xml: every page in Dutch with its English version, for Google. */
 export default function sitemap(): MetadataRoute.Sitemap {

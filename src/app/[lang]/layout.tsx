@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: siteMeta.title,
     description: shortDescription(siteMeta.description),
-    metadataBase: new URL("https://sincantwerpen.be"),
+    metadataBase: new URL("https://www.sincantwerpen.be"),
     openGraph: {
       title: "SINC Antwerpen",
       description: "Students for Innovation & Cooperation",
