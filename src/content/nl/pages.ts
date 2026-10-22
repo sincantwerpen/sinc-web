@@ -124,6 +124,12 @@ export const partnersPage = {
   title: "Powered by onze ondernemings-gezinde partners",
   lead: "Een uitgebreid netwerk van partners zorgt ervoor dat wij kunnen doen wat we doen. Ze hebben veel te bieden voor jullie als student-ondernemers of studenten met ondernemingszin. Leer ze hier kennen.",
   cta: { label: "Zelf partner worden?", href: "/contact" },
+  /** Headings of the three groups on the partners page. */
+  tiers: {
+    main: { eyebrow: "Hoofdpartners", title: "Zij maken SINC mogelijk" },
+    featured: { eyebrow: "Partners", title: "Hulp voor jouw onderneming" },
+    others: { eyebrow: "Netwerk", title: "Ook partner van SINC" },
+  },
   heroPhotos: [1, 6, 5, 2, 3, 4].map((n) => `/images/partners/cards/hero-0${n}.webp`),
   main: [
     {
@@ -171,6 +177,12 @@ export const partnersPage = {
       text: "Xerius ondersteunt bij de opstart, wijziging en stopzetting van ondernemingen. We regelen de administratie voor startende zelfstandigen en controleren elk document zorgvuldig. Daarnaast berekenen we sociale bijdragen en informeren we proactief over rechten en plichten. Vanuit 12 kantoren helpen we meer dan 240.000 zelfstandigen en 146.000 vennootschappen. Bij elke stap staat Xerius achter jou.",
       links: [{ label: "Ontdek meer", href: "https://www.xerius.be/nl-be" }],
     },
+    {
+      name: "Winfakt",
+      logo: "/images/partners/winfakt.png",
+      text: "Winfakt – Slim ondernemen begint hier!\n\nEen eigen zaak starten? Een geweldig idee! Maar bij ondernemen komt natuurlijk meer kijken dan alleen een goed concept.\n\nWinfakt maakt ondernemen eenvoudiger. Met onze gebruiksvriendelijke software regel je moeiteloos je offertes, facturen en administratie. Zo verlies je minder tijd aan papierwerk en hou je meer tijd over voor wat écht telt: jouw onderneming laten groeien.\n\nOf je nu droomt van je eigen start-up of al volop aan het ondernemen bent: Winfakt groeit met je mee!\n\nJij focust op je ideeën, wij maken de administratie eenvoudig.",
+      links: [{ label: "Ontdek meer", href: "https://www.winfakt.be" }],
+    },
   ] satisfies Partner[],
   others: [
     { name: "The Beacon", logo: "/images/partners/the-beacon.webp", links: [{ label: "Ontdek meer", href: "https://www.thebeacon.eu/" }] },
@@ -179,7 +191,7 @@ export const partnersPage = {
     { name: "the launch.", logo: "/images/partners/cards/the-launch.png", links: [{ label: "Ontdek meer", href: "https://www.launchcrew.be/" }] },
     { name: "Flexmail", logo: "/images/partners/flexmail.webp", links: [{ label: "Ontdek meer", href: "https://flexmail.be/nl/" }] },
     { name: "StoryChief", logo: "/images/partners/storychief.webp", links: [{ label: "Ontdek meer", href: "https://www.storychief.io/" }] },
-    { name: "TakeOffAntwerp_", logo: "/images/partners/takoffantwerp.webp", links: [{ label: "Ontdek meer", href: "https://www.takeoffantwerp.be/" }] },
+    { name: "TakeOffAntwerp × VLAIO", logo: "/images/partners/takeoffantwerp-vlaio.png", links: [{ label: "Ontdek meer", href: "https://www.takeoffantwerp.be/" }] },
   ] satisfies Partner[],
   band: {
     title: "Ben jij geïnteresseerd in een samenwerking met SINC?",

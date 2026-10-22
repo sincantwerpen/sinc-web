@@ -5,6 +5,7 @@ import type { Content } from "@/content";
 import { Newsletter } from "./Newsletter";
 import { Button, Reveal } from "./ui";
 import { HideOn } from "./HideOn";
+import { PartnerLogo } from "./PartnerLogo";
 
 function PartnerRow({ partners, reverse = false }: { partners: Content["partners"]; reverse?: boolean }) {
   const logos = reverse ? [...partners.logos].reverse() : partners.logos;
@@ -27,9 +28,9 @@ function PartnerRow({ partners, reverse = false }: { partners: Content["partners
                 target="_blank"
                 rel="noreferrer"
                 tabIndex={copy === 1 ? -1 : undefined}
-                className="flex h-28 w-52 items-center justify-center rounded-3xl bg-white/[0.04] px-8 ring-1 ring-white/8 transition-all duration-300 hover:-translate-y-1 hover:bg-blue/15 hover:ring-blue sm:w-60"
+                className="flex h-28 w-56 items-center justify-center rounded-3xl bg-white/[0.04] px-8 ring-1 ring-white/8 transition-all duration-300 hover:-translate-y-1 hover:bg-blue/15 hover:ring-blue sm:w-64"
               >
-                <Image src={l.src} alt={l.name} width={200} height={80} loading="eager" className="max-h-12 w-auto object-contain" />
+                <PartnerLogo src={l.src} alt={l.name} area={6200} maxWidth={180} maxHeight={60} eager />
               </a>
             </li>
           ))}
