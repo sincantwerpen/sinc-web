@@ -58,7 +58,6 @@ function PartnerLinks({ p }: { p: Partner }) {
 
 export default async function PartnersPage() {
   const { partnersPage } = await getT();
-  const [moore, ...mainRest] = partnersPage.main;
   const { tiers } = partnersPage;
   return (
     <main>
@@ -70,24 +69,12 @@ export default async function PartnersPage() {
         visual={<PhotoFan photos={partnersPage.heroPhotos} />}
       />
 
-      {/* Main partners: Moore with its story, then De Cronos Groep and Stad Antwerpen */}
+      {/* Main partners: De Cronos Groep and Stad Antwerpen */}
       <section className="pb-12 pt-20 sm:pt-28" aria-labelledby="tier-main">
         <div className="container-x flex flex-col gap-8">
           <TierHead id="tier-main" eyebrow={tiers.main.eyebrow} title={tiers.main.title} />
-          <Reveal>
-            <SpotlightCard>
-              <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-14">
-                <div className="flex flex-col gap-6">
-                  <Logo p={moore} tall />
-                  <h3 className="sr-only">{moore.name}</h3>
-                  <PartnerLinks p={moore} />
-                </div>
-                <p className="text-[17px] leading-[1.75] text-cream/75">{moore.text}</p>
-              </div>
-            </SpotlightCard>
-          </Reveal>
           <div className="grid gap-5 md:grid-cols-2">
-            {mainRest.map((p, i) => (
+            {partnersPage.main.map((p, i) => (
               <Reveal key={p.name} delay={i * 0.08} className="h-full">
                 <SpotlightCard className="h-full">
                   <div className="flex h-full flex-col gap-6 p-7 sm:p-8">

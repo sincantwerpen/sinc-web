@@ -119,7 +119,6 @@ export const partners = {
   text: "Dankzij onze partners kunnen wij een toegankelijk platform bieden voor studenten met ondernemingszin. Ontdek onze partners hier.",
   cta: { label: "Meer over onze partners", href: "/partners" },
   logos: [
-    { name: "Moore", src: "/images/partners/moore-wit-1.png", href: "https://www.moore.be" },
     { name: "De Cronos Groep", src: "/images/partners/de-cronos-groep.webp", href: "https://cronos-groep.be/" },
     { name: "Stad Antwerpen", src: "/images/partners/stad-antwerpen.webp", href: "https://www.antwerpen.be/ondernemers-en-bedrijven" },
     { name: "Pitchdrive", src: "/images/partners/cards/pitchdrive.png", href: "https://pitchdrive.com/" },
@@ -128,10 +127,10 @@ export const partners = {
     { name: "The Beacon", src: "/images/partners/the-beacon.webp", href: "https://www.thebeacon.eu/" },
     { name: "Humgy", src: "/images/partners/humgy.webp", href: "https://www.humgy.com/" },
     { name: "Vlajo", src: "/images/partners/vlajo.webp", href: "https://www.vlajo.org/" },
-    { name: "the launch.", src: "/images/partners/cards/the-launch.png", href: "https://www.launchcrew.be/" },
     { name: "Flexmail", src: "/images/partners/flexmail.webp", href: "https://flexmail.be/nl/" },
     { name: "StoryChief", src: "/images/partners/storychief.webp", href: "https://www.storychief.io/" },
     { name: "TakeOffAntwerp × VLAIO", src: "/images/partners/takeoffantwerp-vlaio.png", href: "https://www.takeoffantwerp.be/" },
+    { name: "Moore", src: "/images/partners/moore-wit-1.png", href: "https://www.moore.be" },
   ],
 };
 

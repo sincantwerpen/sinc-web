@@ -107,8 +107,6 @@ export const communityPage = {
 };
 
 
-const MOORE =
-  "Bij Moore zijn we er voor ondernemers. Voor elke kmo, voor elk familiebedrijf, groot of klein, en voor de ambitieuze managementteams met een passie voor ondernemerschap. Zij hebben een onstopbare drive om te groeien. En daar houden wij van. Want ondernemers zijn de motor van onze economie. Ondernemerschap zit in ons DNA. We weten hoe ondernemers denken en handelen omdat we zelf ondernemers zijn. We hebben onmisbare expertise opgebouwd, en die willen we delen. We helpen ondernemers in hun dagelijkse bedrijfsvoering. We adviseren en begeleiden hen op sleutelmomenten. Proactief en op maat. Van fiscaal en juridisch advies tot corporate finance, business consulting, innovatie en digitale transformatie. Meedenken, meewerken en meegroeien. Wij zijn ondernemers, net als u.";
 
 export type Partner = {
   name: string;
@@ -132,16 +130,6 @@ export const partnersPage = {
   },
   heroPhotos: [1, 6, 5, 2, 3, 4].map((n) => `/images/partners/cards/hero-0${n}.webp`),
   main: [
-    {
-      name: "Moore",
-      logo: "/images/partners/cards/moore.png",
-      lightTile: true,
-      text: MOORE,
-      links: [
-        { label: "Website", href: "https://www.moore.be" },
-        { label: "Social media", href: "https://www.linkedin.com/company/moorebelgium/" },
-      ],
-    },
     {
       name: "De Cronos Groep",
       logo: "/images/partners/de-cronos-groep.webp",
@@ -188,10 +176,10 @@ export const partnersPage = {
     { name: "The Beacon", logo: "/images/partners/the-beacon.webp", links: [{ label: "Ontdek meer", href: "https://www.thebeacon.eu/" }] },
     { name: "Humgy Cowork", logo: "/images/partners/humgy.webp", links: [{ label: "Ontdek meer", href: "https://www.humgy.com/" }] },
     { name: "Vlajo", logo: "/images/partners/vlajo.webp", links: [{ label: "Ontdek meer", href: "https://www.vlajo.org/" }] },
-    { name: "the launch.", logo: "/images/partners/cards/the-launch.png", links: [{ label: "Ontdek meer", href: "https://www.launchcrew.be/" }] },
     { name: "Flexmail", logo: "/images/partners/flexmail.webp", links: [{ label: "Ontdek meer", href: "https://flexmail.be/nl/" }] },
     { name: "StoryChief", logo: "/images/partners/storychief.webp", links: [{ label: "Ontdek meer", href: "https://www.storychief.io/" }] },
     { name: "TakeOffAntwerp × VLAIO", logo: "/images/partners/takeoffantwerp-vlaio.png", links: [{ label: "Ontdek meer", href: "https://www.takeoffantwerp.be/" }] },
+    { name: "Moore", logo: "/images/partners/moore-wit-1.png", links: [{ label: "Ontdek meer", href: "https://www.moore.be" }] },
   ] satisfies Partner[],
   band: {
     title: "Ben jij geïnteresseerd in een samenwerking met SINC?",

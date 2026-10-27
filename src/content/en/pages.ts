@@ -106,8 +106,6 @@ export const communityPage = {
   },
 };
 
-const MOORE =
-  "At Moore, we're there for entrepreneurs. For every SME, for every family business, large or small, and for ambitious management teams with a passion for entrepreneurship. They have an unstoppable drive to grow. And we love that. Because entrepreneurs are the engine of our economy. Entrepreneurship is in our DNA. We know how entrepreneurs think and act because we are entrepreneurs ourselves. We've built up indispensable expertise, and we want to share it. We help entrepreneurs in their day-to-day business operations. We advise and guide them at key moments. Proactively and tailored to their needs. From tax and legal advice to corporate finance, business consulting, innovation and digital transformation. Thinking along, working along and growing along. We are entrepreneurs, just like you.";
 
 export const partnersPage = {
   eyebrow: "Partners",
@@ -122,16 +120,6 @@ export const partnersPage = {
   },
   heroPhotos: [1, 6, 5, 2, 3, 4].map((n) => `/images/partners/cards/hero-0${n}.webp`),
   main: [
-    {
-      name: "Moore",
-      logo: "/images/partners/cards/moore.png",
-      lightTile: true,
-      text: MOORE,
-      links: [
-        { label: "Website", href: "https://www.moore.be" },
-        { label: "Social media", href: "https://www.linkedin.com/company/moorebelgium/" },
-      ],
-    },
     {
       name: "De Cronos Groep",
       logo: "/images/partners/de-cronos-groep.webp",
@@ -178,10 +166,10 @@ export const partnersPage = {
     { name: "The Beacon", logo: "/images/partners/the-beacon.webp", links: [{ label: "Discover more", href: "https://www.thebeacon.eu/" }] },
     { name: "Humgy Cowork", logo: "/images/partners/humgy.webp", links: [{ label: "Discover more", href: "https://www.humgy.com/" }] },
     { name: "Vlajo", logo: "/images/partners/vlajo.webp", links: [{ label: "Discover more", href: "https://www.vlajo.org/" }] },
-    { name: "the launch.", logo: "/images/partners/cards/the-launch.png", links: [{ label: "Discover more", href: "https://www.launchcrew.be/" }] },
     { name: "Flexmail", logo: "/images/partners/flexmail.webp", links: [{ label: "Discover more", href: "https://flexmail.be/nl/" }] },
     { name: "StoryChief", logo: "/images/partners/storychief.webp", links: [{ label: "Discover more", href: "https://www.storychief.io/" }] },
     { name: "TakeOffAntwerp × VLAIO", logo: "/images/partners/takeoffantwerp-vlaio.png", links: [{ label: "Discover more", href: "https://www.takeoffantwerp.be/" }] },
+    { name: "Moore", logo: "/images/partners/moore-wit-1.png", links: [{ label: "Discover more", href: "https://www.moore.be" }] },
   ] satisfies Partner[],
   band: {
     title: "Interested in working together with SINC?",

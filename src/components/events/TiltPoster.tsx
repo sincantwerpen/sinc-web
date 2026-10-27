@@ -44,9 +44,12 @@ export function TiltPoster({ src, alt }: { src: string; alt: string }) {
         onPointerMove={onMove}
         onPointerLeave={reset}
         style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
-        className="relative aspect-[4/3] overflow-hidden rounded-[28px] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/15"
+        className="relative aspect-square overflow-hidden rounded-[28px] bg-ink-2 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.9)] ring-1 ring-white/15"
       >
-        <Image src={src} alt={alt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+        {/* Square like Luma posters. Other shapes are shown whole instead of cut off, with a blurred
+            copy of the same image filling the rest of the frame. */}
+        <Image src={src} alt="" aria-hidden fill sizes="96px" className="scale-125 object-cover opacity-60 blur-2xl" />
+        <Image src={src} alt={alt} fill priority sizes="(min-width: 1024px) 45vw, 100vw" className="object-contain" />
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 mix-blend-soft-light"
