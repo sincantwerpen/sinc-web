@@ -70,7 +70,7 @@ export function EmptyEventsCard({ showCta = true }: { showCta?: boolean }) {
 }
 
 export function Events() {
-  const { events, upcomingEvents } = useT();
+  const { events, homeEvents } = useT();
   return (
     <section className="relative py-28 sm:py-40" aria-labelledby="events-title">
       <div className="container-x flex flex-col gap-14 sm:gap-20">
@@ -87,11 +87,11 @@ export function Events() {
           </Reveal>
         </div>
 
-        {upcomingEvents.length === 0 ? (
+        {homeEvents.length === 0 ? (
           <EmptyEventsCard />
         ) : (
           <div className="flex flex-col gap-6">
-            {upcomingEvents.map((e) => (
+            {homeEvents.map((e) => (
               <FeaturedEvent key={e.slug} event={e} />
             ))}
           </div>

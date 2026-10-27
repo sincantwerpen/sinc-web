@@ -5,10 +5,10 @@
 Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 
 ## Forms
-- [ ] Contact form: create a Formspree form for info@sincantwerpen.be and add its address as
-      `CONTACT_WEBHOOK_URL` in Vercel (step-by-step in the chat). Test: send a message, confirm the form
-      in the first Formspree mail, check that "Reply" answers the sender and that the language
-      ("Nederlands"/"English") shows in the mail
+- [ ] Contact form: goes to the SINC dashboard since the dashboard integration (branch
+      `dashboard-integration`). After both are live: set `DASHBOARD_URL` and `DASHBOARD_API_KEY` in Vercel,
+      send a test message and check it on the dashboard's Contact page. Formspree is then not needed
+      (`CONTACT_WEBHOOK_URL` stays a fallback)
 - [ ] Flexmail: set the opt-in form's page after confirmation to
       `https://website26-27.vercel.app/nieuwsbrief/bevestigd` (after going live:
       `https://sincantwerpen.be/nieuwsbrief/bevestigd`)
@@ -20,7 +20,9 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
       - one address (now both Van Schoonbekestraat 55 and Ijzerenpoortkaai 3; the footer uses Ijzerenpoortkaai)
       - remove WordPress and Google Analytics (no longer used)
       - Belgian authority (Gegevensbeschermingsautoriteit, GBA) instead of the Dutch Autoriteit Persoonsgegevens
-      - mention the processors: Vercel (hosting), Flexmail (newsletter), Formspree (contact form), Luma (tickets)
+      - mention the processors: Vercel (hosting of site and dashboard), Turso (dashboard database), Google
+        Workspace (mails, sign-in), Flexmail (newsletter), Luma (tickets during the test semester); the event
+        registration fields (school, field of study, year, entrepreneurial stage) and the 5-year retention
       - "profiel aanmaken op deze website" is no longer possible: remove that line
 - [ ] "SINC in cijfers" on Over SINC (99+ alumni, 60+ events, 4000+ community members): check this year's numbers
 - [ ] Community: two "Coming soon..." blocks ("Student ondernemers in de kijker" and "Wil jij ook vermeld

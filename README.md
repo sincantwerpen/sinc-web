@@ -11,6 +11,45 @@ npm run dev
 
 Then open http://localhost:3000.
 
+Checks before every push: `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`.
+
+## Dashboard (events, registration, team, photos, contact)
+
+Since phase 3 of the SINC dashboard (dashboard.sincantwerpen.be, repo `sincantwerpen/sinc-dashboard`), the
+dashboard is the single source for the events, the team page and the site photos; this site only shows
+them. The connection is server to server with a shared key:
+
+| Variable | What |
+|---|---|
+| `DASHBOARD_URL` | The dashboard's address: `https://dashboard.sincantwerpen.be` (locally `http://localhost:3100`) |
+| `DASHBOARD_API_KEY` | The same key as `DASHBOARD_API_KEY` in the dashboard |
+
+How it works (code in `src/lib/dashboard/`):
+
+- Every page asks the dashboard for its data once (`GET /api/public/site`), cached for at most a minute
+  under the tag `dashboard`. After a change the dashboard calls `POST /api/revalidate` (with the key), so
+  the site shows it within seconds.
+- The dashboard's data is laid over `src/content` (`withLive` in `src/lib/dashboard/live.ts`): an event
+  from the dashboard replaces the site's own event with the same address (slug), the rest of the archive
+  stays; the homepage shows the events the team picks under Homepage-events; the team page comes from the
+  dashboard; a replaced photo replaces every use of that path (`/images/...`).
+- **When the dashboard is not configured or not reachable, the site shows exactly its own content from
+  `src/content`, as before.** Nothing else breaks; only registering on this site needs the dashboard.
+- Events from the dashboard get a Luma-like page (`src/components/events/LumaEvent.tsx`): poster, date,
+  location with a map link, and a registration card. "Inschrijven" opens the registration panel on the page
+  (`RegisterPanel.tsx`); afterwards "Je bent erbij!" with the QR ticket and calendar links. Per event the
+  team can keep a Luma link instead (test semester): the button then opens Luma.
+- `/ticket/<token>` (the link in the ticket mail): the ticket with QR and PDF, change details, cancel.
+  `/betalen/<token>` (the link in the payment mail): IBAN, amount, structured reference, optional proof of
+  payment (max 4 MB, the Vercel limit). Both are passed on to the dashboard via `src/app/api/`.
+- Images from the dashboard (posters, portraits, photos) are loaded through `/api/media/...`.
+- The newsletter box when registering is separate and unticked; only when ticked does the address go
+  to Flexmail.
+
+Run both locally: in the dashboard folder `npm run dev` (port 3100) with `DASHBOARD_API_KEY=local-dev-key`
+and `WEBSITE_URL=http://localhost:3000` in its `.env.local`; here `.env.local` with
+`DASHBOARD_URL=http://localhost:3100` and the same key (see `.env.example`), then `npm run dev`.
+
 ## Where things live
 
 | What | Where |
@@ -26,8 +65,10 @@ To change text, edit `src/content/site.ts`; you don't need to touch the componen
 
 ## Events
 
-Every event (title, poster, date, location, price, ticket link and the full "Over dit event" text) lives in
-`src/content/events.ts`, newest first. Each event automatically gets its own page at `/events/<slug>`.
+New events are made and published in the SINC dashboard (see above). The site's own list in
+`src/content/nl/events.ts` (title, poster, date, location, price, ticket link and the full "Over dit event"
+text, newest first) is the archive, and what the site shows when the dashboard is off. Each event
+automatically gets its own page at `/events/<slug>`.
 
 - **New event:** copy an existing entry to the top of the list, change the fields, put the poster in
   `public/images/events/past/` and set `upcoming: true`. It then appears under "Aankomende events" with a
@@ -43,9 +84,9 @@ The pages themselves are in `src/app/<page>/page.tsx`.
 
 ## Contact form
 
-The form posts to `/api/contact`. Set `CONTACT_WEBHOOK_URL` (for example a Zapier/Make webhook that
-emails info@sincantwerpen.be, or a Formspree endpoint) to deliver messages. Until then the form tells
-visitors to mail info@sincantwerpen.be directly.
+The form posts to `/api/contact`, which sends the message to the dashboard (page Contact there), with
+the visitor's language. Without the dashboard, `CONTACT_WEBHOOK_URL` (e.g. a Formspree endpoint) is used if
+set; with neither, the form tells visitors to mail info@sincantwerpen.be directly.
 
 ## Newsletter (Flexmail)
 

@@ -2,6 +2,8 @@
 // Newest first. Add new events at the top; set `upcoming: true` to show one under "Aankomende events"
 // (with a "Registreer" button that opens `ticketUrl`).
 
+import type { DashEvent } from "@/lib/dashboard/types";
+
 export type Pillar = "Inspireren" | "Informeren" | "Connecteren" | "Activeren";
 
 export type SincEvent = {
@@ -27,6 +29,8 @@ export type SincEvent = {
    */
   body: string[];
   upcoming?: boolean;
+  /** Set for events that come from the SINC dashboard (src/lib/dashboard): registration on this site. */
+  dashboard?: DashEvent;
 };
 
 export const sincEvents: SincEvent[] = [
@@ -352,3 +356,5 @@ export const pillars: Pillar[] = ["Inspireren", "Informeren", "Connecteren", "Ac
 export const upcomingEvents = sincEvents.filter((e) => e.upcoming);
 export const pastEvents = sincEvents.filter((e) => !e.upcoming);
 export const getEvent = (slug: string) => sincEvents.find((e) => e.slug === slug);
+/** The events on the homepage. With the dashboard connected, the team picks them there. */
+export const homeEvents = upcomingEvents;

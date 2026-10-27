@@ -201,3 +201,4 @@ export { pillars };
 export const upcomingEvents = sincEvents.filter((e) => e.upcoming);
 export const pastEvents = sincEvents.filter((e) => !e.upcoming);
 export const getEvent = (slug: string) => sincEvents.find((e) => e.slug === slug);
+export const homeEvents = upcomingEvents;

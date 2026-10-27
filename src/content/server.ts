@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { lang as rootLang } from "next/root-params";
 import { isLang, defaultLang, localize, type Lang } from "@/i18n";
+import { cache } from "react";
 import { getContent } from ".";
+import { fetchSite } from "@/lib/dashboard/client";
+import { liveFor, withLive, type Live } from "@/lib/dashboard/live";
 
 /** Language of the page being rendered (Server Components only). */
 export async function getLang(): Promise<Lang> {
@@ -9,9 +12,18 @@ export async function getLang(): Promise<Lang> {
   return value && isLang(value) ? value : defaultLang;
 }
 
-/** Texts of the page being rendered (Server Components only). */
+/** The dashboard's events, team and photos for a language; null = only the site's own content. */
+export const getLive = cache(async (lang: Lang): Promise<Live | null> => liveFor(await fetchSite(), lang));
+
+/** Texts of the page being rendered (Server Components only), with the dashboard's data laid over them. */
 export async function getT() {
-  return getContent(await getLang());
+  const lang = await getLang();
+  return withLive(getContent(lang), await getLive(lang));
+}
+
+/** Every event address, the site's own and the dashboard's. */
+export async function allEventSlugs(): Promise<string[]> {
+  return withLive(getContent(defaultLang), await getLive(defaultLang)).sincEvents.map((e) => e.slug);
 }
 
 /**

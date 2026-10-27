@@ -37,7 +37,12 @@ In Vercel: **Project → Settings → Environment Variables** (kies "Production"
 | `FLEXMAIL_TOKEN` | een nieuw *personal access token* (maak er één aan voor de website) |
 | `FLEXMAIL_OPT_IN_FORM_ID` | het ID van een actief opt-in formulier (bevestigingsmail = dubbele opt-in, AVG-proof) |
 
-**Contactformulier**: maak een gratis formulier op **formspree.io** met als ontvanger info@sincantwerpen.be
+**Dashboard** (na de website-integratie, branch `dashboard-integration`): zet `DASHBOARD_URL`
+(`https://dashboard.sincantwerpen.be`) en `DASHBOARD_API_KEY` (dezelfde sleutel als in het dashboard). Daarmee
+komen events, inschrijvingen, het team, de foto's en het contactformulier uit het dashboard. Zonder blijft de
+site zijn eigen inhoud tonen.
+
+**Contactformulier** (enkel nodig zonder dashboard): maak een gratis formulier op **formspree.io** met als ontvanger info@sincantwerpen.be
 (gratis plan: 50 berichten/maand). Formspree geeft een adres zoals `https://formspree.io/f/abcd1234`.
 | Naam | Waarde |
 |---|---|

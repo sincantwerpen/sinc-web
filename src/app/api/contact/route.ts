@@ -1,6 +1,9 @@
-// Contact form messages. Not connected yet: set CONTACT_WEBHOOK_URL (e.g. a Zapier/Make webhook that
-// emails info@sincantwerpen.be, or a Formspree endpoint) to deliver messages.
-// Without it the endpoint answers 503 and the form tells visitors to mail info@sincantwerpen.be instead.
+// Contact form messages go to the SINC dashboard (Contact page there), replacing Formspree.
+// Without the dashboard (DASHBOARD_URL + DASHBOARD_API_KEY), CONTACT_WEBHOOK_URL is used if set
+// (e.g. a Formspree endpoint). With neither, or when delivery fails, the endpoint answers an error
+// and the form tells visitors to mail info@sincantwerpen.be instead.
+
+import { dashboardConfigured, dashboardFetch } from "@/lib/dashboard/client";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -19,6 +22,21 @@ export async function POST(request: Request) {
   if (String(body.website ?? "")) return Response.json({ ok: true });
   if (!name || !EMAIL.test(email) || !message || name.length > 200 || message.length > 5000) {
     return Response.json({ error: "invalid_fields" }, { status: 400 });
+  }
+
+  if (dashboardConfigured()) {
+    try {
+      const res = await dashboardFetch("/api/public/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: crypto.randomUUID(), at: new Date().toISOString(), name, email, message, lang: body.language === "en" ? "EN" : "NL" }),
+      });
+      if (res.ok) return Response.json({ ok: true });
+      console.error("Contact form: dashboard answered", res.status);
+    } catch (err) {
+      console.error("Contact form: dashboard not reachable", err);
+    }
+    if (!process.env.CONTACT_WEBHOOK_URL) return Response.json({ error: "upstream_failed" }, { status: 502 });
   }
 
   const webhook = process.env.CONTACT_WEBHOOK_URL;

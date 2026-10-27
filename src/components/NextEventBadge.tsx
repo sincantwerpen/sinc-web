@@ -9,7 +9,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
-import { getContent, type Content } from "@/content";
+import type { Content } from "@/content";
 import { intlLocale, type Lang } from "@/i18n";
 import { ArrowIcon } from "@/components/ui";
 import { useLang, useT } from "./LangProvider";
@@ -39,17 +39,16 @@ function relativeDay(iso: string, copy: Content["nextEventBadge"]) {
  * Round button in the bottom-right corner with the date of the next event. The text ring turns
  * slowly and speeds up on hover; clicking opens a small card that links to the event page.
  */
-// Which event is next only depends on the dates, which are the same in every language.
-const dated = getContent("nl").upcomingEvents.filter((e) => e.startsAt);
 const noSubscribe = () => () => {};
-/** First event that hasn't ended yet (counted as over 4 hours after the start). */
-const nextSlug = () => dated.find((e) => Date.parse(e.startsAt!) + 4 * 3600_000 > Date.now())?.slug ?? null;
 
 export function NextEventBadge() {
-  // The page is built ahead of time, so the browser re-checks which event is next.
-  const slug = useSyncExternalStore(noSubscribe, nextSlug, () => dated[0]?.slug ?? null);
   const lang = useLang();
   const { upcomingEvents, nextEventBadge: copy } = useT();
+  // Which event is next only depends on the dates. The page is built ahead of time, so the browser
+  // re-checks it: the first event that hasn't ended yet (counted as over 4 hours after the start).
+  const dated = upcomingEvents.filter((e) => e.startsAt);
+  const nextSlug = () => dated.find((e) => Date.parse(e.startsAt!) + 4 * 3600_000 > Date.now())?.slug ?? null;
+  const slug = useSyncExternalStore(noSubscribe, nextSlug, () => dated[0]?.slug ?? null);
   const event = upcomingEvents.find((e) => e.slug === slug);
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);

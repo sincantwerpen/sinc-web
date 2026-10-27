@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
-import { eventSlugs } from "@/content";
+import { allEventSlugs } from "@/content/server";
 import { localize } from "@/i18n";
 
 const SITE = "https://www.sincantwerpen.be";
 
 /** /sitemap.xml: every page in Dutch with its English version, for Google. */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const eventSlugs = await allEventSlugs();
   const paths = ["/", "/events", "/partners", "/community", "/over-sinc", "/het-team", "/contact", "/privacy", ...eventSlugs.map((s) => `/events/${s}`)];
   return paths.flatMap((path) =>
     (["nl", "en"] as const).map((lang) => ({

@@ -17,5 +17,6 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Everything except API routes, Next.js internals and files (anything with a dot, e.g. /icon.png).
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  // Ticket and payment links do have a dot (<id>.<signature>), so they are listed on their own.
+  matcher: ["/((?!api|_next|.*\\..*).*)", "/ticket/:token", "/betalen/:token"],
 };

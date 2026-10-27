@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    // The site's own images, and posters/portraits/photos from the SINC dashboard (src/lib/dashboard),
+    // which /api/media/ passes on; those carry a version in the query string.
+    localPatterns: [{ pathname: "/images/**", search: "" }, { pathname: "/api/media/**" }],
+  },
   async redirects() {
     // Old WordPress addresses, so links on Google and social media keep working.
     return [

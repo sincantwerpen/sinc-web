@@ -11,53 +11,7 @@
 // Without Flexmail settings, NEWSLETTER_WEBHOOK_URL (Zapier/Make/...) is used if set.
 // With nothing configured the endpoint answers 503 so visitors never get a false "thanks".
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const FLEXMAIL = process.env.FLEXMAIL_API_URL ?? "https://api.flexmail.eu";
-
-type Signup = { email: string; firstName: string; lastName: string; language: "nl" | "en" };
-
-async function toFlexmail(s: Signup): Promise<Response | null> {
-  const account = process.env.FLEXMAIL_ACCOUNT_ID;
-  const token = process.env.FLEXMAIL_TOKEN;
-  const optInForm = process.env.FLEXMAIL_OPT_IN_FORM_ID;
-  const source = process.env.FLEXMAIL_SOURCE_ID;
-  if (!account || !token || (!optInForm && !source)) return null;
-
-  const headers = {
-    Authorization: `Basic ${Buffer.from(`${account}:${token}`).toString("base64")}`,
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  };
-  const contact = { email: s.email, first_name: s.firstName, name: s.lastName, language: s.language };
-
-  const res = optInForm
-    ? await fetch(`${FLEXMAIL}/opt-ins`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ ...contact, opt_in_form_id: Number(optInForm) }),
-      })
-    : await fetch(`${FLEXMAIL}/contacts`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ ...contact, source: Number(source) }),
-      });
-
-  // 409 = this address is already subscribed or already has a pending confirmation: fine for the visitor.
-  if (res.ok || res.status === 409) return Response.json({ ok: true });
-  console.error("Flexmail sign-up failed", res.status, await res.text().catch(() => ""));
-  return Response.json({ error: "upstream_failed" }, { status: 502 });
-}
-
-async function toWebhook(s: Signup): Promise<Response | null> {
-  const webhook = process.env.NEWSLETTER_WEBHOOK_URL;
-  if (!webhook) return null;
-  const res = await fetch(webhook, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...s, source: "sincantwerpen.be" }),
-  });
-  return res.ok ? Response.json({ ok: true }) : Response.json({ error: "upstream_failed" }, { status: 502 });
-}
+import { EMAIL, toFlexmail, toWebhook, type Signup } from "@/lib/newsletter";
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
