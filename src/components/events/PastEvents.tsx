@@ -5,22 +5,17 @@ import { Link } from "../Link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import type { Pillar } from "@/content";
+import { accents, pillarAccent } from "@/lib/accents";
 import { useT } from "../LangProvider";
 import { Eyebrow, RevealText, ArrowIcon } from "../ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const pillarColor: Record<Pillar, string> = {
-  Inspireren: "bg-blue text-white",
-  Informeren: "bg-cream text-ink",
-  Connecteren: "bg-white/10 text-blue ring-1 ring-blue/40",
-  Activeren: "bg-yellow text-ink",
-};
 
 export function PillarTag({ pillar, className = "" }: { pillar: Pillar; className?: string }) {
   const { eventsPage } = useT();
   return (
-    <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ${pillarColor[pillar]} ${className}`}>
+    <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ${accents[pillarAccent[pillar]].solid} ${accents[pillarAccent[pillar]].onSolid} ${className}`}>
       {eventsPage.pillarLabels[pillar]}
     </span>
   );
@@ -100,18 +95,26 @@ export function PastEvents() {
                     aria-pressed={active}
                     onClick={() => setFilter(p)}
                     className={`relative rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${
-                      active ? "text-white" : "text-cream/70 hover:text-cream"
+                      active ? (p ? accents[pillarAccent[p]].onSolid : "text-white") : "text-cream/70 hover:text-cream"
                     }`}
                   >
                     {active && (
                       <motion.span
                         layoutId="filter-pill"
-                        className="absolute inset-0 rounded-full bg-blue"
+                        className={`absolute inset-0 rounded-full ${p ? accents[pillarAccent[p]].solid : "bg-blue"}`}
                         transition={{ type: "spring", stiffness: 400, damping: 32 }}
                       />
                     )}
                     {!active && <span className="absolute inset-0 rounded-full ring-1 ring-white/12" />}
-                    <span className="relative">{p ? eventsPage.pillarLabels[p] : eventsPage.allLabel}</span>
+                    <span className="relative flex items-center gap-2">
+                      {p && (
+                        <span
+                          aria-hidden
+                          className={`size-2 rounded-full ${active ? "bg-current opacity-60" : accents[pillarAccent[p]].solid}`}
+                        />
+                      )}
+                      {p ? eventsPage.pillarLabels[p] : eventsPage.allLabel}
+                    </span>
                   </button>
                 );
               })}

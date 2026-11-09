@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import type { Member } from "@/content";
 import { useT } from "../LangProvider";
+import { accents, type Accent } from "@/lib/accents";
 
 function LinkedInIcon() {
   return (
@@ -58,7 +59,19 @@ function initials(name: string) {
  * A team member: portrait card that flies in from the side as it scrolls into view,
  * then tilts towards the cursor with a soft light reflection.
  */
-export function MemberCard({ m, from, big = false }: { m: Member; from: "left" | "right"; big?: boolean }) {
+export function MemberCard({
+  m,
+  from,
+  big = false,
+  accent = "blue",
+}: {
+  m: Member;
+  from: "left" | "right";
+  big?: boolean;
+  /** Colour of the member's department. */
+  accent?: Accent;
+}) {
+  const a = accents[accent];
   const { teamPage } = useT();
   const reduce = useReducedMotion();
   const wrap = useRef<HTMLDivElement>(null);
@@ -100,7 +113,7 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
         onPointerMove={onMove}
         onPointerLeave={onLeave}
         style={{ rotateX: rx, rotateY: ry }}
-        className={`group relative isolate h-full overflow-hidden bg-ink-2 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] ring-1 ring-white/10 transition-shadow duration-500 hover:shadow-[0_40px_90px_-30px_rgba(0,150,255,0.55)] hover:ring-blue/60 ${
+        className={`group relative isolate h-full overflow-hidden bg-ink-2 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.9)] ring-1 ring-white/10 transition-shadow duration-500 hover:shadow-[0_40px_90px_-30px_rgba(0,0,0,0.95)] ${a.hoverRing} ${
           big ? "min-h-[520px] rounded-[36px] sm:min-h-[600px]" : "aspect-[3/4] rounded-[28px]"
         }`}
       >
@@ -113,7 +126,7 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
             className="-z-10 object-cover object-[50%_25%] transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.06]"
           />
         ) : (
-          <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-br from-blue via-blue-deep to-ink">
+          <div aria-hidden className={`absolute inset-0 -z-10 bg-gradient-to-br ${a.from} via-ink-2 to-ink`}>
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:36px_36px]" />
             <span className="text-display absolute inset-0 flex items-center justify-center pb-16 text-[clamp(90px,12vw,160px)] text-white/90">
               {initials(m.name)}
@@ -123,7 +136,7 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
 
         {/* readability gradient + hover tint */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-blue/45 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className={`absolute inset-0 -z-10 bg-gradient-to-t ${a.glow} via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100`} />
         <motion.div aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: glare }} />
 
         <div className={`absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 ${big ? "p-6 sm:p-9" : "p-4 sm:p-5"}`}>
@@ -132,7 +145,7 @@ export function MemberCard({ m, from, big = false }: { m: Member; from: "left" |
               className={`whitespace-nowrap rounded-full px-3 py-1 font-bold uppercase max-[374px]:whitespace-normal max-[374px]:rounded-[10px] max-[374px]:leading-tight ${
                 big ? "text-[11px] tracking-[0.14em]" : "text-[9.5px] tracking-[0.08em] sm:text-[11px] sm:tracking-[0.12em]"
               } ${
-                m.lead ? "bg-yellow text-ink" : "bg-white/15 text-white"
+                m.lead ? `${a.solid} ${a.onSolid}` : `${a.soft} text-white ring-1 ${a.ring}`
               }`}
             >
               {m.role}

@@ -149,7 +149,7 @@ export const footer = {
   orgTitle: "SINC VZW",
   privacy: { label: "Privacy & cookies", href: "/privacy" },
   address: "Ijzerenpoortkaai 3, 2000 Antwerpen",
-  vat: "BE0563.354.818",
+  vat: "BTW BE0563.354.818",
   email: "info@sincantwerpen.be",
   socialsTitle: "Volg onze socials",
   socials: [

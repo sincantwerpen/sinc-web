@@ -183,7 +183,7 @@ function PhotoStack({ scroll }: { scroll: MotionValue<number> }) {
 
       {/* Spinning badge */}
       <motion.div
-        className="absolute -bottom-10 -left-8 hidden size-32 items-center justify-center rounded-full bg-yellow text-ink shadow-[0_20px_40px_-15px_rgba(255,216,77,0.6)] sm:flex lg:-left-14 lg:size-36"
+        className="absolute -bottom-10 -left-8 hidden size-32 items-center justify-center rounded-full bg-yellow text-ink shadow-[0_20px_40px_-15px_rgba(252,215,49,0.6)] sm:flex lg:-left-14 lg:size-36"
         initial={{ scale: 0, rotate: -90 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ duration: 1.1, ease: EASE, delay: 1.1 }}

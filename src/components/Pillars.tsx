@@ -7,10 +7,12 @@ import { Button, Eyebrow, Reveal, RevealText, ArrowIcon } from "./ui";
 import { useLang, useT } from "./LangProvider";
 import { localize } from "@/i18n";
 
+// One colour per pillar, in pillar order: Inspireren blue, Informeren green, Connecteren purple,
+// Activeren yellow (the same colours as in lib/accents.ts).
 const themes = [
   { card: "bg-blue text-white", num: "text-white/25", body: "text-white/85", tag: "bg-white/15 text-white" },
-  { card: "bg-cream text-ink", num: "text-ink/12", body: "text-ink/70", tag: "bg-ink/8 text-ink" },
-  { card: "bg-ink-2 text-cream ring-1 ring-white/10", num: "text-blue/40", body: "text-cream/70", tag: "bg-blue/15 text-blue" },
+  { card: "bg-green text-ink", num: "text-ink/15", body: "text-ink/75", tag: "bg-ink/10 text-ink" },
+  { card: "bg-purple text-white", num: "text-white/25", body: "text-white/90", tag: "bg-white/15 text-white" },
   { card: "bg-yellow text-ink", num: "text-ink/15", body: "text-ink/75", tag: "bg-ink/10 text-ink" },
 ];
 
