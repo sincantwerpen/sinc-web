@@ -133,6 +133,41 @@ assert.equal(
   assert.equal(typeof merged.getEvent, "function");
 }
 
+// Partners: the dashboard's three groups replace the site's, the footer logos follow in the same order.
+{
+  const logo = "/api/public/files/partner-logos/22222222-2222-2222-2222-222222222222.png";
+  const partner = (id: string, over: Record<string, unknown> = {}) => ({
+    id,
+    name: id.toUpperCase(),
+    logo,
+    logoRatio: 2.5,
+    lightTile: false,
+    url: `https://${id}.example`,
+    text: { NL: "Tekst", EN: "" },
+    links: [{ label: { NL: "Ontdek meer", EN: "Discover more" }, href: { NL: `https://${id}.example/nl`, EN: `https://${id}.example/en` } }],
+    ...over,
+  });
+  const partners = { main: [partner("cronos", { text: { NL: "", EN: "" } })], featured: [partner("xerius")], others: [partner("vlajo", { links: [], logo: "/images/partners/vlajo.webp", logoRatio: null })] };
+  const nlMerged = live.withLive(nl, live.liveFor(payload({ partners }) as never, "nl"));
+  assert.deepEqual(nlMerged.partnersPage.main.map((p) => p.name), ["CRONOS"]);
+  assert.equal(nlMerged.partnersPage.main[0].logo, "/api/media/files/partner-logos/22222222-2222-2222-2222-222222222222.png");
+  assert.equal(nlMerged.partnersPage.main[0].ratio, 2.5);
+  assert.equal(nlMerged.partnersPage.main[0].text, undefined, "no text on a main partner");
+  assert.equal(nlMerged.partnersPage.featured[0].links[0].href, "https://xerius.example/nl");
+  assert.deepEqual(nlMerged.partnersPage.others[0].links, [{ label: "Ontdek meer", href: "https://vlajo.example" }], "logo wall links to the partner's site");
+  assert.equal(nlMerged.partnersPage.others[0].logo, "/images/partners/vlajo.webp", "a website logo stays a website path");
+  assert.equal(nlMerged.partnersPage.title, nl.partnersPage.title, "page texts stay the site's");
+  assert.deepEqual(nlMerged.partners.logos.map((l) => l.name), ["CRONOS", "XERIUS", "VLAJO"]);
+  const en = getContent("en");
+  const enMerged = live.withLive(en, live.liveFor(payload({ partners }) as never, "en"));
+  assert.equal(enMerged.partnersPage.featured[0].text, "Tekst", "English falls back to the Dutch text");
+  assert.equal(enMerged.partnersPage.featured[0].links[0].label, "Discover more");
+  assert.equal(enMerged.partnersPage.featured[0].links[0].href, "https://xerius.example/en");
+  // An empty or missing partners block keeps the site's own partners (also an older dashboard).
+  assert.equal(live.withLive(nl, live.liveFor(payload({ partners: { main: [], featured: [], others: [] } }) as never, "nl")).partnersPage, nl.partnersPage);
+  assert.equal(live.withLive(nl, live.liveFor(payload() as never, "nl")).partners, nl.partners);
+}
+
 // Calendar links.
 {
   const e = { id: "kickoff-2026", title: "Kickoff, SINC", startsAt: "2099-11-12T17:30:00.000Z", endsAt: null, location: "Meir 78; Antwerpen", url: "https://www.sincantwerpen.be/events/kickoff-2026" };

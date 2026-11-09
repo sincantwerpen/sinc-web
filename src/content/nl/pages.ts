@@ -113,6 +113,8 @@ export type Partner = {
   logo: string;
   /** true when the logo is dark and needs a light tile */
   lightTile?: boolean;
+  /** Width / height of the logo when it is not in logoRatios (a logo from the dashboard). */
+  ratio?: number;
   text?: string;
   links: LinkItem[];
 };
@@ -146,7 +148,7 @@ export const partnersPage = {
         { label: "Social media", href: "https://www.linkedin.com/showcase/business-in-antwerp/" },
       ],
     },
-  ] satisfies Partner[],
+  ] satisfies Partner[] as Partner[],
   featured: [
     {
       name: "Pitchdrive",
@@ -171,7 +173,7 @@ export const partnersPage = {
       text: "Winfakt – Slim ondernemen begint hier!\n\nEen eigen zaak starten? Een geweldig idee! Maar bij ondernemen komt natuurlijk meer kijken dan alleen een goed concept.\n\nWinfakt maakt ondernemen eenvoudiger. Met onze gebruiksvriendelijke software regel je moeiteloos je offertes, facturen en administratie. Zo verlies je minder tijd aan papierwerk en hou je meer tijd over voor wat écht telt: jouw onderneming laten groeien.\n\nOf je nu droomt van je eigen start-up of al volop aan het ondernemen bent: Winfakt groeit met je mee!\n\nJij focust op je ideeën, wij maken de administratie eenvoudig.",
       links: [{ label: "Ontdek meer", href: "https://www.winfakt.be" }],
     },
-  ] satisfies Partner[],
+  ] satisfies Partner[] as Partner[],
   others: [
     { name: "The Beacon", logo: "/images/partners/the-beacon.webp", links: [{ label: "Ontdek meer", href: "https://www.thebeacon.eu/" }] },
     { name: "Humgy Cowork", logo: "/images/partners/humgy.webp", links: [{ label: "Ontdek meer", href: "https://www.humgy.com/" }] },
@@ -180,7 +182,7 @@ export const partnersPage = {
     { name: "StoryChief", logo: "/images/partners/storychief.webp", links: [{ label: "Ontdek meer", href: "https://www.storychief.io/" }] },
     { name: "TakeOffAntwerp × VLAIO", logo: "/images/partners/takeoffantwerp-vlaio.png", links: [{ label: "Ontdek meer", href: "https://www.takeoffantwerp.be/" }] },
     { name: "Moore", logo: "/images/partners/moore-wit-1.png", links: [{ label: "Ontdek meer", href: "https://www.moore.be" }] },
-  ] satisfies Partner[],
+  ] satisfies Partner[] as Partner[],
   band: {
     title: "Ben jij geïnteresseerd in een samenwerking met SINC?",
     cta: { label: "Neem contact met ons op", href: "/contact" },

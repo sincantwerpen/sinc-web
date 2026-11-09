@@ -12,6 +12,7 @@ export function PartnerLogo({
   maxWidth = 220,
   maxHeight = 84,
   eager = false,
+  ratio: given,
   className = "",
 }: {
   src: string;
@@ -20,9 +21,11 @@ export function PartnerLogo({
   maxWidth?: number;
   maxHeight?: number;
   eager?: boolean;
+  /** Width / height when the logo is not in logoRatios (logos from the dashboard). */
+  ratio?: number;
   className?: string;
 }) {
-  const ratio = logoRatios[src] ?? 3;
+  const ratio = given ?? logoRatios[src] ?? 3;
   let width = Math.sqrt(area * ratio);
   let height = width / ratio;
   if (width > maxWidth) [width, height] = [maxWidth, maxWidth / ratio];

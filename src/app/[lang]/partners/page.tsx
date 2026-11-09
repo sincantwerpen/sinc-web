@@ -21,7 +21,7 @@ function Logo({ p, tall = false }: { p: Partner; tall?: boolean }) {
         p.lightTile ? "bg-cream" : "bg-white/[0.04] ring-1 ring-white/8"
       }`}
     >
-      <PartnerLogo src={p.logo} alt={p.name} area={tall ? 13000 : 9000} maxWidth={tall ? 280 : 230} maxHeight={tall ? 110 : 80} />
+      <PartnerLogo src={p.logo} alt={p.name} ratio={p.ratio} area={tall ? 13000 : 9000} maxWidth={tall ? 280 : 230} maxHeight={tall ? 110 : 80} />
     </div>
   );
 }
@@ -128,6 +128,7 @@ export default async function PartnersPage() {
                     <PartnerLogo
                       src={p.logo}
                       alt={p.name}
+                      ratio={p.ratio}
                       area={8000}
                       maxWidth={210}
                       maxHeight={84}

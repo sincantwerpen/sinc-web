@@ -57,12 +57,28 @@ export type DashMember = {
   lead: boolean;
 };
 
+/** A partner on the partners page (three groups) and in the footer's logo rows. */
+export type DashPartner = {
+  id: string;
+  name: string;
+  /** A path on this site ("/images/...") or on the dashboard (/api/public/files/partner-logos/...). */
+  logo: string | null;
+  /** Width / height of the logo, so every logo gets the same visual weight (PartnerLogo). */
+  logoRatio: number | null;
+  lightTile: boolean;
+  url: string | null;
+  text: Labels;
+  links: { label: Labels; href: Labels }[];
+};
+
 export type SitePayload = {
   events: DashEvent[];
   homepage: string[];
   team: { id: string; name: Labels; members: DashMember[] }[];
   /** Website path of a photo -> its replacement (a dashboard path). */
   photos: Record<string, string>;
+  /** All three empty (or missing: an older dashboard) = the site keeps its own partners. */
+  partners?: { main: DashPartner[]; featured: DashPartner[]; others: DashPartner[] };
   choices: { schools: Choice[]; studyYears: Choice[]; entrepreneurStages: Choice[] };
   at: string;
 };
@@ -113,4 +129,23 @@ export type PaymentInfo = {
   details: { firstName: string; lastName: string; iban: string; amount: string; reference: string } | null;
   proof: { at: string; name: string | null } | null;
   rejected: { at: string; reason: string | null } | null;
+};
+
+/** GET /api/public/feedback/<token>: the event's feedback form (the mail's button opens it). */
+export type FeedbackQuestion = {
+  id: string;
+  type: "rating" | "text" | "choice" | "multi";
+  label: Labels;
+  required: boolean;
+  options: { id: string; label: Labels }[];
+};
+export type FeedbackInfo = {
+  titles: Partial<Record<DashLang, string>>;
+  submitted: boolean;
+  /** The anonymous link: anyone may answer, so this browser remembers it answered. */
+  open: boolean;
+  form: {
+    form: { title: Labels; intro: Labels; submit: Labels; thanksTitle: Labels; thanksBody: Labels };
+    questions: FeedbackQuestion[];
+  };
 };

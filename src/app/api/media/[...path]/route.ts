@@ -1,9 +1,9 @@
 import { dashboardConfigured, dashboardUrl } from "@/lib/dashboard/client";
 
-// Posters, team portraits and photos that live in the SINC dashboard, served from this site's own
+// Posters, team portraits, photos and partner logos that live in the SINC dashboard, served from this site's own
 // address (so next/image can optimise them and the dashboard's address stays out of the page).
-// Only these two kinds of paths are passed on.
-const ALLOWED = [/^events\/[a-z0-9-]+\/cover$/, /^files\/(team-photos|site-photos)\/[0-9a-f-]{36}\.jpg$/];
+// Only these kinds of paths are passed on.
+const ALLOWED = [/^events\/[a-z0-9-]+\/cover$/, /^files\/(team-photos|site-photos)\/[0-9a-f-]{36}\.jpg$/, /^files\/partner-logos\/[0-9a-f-]{36}\.png$/];
 
 export async function GET(request: Request, { params }: RouteContext<"/api/media/[...path]">) {
   const path = (await params).path.join("/");

@@ -131,7 +131,7 @@ export const partners = {
     { name: "StoryChief", src: "/images/partners/storychief.webp", href: "https://www.storychief.io/" },
     { name: "TakeOffAntwerp × VLAIO", src: "/images/partners/takeoffantwerp-vlaio.png", href: "https://www.takeoffantwerp.be/" },
     { name: "Moore", src: "/images/partners/moore-wit-1.png", href: "https://www.moore.be" },
-  ],
+  ] as { name: string; src: string; href: string; /** width / height, for a logo from the dashboard */ ratio?: number }[],
 };
 
 export const footer = {

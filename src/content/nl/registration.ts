@@ -128,4 +128,20 @@ export const registration = {
     unavailable: "De betaalgegevens kunnen nu even niet geladen worden. Probeer het straks opnieuw.",
     ticketLink: "Bekijk je inschrijving",
   },
+  // feedback page (/feedback/<token>, the button in the feedback mail)
+  feedback: {
+    metaTitle: "Feedback",
+    title: "Feedback",
+    rating: (n: number) => `${n} op 5`,
+    required: "verplicht",
+    optional: "optioneel",
+    missing: "Vul de verplichte vragen in.",
+    error: "Versturen lukte niet. Probeer het opnieuw.",
+    sending: "Bezig…",
+    answered: "Je gaf al feedback voor dit event. Bedankt!",
+    closed: "Deze feedbackvragen zijn afgesloten. Bedankt om te willen helpen!",
+    notFound: "Deze feedbacklink bestaat niet. Kijk of je de volledige link uit de mail gebruikt.",
+    unavailable: "De vragen kunnen nu even niet geladen worden. Probeer het straks opnieuw.",
+    toEvents: "Naar de events",
+  },
 };

@@ -13,11 +13,11 @@ Then open http://localhost:3000.
 
 Checks before every push: `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`.
 
-## Dashboard (events, registration, team, photos, contact)
+## Dashboard (events, registration, team, partners, photos, contact, feedback)
 
 Since phase 3 of the SINC dashboard (dashboard.sincantwerpen.be, repo `sincantwerpen/sinc-dashboard`), the
-dashboard is the single source for the events, the team page and the site photos; this site only shows
-them. The connection is server to server with a shared key:
+dashboard is the single source for the events, the team page, the partners (since phase 5) and the site
+photos; this site only shows them. The connection is server to server with a shared key:
 
 | Variable | What |
 |---|---|
@@ -32,7 +32,9 @@ How it works (code in `src/lib/dashboard/`):
 - The dashboard's data is laid over `src/content` (`withLive` in `src/lib/dashboard/live.ts`): an event
   from the dashboard replaces the site's own event with the same address (slug), the rest of the archive
   stays; the homepage shows the events the team picks under Homepage-events; the team page comes from the
-  dashboard; a replaced photo replaces every use of that path (`/images/...`).
+  dashboard; the partners page (three groups: main, featured, others) and the footer's partner logos come
+  from the dashboard's Website > Partners, with each logo's width/height ratio for `PartnerLogo` (the page
+  titles stay in `src/content`); a replaced photo replaces every use of that path (`/images/...`).
 - **When the dashboard is not configured or not reachable, the site shows exactly its own content from
   `src/content`, as before.** Nothing else breaks; only registering on this site needs the dashboard.
 - Events from the dashboard get a Luma-like page (`src/components/events/LumaEvent.tsx`): poster, date,
@@ -42,7 +44,10 @@ How it works (code in `src/lib/dashboard/`):
 - `/ticket/<token>` (the link in the ticket mail): the ticket with QR and PDF, change details, cancel.
   `/betalen/<token>` (the link in the payment mail): IBAN, amount, structured reference, optional proof of
   payment (max 4 MB, the Vercel limit). Both are passed on to the dashboard via `src/app/api/`.
-- Images from the dashboard (posters, portraits, photos) are loaded through `/api/media/...`.
+- `/feedback/<token>` (the button in the feedback mail after an event, or an event's open link): the
+  questions the team set in the dashboard, in NL or EN; the answers go to the dashboard via
+  `src/app/api/feedback/`.
+- Images from the dashboard (posters, portraits, photos, partner logos) are loaded through `/api/media/...`.
 - The newsletter box when registering is separate and unticked; only when ticked does the address go
   to Flexmail.
 
@@ -80,6 +85,8 @@ automatically gets its own page at `/events/<slug>`.
 ## Other pages
 
 Text for Over SINC, Community, Ecosysteem, Partners, Contact and Privacy lives in `src/content/pages.ts`.
+The partners themselves come from the dashboard when it is connected (see above); the list in
+`src/content/*/pages.ts` is what the site shows without it.
 The pages themselves are in `src/app/<page>/page.tsx`.
 
 ## Contact form

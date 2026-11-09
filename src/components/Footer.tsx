@@ -30,7 +30,7 @@ function PartnerRow({ partners, reverse = false }: { partners: Content["partners
                 tabIndex={copy === 1 ? -1 : undefined}
                 className="flex h-28 w-56 items-center justify-center rounded-3xl bg-white/[0.04] px-8 ring-1 ring-white/8 transition-all duration-300 hover:-translate-y-1 hover:bg-blue/15 hover:ring-blue sm:w-64"
               >
-                <PartnerLogo src={l.src} alt={l.name} area={6200} maxWidth={180} maxHeight={60} eager />
+                <PartnerLogo src={l.src} alt={l.name} ratio={l.ratio} area={6200} maxWidth={180} maxHeight={60} eager />
               </a>
             </li>
           ))}

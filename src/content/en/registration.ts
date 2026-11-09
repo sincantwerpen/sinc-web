@@ -125,4 +125,20 @@ export const registration: typeof nl = {
     unavailable: "The payment details can't be loaded right now. Please try again later.",
     ticketLink: "View your registration",
   },
+  // feedback page (/feedback/<token>, the button in the feedback mail)
+  feedback: {
+    metaTitle: "Feedback",
+    title: "Feedback",
+    rating: (n: number) => `${n} out of 5`,
+    required: "required",
+    optional: "optional",
+    missing: "Please answer the required questions.",
+    error: "Sending didn't work. Please try again.",
+    sending: "Sending…",
+    answered: "You already shared your feedback for this event. Thank you!",
+    closed: "These feedback questions are closed. Thanks for wanting to help!",
+    notFound: "This feedback link doesn't exist. Check that you used the full link from the email.",
+    unavailable: "The questions can't be loaded right now. Please try again later.",
+    toEvents: "To the events",
+  },
 };

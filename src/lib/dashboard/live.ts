@@ -3,8 +3,8 @@
 // scripts/live.test.ts. When there is no dashboard data, the content stays exactly as it is.
 
 import type { Lang } from "@/i18n";
-import type { Content, Department, Pillar, SincEvent } from "@/content";
-import type { Choice, DashEvent, DashLang, SitePayload } from "./types";
+import type { Content, Department, Partner, Pillar, SincEvent } from "@/content";
+import type { Choice, DashEvent, DashLang, DashPartner, SitePayload } from "./types";
 
 /** The dashboard data for one language, small enough to hand to the browser. */
 export type Live = {
@@ -12,6 +12,8 @@ export type Live = {
   homepage: string[];
   departments: Department[] | null;
   photos: Record<string, string>;
+  /** The partners page in its three groups; null = the site's own partners. */
+  partners: { main: Partner[]; featured: Partner[]; others: Partner[] } | null;
   choices: SitePayload["choices"];
 };
 
@@ -110,6 +112,27 @@ export function toDepartments(team: SitePayload["team"], lang: Lang): Department
   }));
 }
 
+export function toPartner(p: DashPartner, lang: Lang): Partner {
+  const l = dashLang(lang);
+  const text = p.text[l] || p.text.NL;
+  const links = p.links.map((x) => ({ label: x.label[l] || x.label.NL, href: x.href[l] || x.href.NL }));
+  return {
+    name: p.name,
+    logo: p.logo ? mediaPath(p.logo) : "",
+    ...(p.lightTile ? { lightTile: true } : {}),
+    ...(p.logoRatio ? { ratio: p.logoRatio } : {}),
+    ...(text ? { text } : {}),
+    // The logo wall links the tile to the partner's site.
+    links: links.length ? links : p.url ? [{ label: lang === "en" ? "Discover more" : "Ontdek meer", href: p.url }] : [],
+  };
+}
+
+export function toPartners(partners: SitePayload["partners"], lang: Lang): Live["partners"] {
+  if (!partners || partners.main.length + partners.featured.length + partners.others.length === 0) return null;
+  const map = (list: DashPartner[]) => list.filter((p) => p.logo).map((p) => toPartner(p, lang));
+  return { main: map(partners.main), featured: map(partners.featured), others: map(partners.others) };
+}
+
 export function liveFor(payload: SitePayload | null, lang: Lang): Live | null {
   if (!payload) return null;
   const photos: Record<string, string> = {};
@@ -119,6 +142,7 @@ export function liveFor(payload: SitePayload | null, lang: Lang): Live | null {
     homepage: payload.homepage ?? [],
     departments: toDepartments(payload.team ?? [], lang),
     photos,
+    partners: toPartners(payload.partners, lang),
     choices: payload.choices,
   };
 }
@@ -138,7 +162,7 @@ export function replacePhotos<T>(value: T, photos: Record<string, string>): T {
 const startOf = (e: SincEvent) => (e.startsAt ? Date.parse(e.startsAt) : Number.POSITIVE_INFINITY);
 
 /**
- * The site's content with the dashboard's events, team and photos laid over it. A dashboard
+ * The site's content with the dashboard's events, team, partners and photos laid over it. A dashboard
  * event replaces the site's own event with the same address (slug); the site's other events
  * (the archive, or an event still on Luma) stay. The homepage shows the dashboard's choice.
  */
@@ -156,6 +180,19 @@ export function withLive(content: Content, live: Live | null): Content {
   const picks = live.homepage.map((id) => bySlug.get(id)).filter((e): e is SincEvent => !!e && !!e.upcoming);
   const homeEvents = [...picks, ...upcoming.filter((e) => !picks.includes(e) && !own.has(e.slug))].slice(0, 3);
   const departments = live.departments ?? content.departments;
+  // Partners: the dashboard's three groups, and the footer's logo rows in the same order.
+  const partnersPage = live.partners ? { ...content.partnersPage, ...live.partners } : content.partnersPage;
+  const partners = live.partners
+    ? {
+        ...content.partners,
+        logos: [...live.partners.main, ...live.partners.featured, ...live.partners.others].map((p) => ({
+          name: p.name,
+          src: p.logo,
+          href: p.links[0]?.href ?? "",
+          ...(p.ratio ? { ratio: p.ratio } : {}),
+        })),
+      }
+    : content.partners;
   const merged: Content = {
     ...content,
     sincEvents,
@@ -164,6 +201,8 @@ export function withLive(content: Content, live: Live | null): Content {
     homeEvents,
     departments,
     allMembers: departments.flatMap((d) => d.members),
+    partnersPage,
+    partners,
   };
   const photos = Object.keys(live.photos).length ? replacePhotos(merged, live.photos) : merged;
   return { ...photos, getEvent: (slug: string) => photos.sincEvents.find((e) => e.slug === slug) };
