@@ -35,13 +35,13 @@ export const linkedinCommunity = {
 export const overSinc = {
   eyebrow: "Over SINC",
   title: "De studenten-organisatie voor entrepreneurial minded studenten",
-  lead: "Ons team van 18 gemotiveerde studenten werken het hele jaar samen om jullie te inspireren, informeren, connecteren en activeren rond ondernemerschap.",
+  lead: "Ons team van 17 gemotiveerde studenten werken het hele jaar samen om jullie te inspireren, informeren, connecteren en activeren rond ondernemerschap.",
   cta: { label: "Word jij deel van ons team?", href: "/contact" },
   heroPhotos: ["sienna-van-de-merlen", "ilian-costa", "safia-el-mamoun", "babatunde-agunloye", "frie-vermeersch"].map(
     (n) => `/images/team-2026/${n}.jpg`,
   ),
   team: {
-    title: "18 studenten ondernemen, voor meer ondernemer-schap in Antwerpen.",
+    title: "17 studenten ondernemen, voor meer ondernemer-schap in Antwerpen.",
     text: "Ons team bestaat uit een diverse groep studenten die zich een jaar lang inzetten voor ondernemerschap in Antwerpen en daarbuiten.",
     cta: { label: "Ontmoet het team", href: "/het-team" },
     image: "/images/team-2026/groepsfoto.jpg",
@@ -198,7 +198,6 @@ export const contactPage = {
     "can-demet",
     "julie-geeraerts",
     "sander-roedig",
-    "ben-alp-celik",
   ].map((n) => `/images/team-2026/${n}.jpg`),
   form: {
     name: "Naam",

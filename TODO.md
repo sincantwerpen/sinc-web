@@ -21,7 +21,7 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 - [ ] Newsletter: change it ("nieuwsbrief anders"): still to clarify what exactly (design of the block on the site,
       the text, or the mails in Flexmail)
 - [ ] Over SINC: a photo of all of us (new group photo, and where on the page). The current group photo still
-      shows Julie Vandenryt and Helena, who left
+      shows Julie Vandenryt, Helena and Ben, who left
 - [ ] "SINC in cijfers" on Over SINC: adjust the stats (now 99+ alumni, 60+ events, 4000+ community members)
 - [ ] Community: two "Coming soon..." blocks ("Student ondernemers in de kijker" and "Wil jij ook vermeld
       worden?"). Fill them in or hide them until there is content
@@ -56,7 +56,7 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
   English version is missing something
 
 ## Done
-- [x] Team: Julie Vandenryt and Helena removed, Sienna Van de Merlen added as Event Director (18 students now)
+- [x] Team: Julie Vandenryt, Helena and Ben Alp Celik removed, Sienna Van de Merlen added as Event Director (17 students now)
 - [x] Privacy statement: WordPress and Google Analytics removed (no tracking cookies), Belgian GBA, processors
       listed (Vercel, Flexmail, Formspree, Luma), no more "profiel aanmaken"
 - [x] Footer: "BTW BE0563.354.818" (confirmed) in both languages

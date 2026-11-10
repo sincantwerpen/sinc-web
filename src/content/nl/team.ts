@@ -68,7 +68,6 @@ export const departments: Department[] = [
       { name: "Lara Alper", role: "Marketing Manager", photo: photo("lara-alper"), email: "lara.alper@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/lara-alper-98a7a63b4/" },
       { name: "Babatunde Agunloye", role: "Marketing Manager", photo: photo("babatunde-agunloye"), email: "babatunde.agunloye@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/babatunde-agunloye-004483218/" },
       { name: "Safia El Mamoun", role: "Marketing Manager", photo: photo("safia-el-mamoun"), email: "safia.elmamoun@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/safia-el-mamoun-1229b3330/" },
-      { name: "Ben Alp Celik", role: "Marketing Manager", photo: photo("ben-alp-celik"), email: "ben.celik@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/bencelik" },
       { name: "Julie Geeraerts", role: "Marketing Manager", photo: photo("julie-geeraerts"), email: "julie.geeraerts@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/julie-g-40a11633b/" },
     ],
   },

@@ -35,13 +35,13 @@ export const linkedinCommunity = {
 export const overSinc = {
   eyebrow: "About SINC",
   title: "The student organisation for entrepreneurial-minded students",
-  lead: "Our team of 18 motivated students works together all year long to inspire, inform, connect and activate you around entrepreneurship.",
+  lead: "Our team of 17 motivated students works together all year long to inspire, inform, connect and activate you around entrepreneurship.",
   cta: { label: "Want to join our team?", href: "/contact" },
   heroPhotos: ["sienna-van-de-merlen", "ilian-costa", "safia-el-mamoun", "babatunde-agunloye", "frie-vermeersch"].map(
     (n) => `/images/team-2026/${n}.jpg`,
   ),
   team: {
-    title: "18 students taking action, for more entrepreneurship in Antwerp.",
+    title: "17 students taking action, for more entrepreneurship in Antwerp.",
     text: "Our team is made up of a diverse group of students who dedicate a whole year to entrepreneurship in Antwerp and beyond.",
     cta: { label: "Meet the team", href: "/het-team" },
     image: "/images/team-2026/groepsfoto.jpg",
@@ -188,7 +188,6 @@ export const contactPage = {
     "can-demet",
     "julie-geeraerts",
     "sander-roedig",
-    "ben-alp-celik",
   ].map((n) => `/images/team-2026/${n}.jpg`),
   form: {
     name: "Name",
