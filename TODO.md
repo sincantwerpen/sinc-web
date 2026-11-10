@@ -1,6 +1,6 @@
 # SINC website: to-do
 
-**Progress: 32/52 done** (62%)
+**Progress: 33/52 done** (63%)
 
 Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 
@@ -20,9 +20,8 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 - [ ] Contact page: show info@sincantwerpen.be clearly on the page itself (now only behind the buttons and in the footer)
 - [ ] Newsletter: change it ("nieuwsbrief anders"): still to clarify what exactly (design of the block on the site,
       the text, or the mails in Flexmail)
-- [ ] Over SINC: a photo of all of us (new group photo, and where on the page)
-- [ ] Het team: remove Julie and Helena, add Sienna (which Julie: Vandenryt or Geeraerts? Sienna's surname,
-      role, department, photo, email and LinkedIn needed)
+- [ ] Over SINC: a photo of all of us (new group photo, and where on the page). The current group photo still
+      shows Julie Vandenryt and Helena, who left
 - [ ] "SINC in cijfers" on Over SINC: adjust the stats (now 99+ alumni, 60+ events, 4000+ community members)
 - [ ] Community: two "Coming soon..." blocks ("Student ondernemers in de kijker" and "Wil jij ook vermeld
       worden?"). Fill them in or hide them until there is content
@@ -57,6 +56,7 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
   English version is missing something
 
 ## Done
+- [x] Team: Julie Vandenryt and Helena removed, Sienna Van de Merlen added as Event Director (18 students now)
 - [x] Privacy statement: WordPress and Google Analytics removed (no tracking cookies), Belgian GBA, processors
       listed (Vercel, Flexmail, Formspree, Luma), no more "profiel aanmaken"
 - [x] Footer: "BTW BE0563.354.818" (confirmed) in both languages
