@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getT, pageMeta } from "@/content/server";
+import { allMembers } from "@/content/nl/team";
 import { PageHero } from "@/components/page/PageHero";
 import { PhotoFan } from "@/components/page/PhotoFan";
 import { LinkedInBlock, NetworkCards } from "@/components/page/Sections";
@@ -36,7 +37,7 @@ export default async function OverSincPage() {
               aria-hidden
               className="text-display absolute -bottom-8 -right-4 flex size-36 items-center justify-center rounded-full bg-blue text-[64px] text-white shadow-[0_20px_60px_-10px_rgba(0,150,255,0.8)] sm:-right-8 sm:size-44 sm:text-[80px]"
             >
-              19
+              {allMembers.length}
             </div>
           </Reveal>
           <div className="flex flex-col items-start gap-7">
