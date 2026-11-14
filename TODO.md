@@ -1,6 +1,6 @@
 # SINC website: to-do
 
-**Progress: 26/44 done** (59%)
+**Progress: 33/53 done** (62%)
 
 Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 
@@ -16,26 +16,26 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
       is in (an English confirmation may need its own English opt-in form in Flexmail)
 
 ## Content
-- [ ] Privacy statement (`privacyPage` in `src/content/nl/pages.ts` and `src/content/en/pages.ts`):
-      - one address (now both Van Schoonbekestraat 55 and Ijzerenpoortkaai 3; the footer uses Ijzerenpoortkaai)
-      - remove WordPress and Google Analytics (no longer used)
-      - Belgian authority (Gegevensbeschermingsautoriteit, GBA) instead of the Dutch Autoriteit Persoonsgegevens
-      - mention the processors: Vercel (hosting of site and dashboard), Turso (dashboard database), Google
-        Workspace (mails, sign-in), Flexmail (newsletter), Luma (tickets during the test semester); the event
-        registration fields (school, field of study, year, entrepreneurial stage) and the 5-year retention
-      - "profiel aanmaken op deze website" is no longer possible: remove that line
-- [ ] "SINC in cijfers" on Over SINC (99+ alumni, 60+ events, 4000+ community members): check this year's numbers
+- [ ] Privacy statement, dashboard additions (`privacyPage` in `src/content/nl/pages.ts` and
+      `src/content/en/pages.ts`), before the dashboard integration goes live: add the processors Turso
+      (dashboard database) and Google Workspace (mails, sign-in), Vercel also hosts the dashboard, Luma only
+      during the test semester; the event registration fields (school, field of study, year, entrepreneurial
+      stage) and the 5-year retention
+- [ ] Partners: add AUHA (logo + which group: Hoofdpartners, Partners with text, or the logo wall)
+- [ ] Contact page: show info@sincantwerpen.be clearly on the page itself (now only behind the buttons and in the footer)
+- [ ] Newsletter: change it ("nieuwsbrief anders"): still to clarify what exactly (design of the block on the site,
+      the text, or the mails in Flexmail)
+- [ ] Over SINC: a photo of all of us (new group photo, and where on the page). The current group photo still
+      shows Julie Vandenryt, Helena and Ben, who left
+- [ ] "SINC in cijfers" on Over SINC: adjust the stats (now 99+ alumni, 60+ events, 4000+ community members)
 - [ ] Community: two "Coming soon..." blocks ("Student ondernemers in de kijker" and "Wil jij ook vermeld
       worden?"). Fill them in or hide them until there is content
 - [ ] Contact: the two question cards still use older community photos (partners, ecosystem); swap for
       new photos if available
-- [ ] Footer address and VAT number: check they're correct (Ijzerenpoortkaai 3, BE0563.354.818)
 - [ ] English version: have someone read through the English pages once (`/en`)
 - [ ] Read through all text once more for typos and outdated info (2023–24 references, old names)
 
 ## Events
-- [ ] After 20 October: set `upcoming: false` for the SINC Soirée in `src/content/nl/events.ts` (English
-      follows automatically), add a short recap text and photos. Otherwise it stays under "Aankomende events"
 - [ ] Past events: check every event page has a picture and the dates are right
 
 ## Testing
@@ -61,6 +61,14 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
   English version is missing something
 
 ## Done
+- [x] Team: Julie Vandenryt, Helena and Ben Alp Celik removed, Sienna Van de Merlen added as Event Director (17 students now)
+- [x] Privacy statement: WordPress and Google Analytics removed (no tracking cookies), Belgian GBA, processors
+      listed (Vercel, Flexmail, Formspree, Luma), no more "profiel aanmaken"
+- [x] Footer: "BTW BE0563.354.818" (confirmed) in both languages
+- [x] Privacy statement: one address (Ijzerenpoortkaai 3, 2000 Antwerpen) and contact person Emma Torfs (Raad van Bestuur), +32 479 64 92 05
+- [x] SINC Soirée moved to past events; Go With The Coach updated from Luma
+- [x] SINC colours for pillars and departments: blue #0096ff, green #2ace7b, purple #856bad, yellow #fcd731
+- [x] Partners: Winfakt and the VLAIO × TakeOff logo added, the launch removed, Moore in the bottom group
 - [x] Newsletter connected to Flexmail and tested (sign-up → confirmation mail → contact in Flexmail)
 - [x] Newsletter thank-you page: `/nieuwsbrief/bevestigd` (EN: `/en/nieuwsbrief/bevestigd`)
 - [x] Facebook link in the footer checked

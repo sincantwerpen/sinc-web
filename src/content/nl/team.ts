@@ -42,11 +42,10 @@ export const departments: Department[] = [
     id: "events",
     name: "Events",
     members: [
-      { name: "Julie Vandenryt", role: "Event Director", photo: photo("julie-vandenryt"), lead: true, email: "julie.vandenryt@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/julie-vandenryt/" },
+      { name: "Sienna Van de Merlen", role: "Event Director", photo: photo("sienna-van-de-merlen"), lead: true, email: "sienna.vandemerlen@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/sienna-van-de-merlen/" },
       { name: "Arbina Reçica", role: "Event Manager", photo: photo("arbina-recica"), email: "arbina.reqica@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/arbina-re%C3%A7ica-b2b399405" },
       { name: "Naoufal Basite", role: "Event Manager", photo: photo("naoufal-basite"), email: "naoufal.basite@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/naoufal-basite" },
       { name: "Tugce Cadir", role: "Event Manager", photo: photo("tugce-cadir"), email: "tugce.cadir@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/tugce-cadir-22b37a36a/" },
-      { name: "Helena Herrera Freire", role: "Event Manager", photo: photo("helena-herrera-freire"), email: "helena.herrerafreire@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/helena-hf/" },
     ],
   },
   {
@@ -69,7 +68,6 @@ export const departments: Department[] = [
       { name: "Lara Alper", role: "Marketing Manager", photo: photo("lara-alper"), email: "lara.alper@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/lara-alper-98a7a63b4/" },
       { name: "Babatunde Agunloye", role: "Marketing Manager", photo: photo("babatunde-agunloye"), email: "babatunde.agunloye@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/babatunde-agunloye-004483218/" },
       { name: "Safia El Mamoun", role: "Marketing Manager", photo: photo("safia-el-mamoun"), email: "safia.elmamoun@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/safia-el-mamoun-1229b3330/" },
-      { name: "Ben Alp Celik", role: "Marketing Manager", photo: photo("ben-alp-celik"), email: "ben.celik@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/bencelik" },
       { name: "Julie Geeraerts", role: "Marketing Manager", photo: photo("julie-geeraerts"), email: "julie.geeraerts@sincantwerpen.be", linkedin: "https://www.linkedin.com/in/julie-g-40a11633b/" },
     ],
   },

@@ -35,13 +35,13 @@ export const linkedinCommunity = {
 export const overSinc = {
   eyebrow: "About SINC",
   title: "The student organisation for entrepreneurial-minded students",
-  lead: "Our team of 19 motivated students works together all year long to inspire, inform, connect and activate you around entrepreneurship.",
+  lead: "Our team of 17 motivated students works together all year long to inspire, inform, connect and activate you around entrepreneurship.",
   cta: { label: "Want to join our team?", href: "/contact" },
-  heroPhotos: ["julie-vandenryt", "ilian-costa", "safia-el-mamoun", "babatunde-agunloye", "frie-vermeersch"].map(
+  heroPhotos: ["sienna-van-de-merlen", "ilian-costa", "safia-el-mamoun", "babatunde-agunloye", "frie-vermeersch"].map(
     (n) => `/images/team-2026/${n}.jpg`,
   ),
   team: {
-    title: "19 students taking action, for more entrepreneurship in Antwerp.",
+    title: "17 students taking action, for more entrepreneurship in Antwerp.",
     text: "Our team is made up of a diverse group of students who dedicate a whole year to entrepreneurship in Antwerp and beyond.",
     cta: { label: "Meet the team", href: "/het-team" },
     image: "/images/team-2026/groepsfoto.jpg",
@@ -184,11 +184,10 @@ export const contactPage = {
   heroPhotos: [
     "arbina-recica",
     "thibeau-smets",
-    "helena-herrera-freire",
+    "tugce-cadir",
     "can-demet",
     "julie-geeraerts",
     "sander-roedig",
-    "ben-alp-celik",
   ].map((n) => `/images/team-2026/${n}.jpg`),
   form: {
     name: "Name",
@@ -219,7 +218,7 @@ export const privacyPage = {
   blocks: [
     {
       type: "p",
-      text: "SINC, Students for Innovation and Co-operation, located at Van Schoonbekestraat 55, 2018 Antwerp, is responsible for the processing of personal data as set out in this privacy statement.",
+      text: "SINC, Students for Innovation and Co-operation, located at Ijzerenpoortkaai 3, 2000 Antwerp, is responsible for the processing of personal data as set out in this privacy statement.",
     },
     {
       type: "p",
@@ -236,7 +235,11 @@ export const privacyPage = {
     },
     {
       type: "p",
-      text: "+32495898715",
+      text: "Emma Torfs (Board of Directors)",
+    },
+    {
+      type: "p",
+      text: "+32 479 64 92 05",
     },
     {
       type: "h2",
@@ -284,15 +287,11 @@ export const privacyPage = {
     },
     {
       type: "p",
-      text: "– Data about your activities on our website",
-    },
-    {
-      type: "p",
       text: "– Internet browser and device type",
     },
     {
       type: "p",
-      text: "– Other personal data you actively provide, for example by creating a profile on this website, registering for a SINC event, in correspondence and during telephone contact with a SINC board member.",
+      text: "– Other personal data you actively provide, for example by registering for a SINC event, in correspondence and during telephone contact with a SINC board member.",
     },
     {
       type: "h3",
@@ -335,15 +334,7 @@ export const privacyPage = {
     },
     {
       type: "p",
-      text: "– Giving you the option to create an account",
-    },
-    {
-      type: "p",
       text: "– Delivering and providing goods and services to you.",
-    },
-    {
-      type: "p",
-      text: "– SINC analyses your behaviour on the website in order to improve the website and to tailor the range of products and services to your preferences.",
     },
     {
       type: "h3",
@@ -355,11 +346,11 @@ export const privacyPage = {
     },
     {
       type: "p",
-      text: "• WordPress and Flexmail:",
+      text: "• Flexmail:",
     },
     {
       type: "p",
-      text: "The SINC website (www.sincantwerpen.be) is built with WordPress. Based on your activity on the SINC website, WordPress, in cooperation with Flexmail, can automatically send emails to your email address. This way, students with an early-stage business idea receive different and more targeted emails.",
+      text: "When you subscribe to our newsletter, Flexmail automatically sends a confirmation email to your email address. After you confirm, you receive our newsletters. You can unsubscribe at any time via the link at the bottom of every newsletter.",
     },
     {
       type: "h3",
@@ -402,16 +393,32 @@ export const privacyPage = {
       text: "SINC works together with a number of structural partners. To optimise the services and information provided to users (students), data may be passed on to SINC's structural partners. You can find a full list of the structural partners at https://sincantwerpen.be/partners",
     },
     {
+      type: "p",
+      text: "SINC works with the following processors, which only process your data on our behalf:"
+    },
+    {
+      type: "p",
+      text: "– Vercel: hosting of this website"
+    },
+    {
+      type: "p",
+      text: "– Flexmail: sending our newsletter"
+    },
+    {
+      type: "p",
+      text: "– Formspree: forwarding messages sent through the contact form"
+    },
+    {
+      type: "p",
+      text: "– Luma: registrations and tickets for our events"
+    },
+    {
       type: "h2",
       text: "Cookies, or similar techniques, that we use",
     },
     {
       type: "p",
-      text: "SINC uses functional, analytical and tracking cookies. A cookie is a small text file that is stored in the browser of your computer, tablet or smartphone when you first visit this website. SINC uses cookies with a purely technical function. These ensure that the website works properly and that, for example, your preferred settings are remembered. These cookies are also used to make the website work properly and to be able to optimise it. In addition, we place cookies that track your browsing behaviour so that we can offer tailored content.",
-    },
-    {
-      type: "p",
-      text: "During your first visit to our website, we already informed you about these cookies and asked for your consent to place them.",
+      text: "This website does not use analytical or tracking cookies and does not track your browsing behaviour. A cookie is a small text file that is stored in the browser of your computer, tablet or smartphone when you visit a website.",
     },
     {
       type: "p",
@@ -425,26 +432,6 @@ export const privacyPage = {
       type: "p",
       text: "https://veiliginternetten.nl/wat-zijn-cookies/",
       href: "https://veiliginternetten.nl/wat-zijn-cookies/",
-    },
-    {
-      type: "p",
-      text: "Cookies are also placed on this website by third parties, for example advertisers and/or social media companies. Below is an overview:",
-    },
-    {
-      type: "p",
-      text: "Cookie: Google Analytics",
-    },
-    {
-      type: "p",
-      text: "Name: __ga",
-    },
-    {
-      type: "p",
-      text: "Function: Analytical cookie that measures website visits",
-    },
-    {
-      type: "p",
-      text: "Retention period: 2 years",
     },
     {
       type: "h3",
@@ -475,11 +462,11 @@ export const privacyPage = {
     },
     {
       type: "p",
-      text: "SINC would also like to point out that you have the option to file a complaint with the national supervisory authority, the Autoriteit Persoonsgegevens. You can do so via the following link:",
+      text: "SINC would also like to point out that you have the option to file a complaint with the Belgian supervisory authority, the Data Protection Authority (Gegevensbeschermingsautoriteit, GBA). You can do so via the following link:",
     },
     {
       type: "p",
-      text: "https://autoriteitpersoonsgegevens.nl/nl/contact-met-de-autoriteit-persoonsgegevens/tip-ons",
+      text: "https://www.dataprotectionauthority.be/citizen/actions/lodge-a-complaint",
       href: "https://autoriteitpersoonsgegevens.nl/nl/contact-met-de-autoriteit-persoonsgegevens/tip-ons",
     },
     {

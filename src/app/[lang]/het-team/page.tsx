@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Department } from "@/content";
 import { getT, pageMeta } from "@/content/server";
+import { accents, departmentAccent } from "@/lib/accents";
 import { TeamHero } from "@/components/team/TeamHero";
 import { MemberCard } from "@/components/team/MemberCard";
 import { CtaBand } from "@/components/page/Sections";
@@ -46,12 +47,14 @@ function DepartmentSection({ d, last = false }: { d: Department; last?: boolean 
   // Empty cells after the last row on the 4-column grid (lead = 2×2 block + others).
   const others = d.members.length - leads.length;
   const free = onlyLeads || others <= 4 ? 0 : (4 - ((others - 4) % 4)) % 4;
+  const accent = departmentAccent(d.id);
+  const a = accents[accent];
   return (
     <section id={d.id} aria-labelledby={`${d.id}-title`} className="scroll-mt-28 overflow-x-clip py-16 sm:py-24">
       <div className="container-x flex flex-col gap-10">
-        <div className="flex items-end justify-between gap-6 border-b border-white/10 pb-6">
+        <div className={`flex items-end justify-between gap-6 border-b-2 pb-6 ${a.border}`}>
           <RevealText id={`${d.id}-title`} text={d.name} className="text-display text-[clamp(52px,9vw,140px)] leading-[0.85]" />
-          <span className="mb-2 shrink-0 rounded-full bg-white/8 px-4 py-2 text-[14px] font-bold tabular-nums text-cream/70 ring-1 ring-white/10">
+          <span className={`mb-2 shrink-0 rounded-full px-4 py-2 text-[14px] font-bold tabular-nums ${a.solid} ${a.onSolid}`}>
             {d.members.length}
           </span>
         </div>
@@ -61,7 +64,7 @@ function DepartmentSection({ d, last = false }: { d: Department; last?: boolean 
             const big = !!m.lead;
             return (
               <div key={m.name} className={big ? (onlyLeads ? "col-span-2 lg:col-span-1" : "col-span-2 lg:row-span-2") : ""}>
-                <MemberCard m={m} from={side(m)} big={big} />
+                <MemberCard m={m} from={side(m)} big={big} accent={accent} />
               </div>
             );
           })}

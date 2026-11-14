@@ -6,7 +6,10 @@
   --color-ink: #0b0e14;
   --color-ink-2: #121722;
   --color-cream: #f4f3eb;
-  --color-yellow: #ffd84d;
+  /* SINC's four colours (pillars and team departments): blue above, plus these three */
+  --color-yellow: #fcd731;
+  --color-green: #2ace7b;
+  --color-purple: #856bad;
 
   --font-sans: Helvetica, Arial, sans-serif;
 

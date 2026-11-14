@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useT } from "../LangProvider";
+import { accents, departmentAccent } from "@/lib/accents";
 import { DESKTOP, useMedia } from "../useMedia";
 import { Eyebrow } from "../ui";
 
@@ -85,18 +86,22 @@ export function TeamHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: EASE, delay: 0.5 }}
         >
-          {departments.map((d) => (
-            <a
-              key={d.id}
-              href={`#${d.id}`}
-              className="group inline-flex items-center gap-3 rounded-full bg-ink-2/80 py-2 pl-5 pr-2 text-[15px] font-bold text-cream ring-1 ring-white/15 transition-all duration-300 hover:bg-blue hover:ring-blue"
-            >
-              {d.name}
-              <span className="flex size-8 items-center justify-center rounded-full bg-white/10 text-[13px] tabular-nums transition-colors group-hover:bg-white group-hover:text-blue">
-                {d.members.length}
-              </span>
-            </a>
-          ))}
+          {departments.map((d) => {
+            const a = accents[departmentAccent(d.id)];
+            return (
+              <a
+                key={d.id}
+                href={`#${d.id}`}
+                className={`group inline-flex items-center gap-3 rounded-full bg-ink-2/80 py-2 pl-4 pr-2 text-[15px] font-bold text-cream ring-1 ring-white/15 transition-all duration-300 ${a.hoverSolid}`}
+              >
+                <span aria-hidden className={`size-2.5 rounded-full ${a.solid} transition-colors group-hover:bg-current`} />
+                {d.name}
+                <span className="flex size-8 items-center justify-center rounded-full bg-white/10 text-[13px] tabular-nums transition-colors group-hover:bg-black/15">
+                  {d.members.length}
+                </span>
+              </a>
+            );
+          })}
           <span className="inline-flex items-center rounded-full bg-yellow px-5 py-2 text-[15px] font-bold text-ink">
             {total} {teamPage.students}
           </span>
