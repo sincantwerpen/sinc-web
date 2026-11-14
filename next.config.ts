@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // `npm run dev` only: open it on a phone via the Mac's address on the home network (192.168.x.x).
+  allowedDevOrigins: ["192.168.*.*"],
   images: {
     // The site's own images, and posters/portraits/photos from the SINC dashboard (src/lib/dashboard),
     // which /api/media/ passes on; those carry a version in the query string.
