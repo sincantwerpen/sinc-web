@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "node:crypto";
 import type { SitePayload } from "./types";
 
 // Server-to-server connection with the SINC dashboard. DASHBOARD_URL + DASHBOARD_API_KEY
@@ -62,8 +63,8 @@ export async function fetchSite(): Promise<SitePayload | null> {
 export function fromDashboard(request: Request): boolean {
   const expected = process.env.DASHBOARD_API_KEY;
   const got = request.headers.get("x-api-key");
-  if (!expected || !got || got.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < got.length; i++) diff |= got.charCodeAt(i) ^ expected.charCodeAt(i);
-  return diff === 0;
+  if (!expected || !got) return false;
+  const a = Buffer.from(got);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
 }

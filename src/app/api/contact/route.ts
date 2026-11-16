@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       if (res.ok) return Response.json({ ok: true });
       console.error("Contact form: dashboard answered", res.status);
     } catch (err) {
-      console.error("Contact form: dashboard not reachable", err);
+      console.error("Contact form: dashboard not reachable", err instanceof Error ? err.message : "unknown");
     }
     if (!process.env.CONTACT_WEBHOOK_URL) return Response.json({ error: "upstream_failed" }, { status: 502 });
   }
@@ -53,11 +53,12 @@ export async function POST(request: Request) {
       body: JSON.stringify({ name, email, message, language, _subject: `Contactformulier: ${name}`, source: "sincantwerpen.be/contact" }),
     });
     if (!res.ok) {
-      console.error("Contact form delivery failed", res.status, await res.text().catch(() => ""));
+      // Only the status: the webhook's answer can repeat the message that was sent.
+      console.error("Contact form delivery failed", res.status);
       return Response.json({ error: "upstream_failed" }, { status: 502 });
     }
   } catch (err) {
-    console.error("Contact form delivery error", err);
+    console.error("Contact form delivery error", err instanceof Error ? err.message : "unknown");
     return Response.json({ error: "upstream_failed" }, { status: 502 });
   }
 

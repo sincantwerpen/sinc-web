@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       Response.json({ error: "newsletter_not_configured" }, { status: 503 })
     );
   } catch (err) {
-    console.error("Newsletter sign-up error", err);
+    console.error("Newsletter sign-up error", err instanceof Error ? err.message : "unknown");
     return Response.json({ error: "upstream_failed" }, { status: 502 });
   }
 }

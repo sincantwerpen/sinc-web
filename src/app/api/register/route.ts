@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       }),
     });
   } catch (err) {
-    console.error("Registration: dashboard not reachable", err);
+    console.error("Registration: dashboard not reachable", err instanceof Error ? err.message : "unknown");
     return Response.json({ error: "unreachable" }, { status: 502 });
   }
   const data = await res.json().catch(() => ({}));

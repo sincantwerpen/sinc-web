@@ -35,7 +35,8 @@ export async function toFlexmail(s: Signup): Promise<Response | null> {
 
   // 409 = this address is already subscribed or already has a pending confirmation: fine for the visitor.
   if (res.ok || res.status === 409) return Response.json({ ok: true });
-  console.error("Flexmail sign-up failed", res.status, await res.text().catch(() => ""));
+  // Only the status: Flexmail's answer can repeat the name and address that were sent.
+  console.error("Flexmail sign-up failed", res.status);
   return Response.json({ error: "upstream_failed" }, { status: 502 });
 }
 
@@ -57,7 +58,7 @@ export async function subscribe(s: Signup): Promise<boolean> {
     const res = (await toFlexmail(s)) ?? (await toWebhook(s));
     return !!res && res.ok;
   } catch (err) {
-    console.error("Newsletter sign-up error", err);
+    console.error("Newsletter sign-up error", err instanceof Error ? err.message : "unknown");
     return false;
   }
 }
