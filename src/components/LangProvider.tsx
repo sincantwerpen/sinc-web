@@ -12,9 +12,12 @@ const LangContext = createContext<{ lang: Lang; content: Content; live: Live | n
   live: null,
 });
 
-/** `live`: the dashboard's events, team and photos (src/lib/dashboard), laid over the site's own texts. */
-export function LangProvider({ lang, live = null, children }: { lang: Lang; live?: Live | null; children: ReactNode }) {
-  const value = useMemo(() => ({ lang, content: withLive(getContent(lang), live), live }), [lang, live]);
+/**
+ * `live`: the dashboard's events, team and photos (src/lib/dashboard), laid over the site's own texts.
+ * `now`: when the page was built (see renderNow), so the browser shows the same events as the server did.
+ */
+export function LangProvider({ lang, live = null, now, children }: { lang: Lang; live?: Live | null; now: number; children: ReactNode }) {
+  const value = useMemo(() => ({ lang, content: withLive(getContent(lang, now), live), live }), [lang, live, now]);
   return (
     <LangContext.Provider value={value}>
       {/* Respect "reduce motion" in the visitor's system settings for all motion animations. */}

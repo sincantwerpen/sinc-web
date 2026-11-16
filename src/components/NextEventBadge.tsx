@@ -9,7 +9,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
-import type { Content } from "@/content";
+import { isOver, type Content } from "@/content";
 import { intlLocale, type Lang } from "@/i18n";
 import { ArrowIcon } from "@/components/ui";
 import { useLang, useT } from "./LangProvider";
@@ -45,9 +45,9 @@ export function NextEventBadge() {
   const lang = useLang();
   const { upcomingEvents, nextEventBadge: copy } = useT();
   // Which event is next only depends on the dates. The page is built ahead of time, so the browser
-  // re-checks it: the first event that hasn't ended yet (counted as over 4 hours after the start).
+  // re-checks it: the first event that isn't over yet (isOver, the same rule as the event lists).
   const dated = upcomingEvents.filter((e) => e.startsAt);
-  const nextSlug = () => dated.find((e) => Date.parse(e.startsAt!) + 4 * 3600_000 > Date.now())?.slug ?? null;
+  const nextSlug = () => dated.find((e) => !isOver(e, Date.now()))?.slug ?? null;
   const slug = useSyncExternalStore(noSubscribe, nextSlug, () => dated[0]?.slug ?? null);
   const event = upcomingEvents.find((e) => e.slug === slug);
   const reduce = useReducedMotion();

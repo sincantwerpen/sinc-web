@@ -10,6 +10,26 @@ type EventText = Pick<SincEvent, "subtitle" | "topics" | "excerpt" | "body"> &
 const FREE = "FREE";
 
 const texts: Record<string, EventText> = {
+  blueprint: {
+    subtitle: "Draw your own blueprint",
+    topics: "Keynotes, Stories, Networking",
+    excerpt: "SINC's biggest event of the year: a free evening of keynotes, real stories and conversations. Choose between the Career Blueprint and the Venture Blueprint.",
+    date: "2 December",
+    price: FREE,
+    body: [
+      "Your career doesn't come with a manual. Come draw your own blueprint.",
+      "BLUEPRINT is SINC's biggest event of the year. A free evening of keynotes, real stories and conversations for students, student entrepreneurs, recent graduates and young professionals who want to shape their own future.",
+      "You won't leave with a ready-made career. You'll leave with the insights and inspiration to build one, whether that's inside a company or in a business of your own.",
+      "## Two stages, one destination",
+      "Stage 1: Career Blueprint\nFor those who want to discover where their talents can take them. Hear from people who've been where you are now and found their way.",
+      "Stage 2: Venture Blueprint\nFor those ready to turn an idea into something real. Learn from founders who started as students and built from there.",
+      "## What to expect",
+      "- 🎤 Inspiring keynotes\n- 💬 Honest stories about the steps, detours and mistakes behind a career\n- 🤝 Time to connect with speakers, entrepreneurs and like-minded students\n- 🥂 A networking reception with drinks",
+      "## Practical",
+      "- 🕐 Doors open at 18:00, the programme starts at 18:30\n- 📍 Trix, Noordersingel 28, 2140 Antwerp\n- 🎟️ Free entry, but places are limited, so registration is required",
+      "You choose your stage when you register.",
+    ],
+  },
   "sinc-soiree-the-art-of-failing": {
     subtitle: "The Art of Failing",
     topics: "Keynotes, Networking",

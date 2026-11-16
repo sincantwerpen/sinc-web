@@ -12,13 +12,16 @@ export async function getLang(): Promise<Lang> {
   return value && isLang(value) ? value : defaultLang;
 }
 
+/** The moment this page is built, the same for the whole page (layout included). */
+export const renderNow = cache(() => Date.now());
+
 /** The dashboard's events, team and photos for a language; null = only the site's own content. */
 export const getLive = cache(async (lang: Lang): Promise<Live | null> => liveFor(await fetchSite(), lang));
 
 /** Texts of the page being rendered (Server Components only), with the dashboard's data laid over them. */
 export async function getT() {
   const lang = await getLang();
-  return withLive(getContent(lang), await getLive(lang));
+  return withLive(getContent(lang, renderNow()), await getLive(lang));
 }
 
 /** Every event address, the site's own and the dashboard's. */
