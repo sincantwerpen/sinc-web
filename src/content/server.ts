@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import { lang as rootLang } from "next/root-params";
 import { isLang, defaultLang, localize, type Lang } from "@/i18n";
 import { getContent } from ".";
@@ -9,9 +10,12 @@ export async function getLang(): Promise<Lang> {
   return value && isLang(value) ? value : defaultLang;
 }
 
+/** The moment this page is built, the same for the whole page (layout included). */
+export const renderNow = cache(() => Date.now());
+
 /** Texts of the page being rendered (Server Components only). */
 export async function getT() {
-  return getContent(await getLang());
+  return getContent(await getLang(), renderNow());
 }
 
 /**

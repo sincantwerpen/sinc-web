@@ -9,7 +9,7 @@ import {
   useMotionValue,
   useReducedMotion,
 } from "motion/react";
-import { getContent, type Content } from "@/content";
+import { getContent, isOver, type Content } from "@/content";
 import { intlLocale, type Lang } from "@/i18n";
 import { ArrowIcon } from "@/components/ui";
 import { useLang, useT } from "./LangProvider";
@@ -40,10 +40,11 @@ function relativeDay(iso: string, copy: Content["nextEventBadge"]) {
  * slowly and speeds up on hover; clicking opens a small card that links to the event page.
  */
 // Which event is next only depends on the dates, which are the same in every language.
-const dated = getContent("nl").upcomingEvents.filter((e) => e.startsAt);
+// (now = 0: every event marked upcoming; the browser itself checks which one is over.)
+const dated = getContent("nl", 0).upcomingEvents.filter((e) => e.startsAt);
 const noSubscribe = () => () => {};
-/** First event that hasn't ended yet (counted as over 4 hours after the start). */
-const nextSlug = () => dated.find((e) => Date.parse(e.startsAt!) + 4 * 3600_000 > Date.now())?.slug ?? null;
+/** First event that isn't over yet. */
+const nextSlug = () => dated.find((e) => !isOver(e, Date.now()))?.slug ?? null;
 
 export function NextEventBadge() {
   // The page is built ahead of time, so the browser re-checks which event is next.
