@@ -2,6 +2,9 @@
 // Newest first. Add new events at the top; set `upcoming: true` to show one under "Aankomende events"
 // (with a "Registreer" button that opens `ticketUrl`).
 
+/** Language an event is held in. */
+export type EventLang = "nl" | "en";
+
 export type Pillar = "Inspireren" | "Informeren" | "Connecteren" | "Activeren";
 
 export type SincEvent = {
@@ -27,11 +30,14 @@ export type SincEvent = {
    */
   body: string[];
   upcoming?: boolean;
+  /** Language the event is held in: shown as a tag ("Nederlandstalig" / "Engelstalig"). */
+  language?: EventLang;
 };
 
 export const sincEvents: SincEvent[] = [
   {
     slug: "blueprint",
+    language: "en",
     title: "BLUEPRINT",
     subtitle: "Teken je eigen blauwdruk",
     topics: "Keynotes, Verhalen, Netwerken",
@@ -62,6 +68,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "go-with-the-coach",
+    language: "nl",
     title: "Go With The Coach",
     subtitle: "Future proof ondernemen",
     topics: "Keynotes, Coaching, Netwerken",
@@ -87,6 +94,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "sinc-soiree-the-art-of-failing",
+    language: "nl",
     title: "SINC Soirée",
     subtitle: "The Art of Failing",
     topics: "Keynotes, Netwerken",
@@ -112,6 +120,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "seef-the-best-for-last",
+    language: "nl",
     title: "SEEF the best for last",
     subtitle: "Sinc BBQ",
     topics: "BBQ",
@@ -137,6 +146,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "sinc-101-career-edition",
+    language: "en",
     title: "Sinc 101: Career Edition",
     subtitle: "Learn practical skills in three workshops with real scenarios.",
     topics: "Career Edition",
@@ -173,6 +183,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "sinc-soiree-2",
+    language: "nl",
     title: "SINC soiree",
     subtitle: "Twee topsprekers",
     topics: "Marketing, Networking",
@@ -199,6 +210,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "kerst-soiree",
+    language: "nl",
     title: "Kerst soirée",
     subtitle: "Leer spreken met impact en netwerken zonder cringe",
     topics: "Pitch, Network",
@@ -222,6 +234,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "arts-inc",
+    language: "en",
     title: "ARTS.inc",
     subtitle: "Where creativity meets entertainment & AI",
     topics: "Creativity, design, AI",
@@ -250,6 +263,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "go-with-the-coach-jouw-kans-om-alles-te-vragen",
+    language: "nl",
     title: "Go With The Coach",
     subtitle: "Jouw kans om alles te vragen",
     topics: "Finance, Sales, Marketing, Beginner essentials, Legal lift, Founder stories",
@@ -283,6 +297,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "go-with-the-coach-2-2",
+    language: "nl",
     title: "Go With The Coach 2",
     subtitle: "Coaching naar succes!",
     topics: "Sales, Financiën, Diensten voor starters, Marketing, Tools voor starters",
@@ -303,6 +318,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "galabal",
+    language: "nl",
     title: "Galabal - SINC 10 jaar",
     subtitle: "Dit jaar vieren we een bijzondere mijlpaal!",
     topics: "Galabal 🪩",
@@ -324,6 +340,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "arts-inc-create-new-dimensions",
+    language: "en",
     title: "ARTS.inc",
     subtitle: "Create New Dimensions",
     topics: "Content Creation and AI",
@@ -356,6 +373,7 @@ export const sincEvents: SincEvent[] = [
   },
   {
     slug: "go-with-the-coach-2024",
+    language: "nl",
     title: "Go With The Coach",
     subtitle: "Speeddate met jouw toekomst! 🚀",
     topics: "📱 Tools voor starters 🧑🏻‍💻 Services voor starters 📊 Finance 🖼️ Marketing 💻 Tools 📈 Sales 🤖 AI",
@@ -378,6 +396,25 @@ export const sincEvents: SincEvent[] = [
 ];
 
 export const pillars: Pillar[] = ["Inspireren", "Informeren", "Connecteren", "Activeren"];
+
+/**
+ * "Save the date": events further ahead that only have a name, theme and date. They show as small
+ * cards under the upcoming events and disappear by themselves after their date, or as soon as a full
+ * event (above) starts on the same day. English texts: `sneakPeekTexts` in ../en/events.ts.
+ */
+export type SneakPeek = {
+  id: string;
+  title: string;
+  subtitle: string;
+  /** Day of the event, "YYYY-MM-DD". */
+  date: string;
+  language?: EventLang;
+};
+
+export const sneakPeeks: SneakPeek[] = [
+  { id: "sinc-up-2027", title: "SINC UP", subtitle: "Dream Big", date: "2027-02-24" },
+  { id: "arts-inc-2027", title: "ARTS.INC", subtitle: "Creativiteit & Design Thinking", date: "2027-04-28" },
+];
 
 export const upcomingEvents = sincEvents.filter((e) => e.upcoming);
 export const pastEvents = sincEvents.filter((e) => !e.upcoming);

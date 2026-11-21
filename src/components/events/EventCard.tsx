@@ -3,7 +3,7 @@ import { Link } from "../Link";
 import type { SincEvent } from "@/content";
 import { getT } from "@/content/server";
 import { Reveal, ArrowIcon } from "../ui";
-import { PillarTag } from "./PastEvents";
+import { LangTag, PillarTag } from "./PastEvents";
 
 /** Poster card for an event: used for upcoming events and "misschien ook interessant". */
 export async function EventCard({ event: e, delay = 0 }: { event: SincEvent; delay?: number }) {
@@ -22,7 +22,10 @@ export async function EventCard({ event: e, delay = 0 }: { event: SincEvent; del
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
           />
-          <PillarTag pillar={e.pillar} className="absolute left-4 top-4" />
+          <div className="absolute left-4 right-4 top-4 flex flex-wrap gap-2">
+            <PillarTag pillar={e.pillar} />
+            <LangTag lang={e.language} />
+          </div>
         </div>
         <div className="flex flex-1 flex-col gap-3 p-6">
           <h3 className="text-display text-[28px] leading-[1.02]">{e.title}</h3>

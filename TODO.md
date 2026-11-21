@@ -50,13 +50,17 @@ Website work only. Going live (Vercel, DNS, back-up) is in `GO-LIVE.md`.
 
 ## How to keep it up to date (no to-do)
 - New event: add it at the top of `src/content/nl/events.ts` (title, date, `startsAt`, time, location,
-  price, `ticketUrl`, poster in `public/images/events/`) and its English text in `src/content/en/events.ts`.
+  price, `ticketUrl`, `language` ("nl" or "en", shown as a tag), poster in `public/images/events/`) and its English text in `src/content/en/events.ts`.
   The homepage badge and event cards update automatically. A few hours after its start, an event moves to
   "Afgelopen events" by itself (the site refreshes every hour), so nothing has to be removed by hand
+- Event further ahead with only a name and date ("Save the date" card): add it to `sneakPeeks` in
+  `src/content/nl/events.ts`. It disappears by itself after its date, or once the full event is added
 - New text always goes in both `src/content/nl/` and `src/content/en/`; TypeScript gives an error when the
   English version is missing something
 
 ## Done
+- [x] Events: "Save the date" cards for SINC UP (24 Feb 2027) and ARTS.INC (28 Apr 2027)
+- [x] Events: tag with the event's language (Nederlandstalig / Engelstalig) on every event; BLUEPRINT is English
 - [x] Events: past events leave "Aankomende events" by themselves; BLUEPRINT (2 December, Trix) added as the next event
 - [x] Team: Julie Vandenryt, Helena and Ben Alp Celik removed, Sienna Van de Merlen added as Event Director (17 students now)
 - [x] Privacy statement: WordPress and Google Analytics removed (no tracking cookies), Belgian GBA, processors

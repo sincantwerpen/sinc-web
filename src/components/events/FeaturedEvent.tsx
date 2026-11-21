@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import type { SincEvent } from "@/content";
 import { useT } from "../LangProvider";
 import { Button, Reveal } from "../ui";
-import { PillarTag } from "./PastEvents";
+import { LangTag, PillarTag } from "./PastEvents";
 
 function useCountdown(iso?: string) {
   const [left, setLeft] = useState<number | null>(null);
@@ -96,6 +96,7 @@ export function FeaturedEvent({ event: e, level = 3 }: { event: SincEvent; level
                 {eventsPage.title}
               </span>
               <PillarTag pillar={e.pillar} />
+              <LangTag lang={e.language} />
             </div>
 
             <div className="flex flex-col gap-2">

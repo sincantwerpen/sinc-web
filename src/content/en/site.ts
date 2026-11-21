@@ -168,11 +168,16 @@ export const eventsPage = {
   title: "Upcoming events",
   lead: "We organise a variety of events built around our four pillars (inspire, inform, connect and activate). Discover the interesting events we have planned.",
   heroPhotos: [1, 2, 6, 5, 4, 3].map((n) => `/images/events/hero/0${n}.webp`),
+  /** Small "save the date" cards under the upcoming events. */
+  sneakPeek: { title: "Save the date", soon: "More info coming soon" },
   pastTitle: "Past events",
   pastLabel: "Past",
   allLabel: "All",
   /** Names of the four pillars on tags and filters. */
   pillarLabels: { Inspireren: "Inspire", Informeren: "Inform", Connecteren: "Connect", Activeren: "Activate" },
+  /** Tag with the language an event is held in. */
+  langLabels: { nl: "In Dutch", en: "In English" },
+  langTitle: "Language of the event",
   moreInfo: "More info",
   register: "Register",
   countdown: { days: "days", hours: "hrs", minutes: "min", seconds: "sec" },

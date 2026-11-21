@@ -5,6 +5,7 @@ import { EmptyEventsCard } from "@/components/Events";
 import { PhotoRing } from "@/components/events/PhotoRing";
 import { PastEvents } from "@/components/events/PastEvents";
 import { FeaturedEvent } from "@/components/events/FeaturedEvent";
+import { SneakPeeks } from "@/components/events/SneakPeeks";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getT();
@@ -45,6 +46,9 @@ export default async function EventsPage() {
               ))}
             </div>
           )}
+          <div className="mt-10 sm:mt-14">
+            <SneakPeeks />
+          </div>
         </div>
       </section>
 

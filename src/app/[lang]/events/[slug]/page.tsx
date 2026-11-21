@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { eventSlugs } from "@/content";
 import { getT, pageMeta } from "@/content/server";
 import { Button, Reveal, ArrowIcon } from "@/components/ui";
-import { PillarTag } from "@/components/events/PastEvents";
+import { LangTag, PillarTag } from "@/components/events/PastEvents";
 import { EventCard } from "@/components/events/EventCard";
 import { TiltPoster } from "@/components/events/TiltPoster";
 
@@ -124,6 +124,7 @@ export default async function EventPage({ params }: PageProps<"/[lang]/events/[s
           <Reveal className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-2">
               <PillarTag pillar={e.pillar} />
+              <LangTag lang={e.language} />
               {!e.upcoming && (
                 <span className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-cream/80">
                   {eventsPage.pastLabel}

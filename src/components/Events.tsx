@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { FeaturedEvent } from "./events/FeaturedEvent";
+import { SneakPeeks } from "./events/SneakPeeks";
 import { Button, Eyebrow, Reveal, RevealText } from "./ui";
 import { useT } from "./LangProvider";
 
@@ -96,6 +97,7 @@ export function Events() {
             ))}
           </div>
         )}
+        <SneakPeeks />
       </div>
     </section>
   );

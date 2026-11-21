@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Link } from "../Link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
-import type { Pillar } from "@/content";
+import type { EventLang, Pillar } from "@/content";
 import { accents, pillarAccent } from "@/lib/accents";
 import { useT } from "../LangProvider";
 import { Eyebrow, RevealText, ArrowIcon } from "../ui";
@@ -17,6 +17,26 @@ export function PillarTag({ pillar, className = "" }: { pillar: Pillar; classNam
   return (
     <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] ${accents[pillarAccent[pillar]].solid} ${accents[pillarAccent[pillar]].onSolid} ${className}`}>
       {eventsPage.pillarLabels[pillar]}
+    </span>
+  );
+}
+
+/**
+ * Outlined tag with the language the event is held in ("EN · Engelstalig"). Outlined so it reads as
+ * information next to the coloured pillar tag, not as a second category.
+ */
+export function LangTag({ lang, className = "" }: { lang?: EventLang; className?: string }) {
+  const { eventsPage } = useT();
+  if (!lang) return null;
+  return (
+    <span
+      title={eventsPage.langTitle}
+      className={`inline-flex w-fit items-center gap-2 rounded-full bg-ink/40 py-1 pl-1 pr-3 text-[11px] font-bold uppercase tracking-[0.14em] text-cream ring-1 ring-white/25 backdrop-blur-sm transition-colors ${className}`}
+    >
+      <span aria-hidden className="rounded-full bg-cream px-1.5 py-px text-[10px] tracking-[0.06em] text-ink">
+        {lang.toUpperCase()}
+      </span>
+      {eventsPage.langLabels[lang]}
     </span>
   );
 }
@@ -164,6 +184,7 @@ export function PastEvents() {
                     </span>
                     <span className="flex flex-wrap items-center gap-2 lg:hidden">
                       <PillarTag pillar={e.pillar} />
+                      <LangTag lang={e.language} />
                       <span className="text-[13px] text-cream/50">
                         {eventsPage.pastLabel}
                         {e.location ? ` · ${e.location}` : ""}
@@ -172,7 +193,10 @@ export function PastEvents() {
                   </span>
 
                   <span className="relative hidden flex-col gap-2 lg:flex">
-                    <PillarTag pillar={e.pillar} className="group-hover:bg-white group-hover:text-ink group-hover:ring-0" />
+                    <span className="flex flex-wrap items-center gap-2">
+                      <PillarTag pillar={e.pillar} className="group-hover:bg-white group-hover:text-ink group-hover:ring-0" />
+                      <LangTag lang={e.language} className="group-hover:bg-transparent group-hover:ring-white/70" />
+                    </span>
                     <span className="text-[14px] text-cream/55 transition-colors group-hover:text-white/85">
                       {eventsPage.pastLabel}
                       {e.location ? ` · ${e.location}` : ""}

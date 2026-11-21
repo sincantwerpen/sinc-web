@@ -12,7 +12,7 @@ import * as enEvents from "./en/events";
 import * as enTeam from "./en/team";
 
 import type { SincEvent } from "./nl/events";
-export type { Pillar, SincEvent } from "./nl/events";
+export type { EventLang, Pillar, SincEvent, SneakPeek } from "./nl/events";
 export type { LinkItem, Partner, PrivacyBlock } from "./nl/pages";
 export type { Member, Department } from "./nl/team";
 
@@ -33,8 +33,13 @@ export const isOver = (e: SincEvent, now: number) => !!e.startsAt && Date.parse(
 function withDates(c: Content, now: number): Content {
   const sincEvents = c.sincEvents.map((e) => (e.upcoming && isOver(e, now) ? { ...e, upcoming: false } : e));
   const start = (e: SincEvent) => (e.startsAt ? Date.parse(e.startsAt) : Number.POSITIVE_INFINITY);
+  // "Save the date" cards: gone after their day (Brussels time), or once a full event starts that day.
+  const day = (t: number) => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Brussels" }).format(t);
+  const today = day(now);
+  const fullDays = new Set(sincEvents.filter((e) => e.startsAt).map((e) => day(Date.parse(e.startsAt!))));
   return {
     ...c,
+    sneakPeeks: c.sneakPeeks.filter((p) => p.date >= today && !fullDays.has(p.date)),
     sincEvents,
     upcomingEvents: sincEvents.filter((e) => e.upcoming).sort((a, b) => start(a) - start(b)),
     pastEvents: sincEvents.filter((e) => !e.upcoming),

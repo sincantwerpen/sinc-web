@@ -2,7 +2,7 @@
 // `upcoming`) comes from the Dutch file, so a new event only has to be added there; until it gets an
 // entry here, the English site shows the Dutch text.
 
-import { sincEvents as nlEvents, pillars, type SincEvent } from "../nl/events";
+import { sincEvents as nlEvents, sneakPeeks as nlSneakPeeks, pillars, type SincEvent, type SneakPeek } from "../nl/events";
 
 type EventText = Pick<SincEvent, "subtitle" | "topics" | "excerpt" | "body"> &
   Partial<Pick<SincEvent, "title" | "date" | "time" | "doors" | "location" | "price">>;
@@ -217,6 +217,12 @@ const texts: Record<string, EventText> = {
 export const sincEvents: SincEvent[] = nlEvents.map((e) => ({ ...e, ...texts[e.slug] }));
 
 export { pillars };
+
+/** English texts for the "save the date" events in ../nl/events.ts (by id). */
+const sneakPeekTexts: Record<string, Partial<Pick<SneakPeek, "title" | "subtitle">>> = {
+  "arts-inc-2027": { subtitle: "Creativity & Design Thinking" },
+};
+export const sneakPeeks: SneakPeek[] = nlSneakPeeks.map((p) => ({ ...p, ...sneakPeekTexts[p.id] }));
 
 export const upcomingEvents = sincEvents.filter((e) => e.upcoming);
 export const pastEvents = sincEvents.filter((e) => !e.upcoming);
